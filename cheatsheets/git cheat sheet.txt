@@ -7,7 +7,7 @@ git add                                               then filename
 git add .                                             will add all files
 git status                                            to see if the files went
 git commit -m "enter comments"                        to commit to the submissions
-git push                                              let github know these are the changes
+git push origin |branch name|                         let github know these are the changes
 git pull                                              shows files that have being changed
 git branch                                            sees what branch you are
 git branch littlefeature                              creates a new branch tree so you dont work on the main branch
