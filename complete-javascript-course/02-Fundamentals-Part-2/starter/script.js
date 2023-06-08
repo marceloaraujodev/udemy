@@ -234,17 +234,38 @@
 
 // Object Methods ------ functions attached to a method are called Methods
 
-const jonas = {
-    firstName: 'Jonas', 
-    lastName: 'Schmedtmann',
-    age: 2023 - 1987, // you can add expressions
-    job: 'teacher',
-    friends: ['Michael', 'Peter', 'Steven'],
-    hasDriversLicense: true, 
-    calcAge: function (birthYear){
-        return 2023 - birthYear
-    }
-};
+// const jonas = {
+//     firstName: 'Jonas', 
+//     lastName: 'Schmedtmann',
+//     birthYear: 1988, 
+//     job: 'teacher',
+//     friends: ['Michael', 'Peter', 'Steven'],
+//     hasDriversLicense: true, 
+//     // calcAge: function (birthYear){
+//     //     return 2023 - birthYear
+//     // }
+//     // calcAge: function () {
+//     //     // console.log(this)
+//     //     return 2023 - this.birthYear
+//     // }
 
-console.log(jonas.calcAge(1988))
-console.log(jonas['calcAge'](1988)) // calling using backets needs to be a string! IMPORTANT
+//     calcAge: function (){
+//         this.age = 2023 - this.birthYear
+//         return this.age
+//     },
+
+//     summary: function(){
+
+//         return `${this.firstName} is a ${this.calcAge()}-year old ${this.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} Drivers License.`
+//     }
+// };
+
+// // console.log(jonas.calcAge(jonas.birthYear))
+// // console.log(jonas['calcAge'](1988)) // calling using backets needs to be a string! IMPORTANT
+// // console.log(jonas.calcAge()) // need to execute first and then print the jonas.age
+// // jonas.calcAge()
+
+// //Challange
+// //Jonas is a age old teacher. and he has a driver's license
+
+// console.log(jonas.summary())
