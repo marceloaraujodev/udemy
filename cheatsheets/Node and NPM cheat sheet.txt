@@ -1,0 +1,28 @@
+node -v		Node version
+npm -v		Npm version
+
+worktree
+1. html css javascript
+2. github respositories
+3. Package.JSON file
+
+(good to do 
+when starting 
+working on
+other ppls
+project)
+
+npm install			saves any specified packages into dependencies by default
+npm install -g packagename 	installs the package globally
+npm install packagename		installs the package locally
+npm init			will create the package.JSON file 
+
+on the package.json file right below scripts
+  "scripts": {
+    "build": "browserify script.js > bundle.js"
+  }
+
+I can edit build to run the script. ex: If I type this command npm run build it will execute what is inside the build object
+ex. (saving time in typing)
+> background-generator@1.0.0 build
+> browserify script.js > bundle.js

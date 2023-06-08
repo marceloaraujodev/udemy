@@ -1,0 +1,28 @@
+
+
+npx create-react-app 	nameOfProject to create a new project
+
+
+----------------------SYNTAX------------------------
+
+- Variables in JSX documents { Variable } always wrappe in curly braces
+- Anytime you make your own methods (functions) use the syntax below
+funtionName = (event) => {} basically a arraow function within a function other there will be prop a error
+
+
+
+-----------COMPONENTS / CONTAINERS--------------------------
+- Components are the smaller pieces
+- Containers are the bigger pieces to build the page
+
+
+------------------------ERRORS-------------------------------
+
+ERROR 
+
+Error when deploying react app and it keeps sayings << Plugin "react" was conflicted between "package.json 
+» eslint-config-react-app » >>
+
+fix the folder structures on the command line, this problem is because of the folders dont match with the command line
+they are case sensitive
+

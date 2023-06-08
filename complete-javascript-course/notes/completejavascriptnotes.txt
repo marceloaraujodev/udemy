@@ -1,0 +1,6 @@
+Functions 
+
+- Store the Return value of a function in a variable to use it anywhere! Give it a name then call the function! ex const x = func(parameter)! **IMPORTANT**
+- Receive input data, transform data, then output data!
+- array.indexOf() will return a number!
+- array.includes() will return true or false!
