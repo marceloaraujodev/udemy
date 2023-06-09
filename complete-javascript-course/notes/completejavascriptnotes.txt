@@ -4,3 +4,9 @@ Functions
 - Receive input data, transform data, then output data!
 - array.indexOf() will return a number!
 - array.includes() will return true or false!
+ 
+ ---LOOPS--
+
+ - Continue - if the condition is not true the code will hit continue and will not execute what is below the continue. It will go back to the next interation
+
+ - Break - The break will immidiattly exit the whole loop when the condition is met. If (x === 'number') break; it wont execute nothing after this.

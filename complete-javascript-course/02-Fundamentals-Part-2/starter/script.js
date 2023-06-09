@@ -269,3 +269,96 @@
 // //Jonas is a age old teacher. and he has a driver's license
 
 // console.log(jonas.summary())
+
+
+
+// // challenge 3 ------------------------
+
+// const bmi = weight /(height * height)
+
+// const mark = {
+//     fullName: 'Mark Miller',
+//     weight: 78,
+//     height: 1.69,
+//     calcBmi: function (){
+//         this.bmi = (this.weight / (this.height * this.height))
+//     }
+// }
+
+// const john = {
+//     fullName: "John Smith",
+//     weight: 92,
+//     height: 1.95,
+//     calcBmi: function (){
+//        this.bmi = this.weight / this.height ** 2; // means squared
+//        return this.bmi
+//     }
+// }
+
+// john.calcBmi()
+// mark.calcBmi()
+// console.log()
+
+
+// if(mark.bmi > john.bmi){
+//     console.log(`${mark.fullName}'s BMI is (${mark.bmi}) is higher than ${john.fullName}'s BMI is (${john.bmi})`)
+// }else{
+//     console.log(`${john.fullName}'s BMI is (${john.bmi}) is higher than ${mark.fullName}'s BMI is (${mark.bmi})`)
+// }
+
+////---------------------------------------------
+
+
+
+
+
+
+
+// // LOOPS CONDITIONS RUN WHILE THEY ARE TRUE ---------------------------------
+
+// for(let rep = 0; rep <= 10; rep++ ){
+//     console.log(`Lifting weights repetion ${rep}`)
+// }
+
+const jonas = [
+    'Jonas', 
+    'Schmedtmann',
+    2023 - 1987, // you can add expressions
+    'teacher',
+    ['Michael', 'Peter', 'Steven'],
+    true
+];
+// const newArr = []
+
+// for (let i = 0; i < jonas.length; i++){
+//     console.log(jonas[i], typeof jonas[i])
+    
+//     newArr.push(typeof jonas[i])
+// }
+// console.log(newArr)
+
+// const years = [1991, 2007, 1969, 2020]
+// const ages = []
+
+// for(let i = 0; i < years.length; i++){
+//     ages.push(2023 - years[i])
+// }
+
+// console.log(ages)
+
+// console.log('STRINGS ONLY')
+// for (let i = 0; i < jonas.length; i++){
+//     if(typeof jonas[i] !== 'string'){
+//         continue;
+//     }
+//     console.log(jonas[i], typeof jonas[i])
+// }
+
+console.log('NUMBERS ONLY')
+for (let i = 0; i < jonas.length; i++){
+    if(typeof jonas[i] === 'number'){
+        break;
+    }
+    console.log(jonas[i], typeof jonas[i])
+}
+
