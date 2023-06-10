@@ -354,11 +354,30 @@ const jonas = [
 //     console.log(jonas[i], typeof jonas[i])
 // }
 
-console.log('NUMBERS ONLY')
-for (let i = 0; i < jonas.length; i++){
-    if(typeof jonas[i] === 'number'){
-        break;
-    }
-    console.log(jonas[i], typeof jonas[i])
+// console.log('NUMBERS ONLY')
+// for (let i = 0; i < jonas.length; i++){
+//     if(typeof jonas[i] === 'number'){
+//         break;
+//     }
+//     console.log(jonas[i], typeof jonas[i])
+// }
+
+// // LOOP IN A LOOP ------------------------------
+
+// for (let exercise = 1; exercise < 4; exercise++){
+//     console.log(`----------- Starting exercise ${exercise}`)
+
+//     for (let rep = 1; rep < 6; rep++){
+//         console.log(`Exercise ${exercise}: Lifting weight repetition ${rep}`)
+//     }
+// }
+
+
+// // WHILE LOOP--------------------------
+let rep = 1
+
+while (rep <= 10){
+    console.log(`WHILE: Lifting weight repetition ${rep}`)
+    rep++
 }
 
