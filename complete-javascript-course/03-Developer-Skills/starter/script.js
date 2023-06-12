@@ -167,4 +167,4 @@ test data 2: [12, 5, -5, 0, 4]
 //     // return string
 // }
 
-// console.log(printForecast2(data1));
+// console.log(printForecast2(data1)); 
