@@ -85,7 +85,7 @@ return reversed value
 
  -- vscode settings --
 
-- For todo Highlights settings. "FIX TODO" This config. is under settings.json on vscode under settings the third icond from right to left the icon reads open settings.json when mouse over.
+- For todo Highlights settings. "BUG TODO" This config. is under settings.json on vscode under settings the third icond from right to left the icon reads open settings.json when mouse over.
 
 - Prettier default format. 
 
@@ -96,4 +96,5 @@ return reversed value
 - USER SNIPPETS ----
 
 - under preferences > configure user snippets 
-- look for the file I created Global snippets.code.snippets
+- create a new file anyname 
+- edit what you need inside

@@ -17,11 +17,30 @@ function amplitude(temp){
             cleanArr.push(temp[i])
         }
     }
-    console.log(cleanArr)
+    // console.log(cleanArr)
     const minTemp = Math.min(...cleanArr)
     const maxTemp = Math.max(...cleanArr)
     return maxTemp - minTemp
 }
 
-amplitude(temperatures)
-console.log('Amplitude is: ', amplitude(temperatures), 'degrees');
+// amplitude(temperatures)
+console.log('Amplitude is:', amplitude(temperatures), 'degrees - End my function');
+
+const calcAmplitude = function (temps) {
+    // compare all the items against the first item to find highest or lowest
+    let max = temps[0]
+    let min = temps[0]
+
+    for (let i = 0; i < temps.length; i++){
+        const currTemp = temps[i]
+        if(typeof currTemp !== 'number') continue;
+
+        if(currTemp > max) max = currTemp;
+        if(currTemp < min) min = currTemp;
+    }
+    console.log('Start teacher answer: ', 'Max and Min temp: ', max, min)
+    return max - min
+}
+
+const amp = calcAmplitude(temperatures)
+console.log('Amplitude', amp)
