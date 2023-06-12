@@ -10,3 +10,13 @@ Functions
  - Continue - if the condition is not true the code will hit continue and will not execute what is below the continue. It will go back to the next interation
 
  - Break - The break will immidiattly exit the whole loop when the condition is met. If (x === 'number') break; it wont execute nothing after this.
+
+
+ -- vscode settings --
+
+- For todo Highlights settings. "FIX TODO" This config. is under settings.json on vscode under settings the third icond from right to left the icon reads open settings.json when mouse over.
+
+- Prettier default format. 
+
+- go to settings type default form and on editor choos Prettier Code formatter
+- go to settings  type formatons and check the box it will save and format the code.
