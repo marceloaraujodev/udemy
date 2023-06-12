@@ -91,3 +91,9 @@ return reversed value
 
 - go to settings type default form and on editor choos Prettier Code formatter
 - go to settings  type formatons and check the box it will save and format the code.
+
+
+- USER SNIPPETS ----
+
+- under preferences > configure user snippets 
+- look for the file I created Global snippets.code.snippets
