@@ -67,6 +67,7 @@ h1 {
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
+
 }
 
 .between {
@@ -109,6 +110,10 @@ h1 {
   background-color: #ccc;
 }
 
+.disabled, .btn:hover {
+  background-color: #7e7c7c;
+}
+
 .message {
   margin-bottom: 8rem;
   height: 3rem;
@@ -116,4 +121,18 @@ h1 {
 
 .label-score {
   margin-bottom: 2rem;
+}
+
+
+/* Remove the number arrows inside the number input field */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
