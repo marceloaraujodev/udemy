@@ -11,13 +11,13 @@ let secretNumber = Math.floor(Math.random() * 20) + 1;
 
 let scoreValue = 20;
 let highScoreValue = 0;
-console.log(secretNumber, 'turn on to work on BUGs') // erase later
+console.log(secretNumber, 'turn on to work on BUGs'); // erase later
 
 checkBtn.addEventListener('click', () => {
   const guess = Number(document.querySelector('.guess').value);
   // No input
   if (guess === 0) {
-    message.textContent = 'Enter number from 1 to 20!';
+    message.textContent = '⛔ Enter a number!';
   } else {
     // numberDisplay.textContent = secretNumber // displays number
 
@@ -30,25 +30,21 @@ checkBtn.addEventListener('click', () => {
       document.querySelector('.number').style.width = '30rem';
       numberDisplay.textContent = secretNumber; // displays number
 
+      // Sets High score
       if (scoreValue > highScoreValue) {
         highScoreValue = scoreValue;
         highScore.textContent = highScoreValue;
       }
-      
+
       // Guess too High
     } else if (guess > secretNumber) {
       message.textContent = '📈 Too High!';
-      guessWrong()
+      guessWrong();
 
       // Guess too Low
     } else if (guess < secretNumber) {
       message.textContent = '📉 Too Low!';
-      guessWrong()
-    }
-
-    function guessWrong(){
-      scoreValue--;
-      scoreDisplay.textContent = scoreValue;
+      guessWrong();
     }
 
     // Game over
@@ -58,9 +54,14 @@ checkBtn.addEventListener('click', () => {
       checkBtn.classList.add('disabled', 'btn:hover');
     }
   }
-
-  // }
 });
+
+// Score goes down / display score
+function guessWrong() {
+  scoreValue--;
+  scoreDisplay.textContent = scoreValue;
+}
+
 // restart
 againBtn.addEventListener('click', () => {
   const guess = document.querySelector('.guess');
@@ -74,5 +75,5 @@ againBtn.addEventListener('click', () => {
   secretNumber = Math.floor(Math.random() * 20) + 1;
   scoreDisplay.textContent = 20;
   scoreValue = 20;
-  console.log(secretNumber, 'turn on to work on BUGs')
+  console.log(secretNumber, 'turn on to work on BUGs');
 });
