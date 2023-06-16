@@ -26,4 +26,245 @@ const restaurant = {
       close: 24,
     },
   },
+
+  order: function(starterIndex, mainIndex){
+    // console.log(this)
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
+
+  },
+
+  orderDelivery: function ({starterIndex = 1, mainIndex = 0, time = '20:00', address}){
+    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`)
+  },
+  orderPasta: function(ing1, ing2, ing3){
+    console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3}`)
+  },
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient)
+    console.log(otherIngredients)
+  }
 };
+
+
+// // TITLE The Spread Operator 
+
+//// Without the spread
+// const arr = [7, 8, 9];
+// const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+// console.log(badNewArr);
+//with the spread
+// const newArr = [1, 2, ...arr];
+// console.log(newArr);
+// console.log(...newArr);
+
+// const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+// console.log(newMenu);
+
+//// Copy Array
+// const mainMenuCopy = [...restaurant.mainMenu]
+// console.log(mainMenuCopy)
+
+
+//// join 2 arrays
+// const menu = [...restaurant.mainMenu, ...restaurant.starterMenu]
+// console.log(menu)
+
+// const str = 'marcelo';
+// const letters = [...str]
+// console.log(letters)
+// console.log(...str)
+
+//// Real world example
+// const ingredients = [prompt('Let\'s make pasta! Ingredient 1?'), prompt('Ingredient 2?'), prompt('Ingredient 2?')];
+// console.log(ingredients)
+
+// restaurant.orderPasta(...ingredients)
+
+
+//// Objects with the Spread Operator
+// const newRestaurant = {...restaurant, founder: 'Guisppe', foundedIn: 1998}
+// console.log(newRestaurant)
+// const restaurantCopy = {...restaurant};
+// restaurantCopy.name = 'Ristorante Roma'
+// console.log(restaurant.name, '/', restaurantCopy.name)
+
+
+//// TITLE - REST - OPERATOR - Destructuring
+
+//// SPREAD, because its on the RIGHT side of the = IMPORTANT
+// const arr = [1,2, ...[3,4]]
+
+//// REST OPERATOR, because its on the left side of the =
+// const [a, b, ...others] = [1, 2, 3, 4, 5];
+// console.log(a, b, others)
+
+//// 8 
+// const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu]
+// console.log(pizza, risotto, otherFood)
+
+
+//// REST with Objects 
+// const {sat, ...weekdays} = restaurant.openingHours;
+// console.log(weekdays)
+
+
+//// TITLE REST in Functions
+
+const add = function (...numbers) {
+  // console.log(numbers)
+  let sum = 0;
+  for(let i = 0; i < numbers.length; i++){
+    sum += numbers[i]
+    console.log(sum)
+  }
+}
+
+// add(2, 3)
+// add(5, 3, 7, 2)
+// add(8, 2, 5, 3, 2, 1, 4)
+
+const x = [23, 5, 7];
+// add(...x)
+
+restaurant.orderPizza('mushroom', 'onions', 'olives', 'spinach')              
+restaurant.orderPizza('mushrrom')
+
+
+
+
+
+
+
+
+
+// //TITLE Destructuring arrays IMPORTANT
+
+// const arr = [2, 3,4]
+
+// //This is not a array this is a destructuring assingment
+// const [x, y, z] = arr //1 
+// console.log(x, y, z)
+// console.log(arr)
+
+// let [main, ,secondary] = restaurant.categories;
+// console.log(main, secondary);
+
+//// Destructuring Switching variables 
+
+// const temp = main
+// main = secondary
+// secondary = main
+// console.log(main, secondary) // what was italian is now vegetarian and what was vegatarian is now italian
+
+
+//// With Destructuring
+
+//// we dont need let or const just to reasign the variables in the destructuring method! IMPORTANT 2
+// [main, secondary] = [secondary, main];
+// console.log(main, secondary);
+
+
+// // Receive 2 return values from a function with destructuring
+// const [starter, mainCourse] = restaurant.order(2, 0)
+// console.log(starter, mainCourse)
+
+
+// // Nested Array Destructuring
+
+// const nested = [2, 4, [5, 6]];
+
+// // const [i, , j] = nested
+// const [i, , [j, k]] = nested
+// // console.log(i, j)
+// console.log(i, j, k)
+
+
+
+// // Default values IMPORTANT 7
+
+// const [p = 1, q = 1, r = 1] = [8, 9];
+// console.log(p, q, r);
+
+
+// // Destructuring Objects
+const {name, openingHours, categories} = restaurant
+// console.log(name, openingHours, categories)
+
+// // If we want the properties names to be different than the variables names IMPORTANT 6
+const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
+// console.log(restaurantName, hours, tags)
+
+// restaurant.orderDelivery({
+//   time: '22:30',
+//   address: 'Via del sole',
+//   mainIndex: 2,
+//   starterIndex: 2
+// });
+
+// restaurant.orderDelivery({
+//   address: '55 el point st',
+//   starterIndex: 1
+// })
+
+
+
+// // Seting default values.  IMPORTANT
+// const { menu = [], starterMenu: starters = []} = restaurant
+// console.log(menu, starters)
+
+
+// // Mutating variables in Objects
+// let a = 111;
+// let b = 999;
+// const obj = {a:23, b: 7, c: 14};
+
+// ({a, b} = obj);
+// console.log(a, b);
+
+
+// // Destructuring Nested Objects Syntax    IMPORTANT
+// console.log(openingHours)
+// const {fri} = openingHours;
+// const {fri: {open, close}} = openingHours;
+// const {fri: {open: o, close: c}} = openingHours;
+// console.log();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // 1 IMPORTANT those constants will be the value of each array item! The array is preserved
+
+// // 2 IMPORTANT we dont need let or const just to reasign the variables in the destructuring method!
+
+// // 3 IMPORTANT Destructuring Arrays we use [] 
+
+// // 4 IMPORTANT Destructuring Objects we use {} 
+
+// // 5 IMPORTANT Destructuring Objects the order is irrelevant
+
+// // 6 IMPORTANT If we want the properties names to be different than the variables names
+
+// // 7 IMPORTANT Default value can be assigned at the distructuring. It will be applied if arguments havent been passed
+
+// // 8 IMPORTANT the REST operator must be the last so it can collect the rest of the data.
+
+
+
+
+
+
+
+
+
+
+

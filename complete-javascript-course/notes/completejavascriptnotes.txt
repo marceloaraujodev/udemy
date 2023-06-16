@@ -79,8 +79,24 @@ return reversed value
 
 
 
+------------------------------SUBJECT: SPREAD OPERATOR - rEST AND DESTRUCTURING ------------------
 
 
+// // 1 IMPORTANT those constants will be the value of each array item! The array is preserved
+
+// // 2 IMPORTANT we dont need let or const just to reasign the variables in the destructuring method!
+
+// // 3 IMPORTANT Destructuring Arrays we use [] 
+
+// // 4 IMPORTANT Destructuring Objects we use {} 
+
+// // 5 IMPORTANT Destructuring Objects the order is irrelevant
+
+// // 6 IMPORTANT If we want the properties names to be different than the variables names
+
+// // 7 IMPORTANT Default value can be assigned at the distructuring. It will be applied if arguments havent been passed
+
+// // 8 IMPORTANT the REST operator must be the last so it can collect the rest of the data.
 
 
 
