@@ -46,7 +46,93 @@ const restaurant = {
 };
 
 
-// // TITLE The Spread Operator 
+////                           TITLE LOGICAL ASSIGNMENT OPERATORS
+
+const rest1 ={
+  name: 'Capri',
+  // numGuests: 20,
+  numGuests: 0,
+}
+
+const rest2 ={
+  name: 'La Piazza',
+  owner: 'Giovani Rossi'
+}
+
+//OR assignment operator
+// rest1.numGuests = rest1.numGuests || 10
+// rest2.numGuests = rest2.numGuests || 10
+// rest1.numGuests  ||= 10 // same as above!
+// rest2.numGuests  ||= 10 // same as above!
+
+// Nullish assignment operator
+// rest1.numGuests  ??= 10 
+// rest2.numGuests  ??= 10 
+
+// // Logical 
+
+// rest2.owner = rest2.owner && '<ANONYMOUS>'
+
+
+// console.log(rest1)
+// console.log(rest2)
+
+
+
+
+
+////                                 TITLE || && Operators
+
+////Use ANY data type, return ANY data type, short-circuiting IMPORTANT 9
+
+// console.log(3 || 'Jonas')
+// console.log('' || 'Jonas')
+// console.log(true || 0 )
+// console.log(undefined || null)
+
+// console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+
+//// Assigining value with the || operand and making use of short-circuiting 
+// restaurant.numGuests = 23;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// console.log(guests1)
+
+// const guest2 = restaurant.numGuests || 10;
+// console.log(guest2)
+
+
+//// The && operator does the oposite of the || operator it short-circuit when the first operand is falsy! 
+//// The && operator is only true if all the operands are true. When the first operatorand is thruthy it will only print the second operand, since it still needs to confirm the second operand so on and so forth.
+//// IMPORTANT 10
+
+// console.log(0 && 'Jonas')
+// console.log(7 && 'Jonas')
+// console.log('Hello' && 23 && null && 'Jonas')
+
+// //Pratical example, check if orderPizza exist
+// if(restaurant.orderPizza){
+//   restaurant.orderPizza('calling with the if', 'mushroom', 'tomatos')
+// }
+
+// // It checks if the orderPizza property exist then if it does executes
+// restaurant.orderPizza && restaurant.orderPizza('olives', 'cheese')
+
+
+////                                    TITLE NULLISH COALESING OPERATOR ??
+//// The nullish operator works with the principle of null values, only null values will short-circuit the operand
+
+// restaurant.numGuests = 0;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// // console.log(guests1)
+
+// // Nullish: null and undefined (NOT 0 or '')
+// const guestCorrect = restaurant.numGuests ?? 10;
+// // console.log(guestCorrect)
+
+
+
+
+// //                               TITLE The Spread Operator 
 
 //// Without the spread
 // const arr = [7, 8, 9];
@@ -89,7 +175,7 @@ const restaurant = {
 // console.log(restaurant.name, '/', restaurantCopy.name)
 
 
-//// TITLE - REST - OPERATOR - Destructuring
+////                                TITLE - REST - OPERATOR - Destructuring
 
 //// SPREAD, because its on the RIGHT side of the = IMPORTANT
 // const arr = [1,2, ...[3,4]]
@@ -108,7 +194,7 @@ const restaurant = {
 // console.log(weekdays)
 
 
-//// TITLE REST in Functions
+////                                      TITLE REST in Functions
 
 const add = function (...numbers) {
   // console.log(numbers)
@@ -126,8 +212,8 @@ const add = function (...numbers) {
 const x = [23, 5, 7];
 // add(...x)
 
-restaurant.orderPizza('mushroom', 'onions', 'olives', 'spinach')              
-restaurant.orderPizza('mushrrom')
+// restaurant.orderPizza('mushroom', 'onions', 'olives', 'spinach')              
+// restaurant.orderPizza('mushrrom')
 
 
 
@@ -137,7 +223,7 @@ restaurant.orderPizza('mushrrom')
 
 
 
-// //TITLE Destructuring arrays IMPORTANT
+// //                                   TITLE Destructuring arrays IMPORTANT
 
 // const arr = [2, 3,4]
 
@@ -258,6 +344,14 @@ const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
 
 // // 8 IMPORTANT the REST operator must be the last so it can collect the rest of the data.
 
+
+// ------------------------------SUBJECT: || && OPERATORS --------------------------------------------
+
+// // 1 IMPORTANT (short-circuit evaluation means if the first value is a thruthy value it will immiattly return the thruthy value and the other operand will not be evaluated)
+
+// // 2 IMPORTANT The && operator is only true if all the operands are true. When the first operatorand is thruthy it will only print the second operand, since it still needs to confirm the second operand so on and so forth.
+
+// // 3 IMPORTANT The nullish operator works with the principle of null values, only 'null' and 'undefined' values will short-circuit the operand
 
 
 

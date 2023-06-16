@@ -79,7 +79,7 @@ return reversed value
 
 
 
-------------------------------SUBJECT: SPREAD OPERATOR - rEST AND DESTRUCTURING ------------------
+------------------------------SUBJECT: SPREAD OPERATOR - REST AND DESTRUCTURING ------------------
 
 
 // // 1 IMPORTANT those constants will be the value of each array item! The array is preserved
@@ -99,9 +99,13 @@ return reversed value
 // // 8 IMPORTANT the REST operator must be the last so it can collect the rest of the data.
 
 
+------------------------------SUBJECT: || && OPERATORS --------------------------------------------
 
+// // 1 IMPORTANT (short-circuit evaluation means if the first value is a thruthy value it will immiattly return the thruthy value and the other operand will not be evaluated)
 
+// // 2 IMPORTANT The && operator is only true if all the operands are true. When the first operatorand is thruthy it will only print the second operand, since it still needs to confirm the second operand so on and so forth.
 
+// // 3 IMPORTANT The nullish operator works with the principle of null values, only 'null' and 'undefined' values will short-circuit the operand
 
 
 
