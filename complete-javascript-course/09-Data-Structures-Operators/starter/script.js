@@ -46,42 +46,109 @@ const restaurant = {
 };
 
 
+////TITLE OPTIONAL CHAINING ?.
+
+// only if the property before the ? exist it will read from there if not undefined will be returned 
+// console.log(restaurant.openingHours.mon?.open)
+// console.log(restaurant.openingHours.fri?.open)
+// console.log(restaurant.openingHours?.mon?.open)
+
+// const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+
+// for (const day of days){
+//   console.log(day)
+//   let open = restaurant.openingHours[day]?.open ?? 'closed'
+//     if(open === 'closed') {
+//       console.log(`On ${day}, we are ${open}`) 
+//     }else{
+//       console.log(`On ${day}, we are open at ${open || '24hrs'}`) 
+//     }
+// }
+
+//// On Methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist')
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist')
+
+//// On Arrays
+const users = [
+{
+  name: 'Jonas',
+  email: 'xx@xx.com'
+}
+]
+//// if exists will return name if not will return string with user array empty
+console.log(users[0]?.name ?? 'User array empty')
+console.log(users[0]?.time ?? 'User array empty')
+
+
+
+// //                            TITLE FOR OF LOOP
+
+// // With the for of loop you can use continue and break!       IMPORTANT  1                
+
+// const menu = [...restaurant.starterMenu, ... restaurant.mainMenu]                    
+
+// // for(const item of menu) console.log(item); // no code block need it when its only one statement to execute
+
+// //                                                            IMPORTANT 2
+// // for(const item of menu.entries()){
+// //   console.log(item)
+// //   // console.log(`${item[0] + 1}: ${item[1]}`)
+// // }
+// ////                                                          IMPORTANT 3
+
+// //// using destructuring at the beginning
+// for(const [i, element] of menu.entries()){
+//   console.log(`${i + 1}: ${element}`)
+// }
+
+
+
+
 ////                           TITLE LOGICAL ASSIGNMENT OPERATORS
 
-const rest1 ={
-  name: 'Capri',
-  // numGuests: 20,
-  numGuests: 0,
-}
+// const rest1 ={
+//   name: 'Capri',
+//   // numGuests: 20,
+//   numGuests: 0,
+// }
 
-const rest2 ={
-  name: 'La Piazza',
-  owner: 'Giovani Rossi'
-}
+// const rest2 ={
+//   name: 'La Piazza',
+//   owner: 'Giovani Rossi'
+// }
 
 //OR assignment operator
+////if numGuests exist make it equal to numGuests if not set it to 10
 // rest1.numGuests = rest1.numGuests || 10
 // rest2.numGuests = rest2.numGuests || 10
 // rest1.numGuests  ||= 10 // same as above!
 // rest2.numGuests  ||= 10 // same as above!
 
-// Nullish assignment operator
-// rest1.numGuests  ??= 10 
+
+//// Nullish assignment operator (null or undefined)
+//// if numGuest is null or undefined it will set it to 10 if not it wont do anything
+// rest1.numGuests  ??= 10  
 // rest2.numGuests  ??= 10 
+
 
 // // Logical 
 
 // rest2.owner = rest2.owner && '<ANONYMOUS>'
 
+//// AND assignment operator IMPORTANT
+//// below it will set owner to anonymous if owner prop exists
+// rest1.owner = rest1.owner && 'ANONYMOUS' // will show owner: undefined
+// rest2.owner = rest2.owner && 'ANONYMOUS'
+// rest1.owner &&= 'ANONYMOUS' // wont show owner: undefined
+// rest2.owner &&= 'ANONYMOUS'
 
-// console.log(rest1)
-// console.log(rest2)
+// console.log('Rest 1:', rest1)
+// console.log('Rest 2:', rest2)
 
 
 
-
-
-////                                 TITLE || && Operators
+////                                 TITLE ||, && Operators
 
 ////Use ANY data type, return ANY data type, short-circuiting IMPORTANT 9
 
@@ -196,20 +263,20 @@ const rest2 ={
 
 ////                                      TITLE REST in Functions
 
-const add = function (...numbers) {
-  // console.log(numbers)
-  let sum = 0;
-  for(let i = 0; i < numbers.length; i++){
-    sum += numbers[i]
-    console.log(sum)
-  }
-}
+// const add = function (...numbers) {
+//   // console.log(numbers)
+//   let sum = 0;
+//   for(let i = 0; i < numbers.length; i++){
+//     sum += numbers[i]
+//     console.log(sum)
+//   }
+// }
 
 // add(2, 3)
 // add(5, 3, 7, 2)
 // add(8, 2, 5, 3, 2, 1, 4)
 
-const x = [23, 5, 7];
+// const x = [23, 5, 7];
 // add(...x)
 
 // restaurant.orderPizza('mushroom', 'onions', 'olives', 'spinach')              
@@ -272,12 +339,12 @@ const x = [23, 5, 7];
 // console.log(p, q, r);
 
 
-// // Destructuring Objects
-const {name, openingHours, categories} = restaurant
+// // TITLE Destructuring Objects
+// const {name, openingHours, categories} = restaurant
 // console.log(name, openingHours, categories)
 
 // // If we want the properties names to be different than the variables names IMPORTANT 6
-const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
+// const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
 // console.log(restaurantName, hours, tags)
 
 // restaurant.orderDelivery({
@@ -315,17 +382,7 @@ const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
 // const {fri: {open: o, close: c}} = openingHours;
 // console.log();
 
-
-
-
-
-
-
-
-
-
-
-
+////----------------------------------------------
 
 
 // // 1 IMPORTANT those constants will be the value of each array item! The array is preserved
@@ -345,7 +402,7 @@ const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
 // // 8 IMPORTANT the REST operator must be the last so it can collect the rest of the data.
 
 
-// ------------------------------SUBJECT: || && OPERATORS --------------------------------------------
+// ------------------------------SUBJECT: ||, &&, ?? OPERATORS --------------------------------------------
 
 // // 1 IMPORTANT (short-circuit evaluation means if the first value is a thruthy value it will immiattly return the thruthy value and the other operand will not be evaluated)
 
@@ -353,12 +410,97 @@ const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
 
 // // 3 IMPORTANT The nullish operator works with the principle of null values, only 'null' and 'undefined' values will short-circuit the operand
 
+// // 4 IMPORTANT The &&= does is assigns a value to a variable if is currently thruthy
 
 
 
+//// ------------------------------SUBJECT: FOR OF LOOP --------------------------------------------
+//// 1 IMPORTANT With the for of loop you can use continue and break!     
 
+//// 2 IMPORTANT To get the index in the for of loop you need to use the .entries() method    
 
+//// 3 IMPORTANT each item in the for of loop is returned as an array. giving the possibility to destructure the item at the very beginning     
 
+///////////////////////////////////////
+// Coding Challenge #1
 
+/* 
+We're building a football betting app (soccer for my American friends 😅)!
 
+Suppose we get data from a web service about a certain game (below). In this challenge we're gonna work with the data. So here are your tasks:
 
+1. Create one player array for each team (variables 'players1' and 'players2')
+2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
+3. Create an array 'allPlayers' containing all players of both teams (22 players)
+4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
+5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
+6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
+
+TEST DATA FOR 6: Use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Then, call the function again with players from game.scored
+
+GOOD LUCK 😀
+*/
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+const [players1, players2] = game.players
+const [gk, ...fieldPlayers] = players1;
+const [...allPlayers] = [...players1, ...players2] 
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic']
+const {odds: {team1, x: draw, team2} } = game
+
+function printGoals(...players){
+  players.forEach((e)=>{
+    console.log(e)
+  })
+  console.log(`${players.length} goals were scored`)
+  // team1 < team2 ? console.log('Team 1 is more likely to win') : console.log('Team 2 is more likely to win')
+  team1 < team2 && console.log('Team 1 is more likely to win')
+  team1 > team2 && console.log('Team 2 is more likely to win')
+}
+
+// printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich')
+// printGoals(...game.scored)
+
+// 6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
+// 7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.

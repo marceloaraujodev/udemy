@@ -107,6 +107,12 @@ return reversed value
 
 // // 3 IMPORTANT The nullish operator works with the principle of null values, only 'null' and 'undefined' values will short-circuit the operand
 
+// // 4 IMPORTANT The &&= does is assigns a value to a variable if is currently thruthy
+
+------------------------------SUBJECT: || OBJECTS --------------------------------------------
+
+// //  IMPORTANT if you want to use variables name as a object properties name you have to use with brackets object[variableName] 
+
 
 
 
