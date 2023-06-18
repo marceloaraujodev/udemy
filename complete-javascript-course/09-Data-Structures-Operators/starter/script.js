@@ -46,7 +46,84 @@ const restaurant = {
 };
 
 
-////TITLE OPTIONAL CHAINING ?.
+////            TITLE MAPS ------------
+
+
+
+
+
+
+
+
+////            TITLE SET ----------------------
+
+// const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza']);
+// console.log(ordersSet)
+// console.log(ordersSet.size)
+// console.log(ordersSet.has('Pizza'))
+// console.log(ordersSet.has('Bread'))
+// ordersSet.add('Garlic Bread')
+// ordersSet.add('Garlic Bread')
+// ordersSet.delete('Risotto')
+// // ordersSet.clear()
+// console.log(ordersSet)
+// // console.log(ordersSet[0]) // it doenst work. You cant get items of a set!
+
+// for(const order of ordersSet)console.log(order)
+
+// ////Real world example
+// const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// // const staffUnique = new Set(staff)
+// const staffUnique = [...new Set(staff)] // creating an array from a set! IMPORTANT
+// console.log(staffUnique)
+
+// console.log(new Set('marcelo').size)
+
+
+
+
+
+
+////            TITLE LOOPING OBJECTS: OBJECT KEYS, VALUES AND ENTRIES
+
+
+//// Property NAMES:
+//   const properties = Object.keys(restaurant.openingHours);
+//   console.log(properties)
+
+//   let openStr = `We are open on ${properties.length} days:`
+
+//   for (const day of Object.keys(restaurant.openingHours)){
+//     openStr += ` ${day}, `
+//   }
+// console.log(openStr)
+
+//// Property VALUES: 
+// const values = Object.values(restaurant.openingHours)
+// console.log(values)
+
+
+//// LOOP Entire Object with .entries()
+
+// const entries = Object.entries(restaurant.openingHours)
+
+// console.log('Entries', entries)
+
+//// looking at the return entries we know the sccond item in the array is a object so destructure it immidiately
+//// if the object only had key and value you would do just [key, value] since the object in the example has 2 properties inside you do it as it is below.
+// for(const [day, {open, close}] of entries){
+//   console.log(`On ${day} we open at ${open} and close at ${close}`)
+// }
+
+
+
+
+
+
+
+
+
+////                        TITLE OPTIONAL CHAINING ?.
 
 // only if the property before the ? exist it will read from there if not undefined will be returned 
 // console.log(restaurant.openingHours.mon?.open)
@@ -66,19 +143,25 @@ const restaurant = {
 // }
 
 //// On Methods
-console.log(restaurant.order?.(0, 1) ?? 'Method does not exist')
-console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist')
+// console.log(restaurant.order?.(0, 1) ?? 'Method does not exist')
+// console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist')
 
-//// On Arrays
-const users = [
-{
-  name: 'Jonas',
-  email: 'xx@xx.com'
-}
-]
-//// if exists will return name if not will return string with user array empty
-console.log(users[0]?.name ?? 'User array empty')
-console.log(users[0]?.time ?? 'User array empty')
+// //// On Arrays
+// const users = [
+// {
+//   name: 'Jonas',
+//   email: 'xx@xx.com'
+// }
+// ]
+// //// if exists will return name if not will return string with user array empty
+// console.log(users[0]?.name ?? 'User array empty')
+// // console.log(users[0]?.time ?? 'User array empty')
+
+// if (users.length > 0) console.log(users[0].name)
+// else console.log('User array empty')
+
+
+
 
 
 
@@ -422,22 +505,25 @@ console.log(users[0]?.time ?? 'User array empty')
 //// 3 IMPORTANT each item in the for of loop is returned as an array. giving the possibility to destructure the item at the very beginning     
 
 ///////////////////////////////////////
-// Coding Challenge #1
+// Coding Challenge #2
 
 /* 
-We're building a football betting app (soccer for my American friends 😅)!
+Let's continue with our football betting app!
 
-Suppose we get data from a web service about a certain game (below). In this challenge we're gonna work with the data. So here are your tasks:
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
 
-1. Create one player array for each team (variables 'players1' and 'players2')
-2. The first player in any player array is the goalkeeper and the others are field players. For Bayern Munich (team 1) create one variable ('gk') with the goalkeeper's name, and one array ('fieldPlayers') with all the remaining 10 field players
-3. Create an array 'allPlayers' containing all players of both teams (22 players)
-4. During the game, Bayern Munich (team 1) used 3 substitute players. So create a new array ('players1Final') containing all the original team1 players plus 'Thiago', 'Coutinho' and 'Perisic'
-5. Based on the game.odds object, create one variable for each odd (called 'team1', 'draw' and 'team2')
-6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
-7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
-
-TEST DATA FOR 6: Use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Then, call the function again with players from game.scored
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+      }
 
 GOOD LUCK 😀
 */
@@ -499,8 +585,69 @@ function printGoals(...players){
   team1 > team2 && console.log('Team 2 is more likely to win')
 }
 
+
+
+
+// console.log(game.odds)
+
+// for(const [i, player] of game.scored.entries()){
+//   console.log(`Gol ${i + 1}: ${player}`)
+// }
+
+
+// const scorers = {};
+// console.log(game.scored)
+// for (const player of game.scored){
+//   if(scorers[player]){
+//     scorers[player] += 1;
+//   }else{
+//     scorers[player] = 1
+//   }
+// }
+// console.log(scorers)
+
+// const values = Object.values(game.odds)
+// // console.log(v)
+// let total = 0;
+// let average;
+// for(const value of values){
+//   total += value
+//   average = total / values.length
+// }
+// console.log('The average odd for a win is: ', average)
+
+// const odds = Object.entries(game.odds)
+// console.log(odds)
+// for (const [team, odd] of odds){
+//   const teamStr = team === 'x' ? 'draw' : `Victory ${game[team]}`
+//   console.log(`Odd of ${teamStr} ${odd}`)
+// }
+
+
+// const scorers = {
+//   name: 'goals'
+// }
+
+// console.log(game.scores)
+// BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+//       {
+//         Gnarby: 1,
+//         Hummels: 1,
+//         Lewandowski: 2
+//       }
+
+
+
+
+
+
+
+
+
+
+
+
+
 // printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich')
 // printGoals(...game.scored)
 
-// 6. Write a function ('printGoals') that receives an arbitrary number of player names (NOT an array) and prints each of them to the console, along with the number of goals that were scored in total (number of player names passed in)
-// 7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.

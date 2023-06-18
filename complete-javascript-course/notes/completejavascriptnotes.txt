@@ -111,7 +111,7 @@ return reversed value
 
 ------------------------------SUBJECT: || OBJECTS --------------------------------------------
 
-// //  IMPORTANT if you want to use variables name as a object properties name you have to use with brackets object[variableName] 
+// //  IMPORTANT Accessing Objects with the BRACKET NOTATION. To use a variable name as a object property, you have to use with brackets IMPORTANT object[variableName] IMPORTANT
 
 
 
