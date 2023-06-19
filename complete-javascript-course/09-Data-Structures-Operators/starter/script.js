@@ -130,29 +130,66 @@ const restaurant = {
 
 
 //// Replacing 
-const priceGB = '€288,97'
-const priceUs = priceGB.replace('€', '$').replace(',', '.')
-console.log(priceUs)
+// const priceGB = '€288,97'
+// const priceUs = priceGB.replace('€', '$').replace(',', '.')
+// console.log(priceUs)
 
-const announcement = 'All passagenr come to boarding door 23. Boarding at door 23!'
-// console.log(announcement.replace('door', 'gate').replace('door', 'gate'))
-console.log(announcement.replaceAll(/door/g, 'gate')) //regex
-// console.log(announcement.replaceAll('door', 'gate'))
+// const announcement = 'All passagenr come to boarding door 23. Boarding at door 23!'
+// // console.log(announcement.replace('door', 'gate').replace('door', 'gate'))
+// console.log(announcement.replaceAll(/door/g, 'gate')) //regex
+// // console.log(announcement.replaceAll('door', 'gate'))
 
 
 //// Booleans
-const plane = 'A320neo';
-console.log(plane.includes('A320'))
-console.log(plane.includes('boeing'))
-console.log(plane.startsWith('Air'))
+// const plane = 'Airbus A320neo';
+// console.log(plane.includes('A320'))
+// console.log(plane.includes('boeing'))
+// console.log(plane.startsWith('Air'))
+
+// if(plane.startsWith('Airbus') && plane.endsWith('neo')){
+//   console.log('Part of the NEW Airbus family')
+// }
 
 
+//// Practice exercise
+// const checkBaggage = function(items){
+//   const baggage = items.toLowerCase();
+//   if(baggage.includes('knife') || baggage.includes('gun')){
+//     console.log('Those items are not allowed')
+//   }else{
+//     console.log('Welcome aboard!')
+//   }
+// }
+// checkBaggage('I have a laptop, some food and a pocket knife')
+// checkBaggage('Socks and a camera')
+// checkBaggage('Got some snacks and a gun for protection')
 
 
+//// The slipt 
+console.log('a+very+nice+string'.split('+'))
+console.log('Marcelo Araujo'.split(' '))
 
+const [firstName, lastName] = 'Marcelo Araujo'.split(' ');
 
+// Printing Passegers name
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ')
+console.log(newName)
 
-
+const capitalizeName = function(name){
+ const names = name.split(' ') // creates an array with each item after ' '
+ const namesUpper = []
+//  console.log(names)
+// isolates the first letter of each name on the array. Makes it uppercase 
+ for(const firstL of names){ // loops through each name firstL[0] = first letter then removes it and pushes to namesUpper
+  namesUpper.push(firstL[0].toUpperCase() + firstL.slice(1)) 
+ }
+ console.log('names upper', namesUpper)
+ console.log('Final result', namesUpper.join(' '))
+}
+capitalizeName('marcelo araujo') // this is what is passed
+// console.log('marcelo'.slice(1))
+// console.log(capitalizeName('jessica ann smith davis'))
+// console.log(capitalizeName('marcelo araujo'))
 
 
 
