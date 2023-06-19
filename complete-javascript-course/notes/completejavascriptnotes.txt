@@ -118,6 +118,60 @@ return reversed value
 
 
 
+---------------------------------------------------------------------
+
+//// IMPORTANT TITLE        WICH DATA STRUCTURE TO USE?
+
+//// Sources of Data
+//// 1. From the program itself: Data directley in the source code (e.g. status msgs)
+//// 2. From the UI: Data from the user or data wriatten in the DOM (e.g tasks in todo app)
+//// 3. From external sources: Data fetched for example from web API (e.g recipe objects)
+
+//// For simple list use: Arrays or Sets
+//// For Key/Value Pairs: Objects or Maps
+
+//// With key/value pairs we have a way of describing the values
+//// With Arrays we just have the values without descriptions
+
+
+
+////              TITLE     ARRAYS VS SETS            IMPORTANT
+
+//// TITLE Arrays used when:
+
+//// When you need ordered list of values (might contains duplicates)
+//// When you need to Manipulate data
+
+
+//// TITLE Sets used when:
+
+//// When you need to work with unique values
+//// When high performance is really important
+//// To remove duplicates
+
+
+////                TITLE   OBJECT VS MAPS            IMPORTANT
+
+////  TITLE Objects used when:
+
+//// More traditional key/value
+//// Easier to write and access values with . and []
+//// When you need to include functions (methods)
+//// When working with JSON (can convert to map)
+
+
+////  TITLE Maps used when:
+
+//// Better performance
+//// Keys can have any data type
+//// Easy to iterate
+//// Easy to compute size
+//// When you simply need to map key to values
+//// When you need keys that are not strings
+
+-------------------------------------------------------------------------------
+
+
 
 
 

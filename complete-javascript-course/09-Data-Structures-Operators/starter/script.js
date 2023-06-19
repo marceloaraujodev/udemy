@@ -46,12 +46,227 @@ const restaurant = {
 };
 
 
+
+////           TITLE STRINGS------------------------------------
+
+// const airline = 'TAP Air Portugal'
+// const plane = 'A320'
+
+// console.log(plane[0])
+// console.log(plane[1])
+// console.log(plane[2])
+// console.log('B737'[0])
+// console.log(airline.length)
+// console.log('B737'.length)
+
+
+// //// String Methods    - They will always return a new modified string
+
+// console.log(airline.indexOf('r')) // return first appearence
+// console.log(airline.lastIndexOf('r')) // return the last appearence
+// console.log(airline.indexOf('portugal')) // case sensitive, when dont exist returns -1
+
+// //// Extracting part of a string
+
+// console.log(airline.slice(4)) // counts from 0 when reach 4 will remove it. It doesnt change the original
+// console.log(airline.slice(4, 7)) 
+// console.log(airline.slice(0, airline.indexOf(' ')))
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1)) // since count is from 0 will add the space + 1 eliminates!
+// console.log(airline.slice(-2)) // with negative values will start from the end
+// console.log(airline.slice(1, -1)) 
+
+// const checkMiddleSeat = function(seat){
+//   // B and E are middle seats small planes
+//   const s = seat.slice(-1)
+  
+//   if(s === 'B' || s === 'C'){
+//     console.log('You have a middle seat')
+//   }
+//   else if(s === 'A' || s ==='J'){
+//     console.log('You have a window')
+//   }else{
+//     console.log('You have a Aisle')
+//   }
+// }
+
+// checkMiddleSeat('3A')
+// checkMiddleSeat('3C')
+// checkMiddleSeat('3F')
+
+
+//// Fix capitalization in a Passegers name
+
+// const passenger = 'mArcelo' 
+
+// function correctName(passeger){
+//   const passegerToLowerCase = passenger.toLocaleLowerCase()
+//   const passegerCorrect = passenger[0].toLocaleUpperCase() + passegerToLowerCase.slice(1)
+//   return passegerCorrect
+// }
+
+// console.log(correctName(passenger))
+
+
+//// Comparing emails
+
+// const email = 'hello@marcelo.com'
+// const loginEmail = '  Hello@marcelo.coM \n'
+// const lowerEmail = loginEmail.toLocaleLowerCase();
+// const trimmedEmail = lowerEmail.trim()
+
+// all in  one line
+// const normalizedEmail = loginEmail.toLocaleLowerCase().trim()
+// console.log(normalizedEmail)
+// console.log(email === normalizedEmail)
+
+// function checkEmails(email){
+//   // checks email in the data base agains loginEmail entered
+//   const loginEmail = '  Hello@marcelo.coM \n'
+//   const fixedEmail = loginEmail.toLocaleLowerCase().trim()
+//   return email === fixedEmail ? true : false
+// }
+
+// console.log(checkEmails(email))
+
+
+//// Replacing 
+const priceGB = '€288,97'
+const priceUs = priceGB.replace('€', '$').replace(',', '.')
+console.log(priceUs)
+
+const announcement = 'All passagenr come to boarding door 23. Boarding at door 23!'
+// console.log(announcement.replace('door', 'gate').replace('door', 'gate'))
+console.log(announcement.replaceAll(/door/g, 'gate')) //regex
+// console.log(announcement.replaceAll('door', 'gate'))
+
+
+//// Booleans
+const plane = 'A320neo';
+console.log(plane.includes('A320'))
+console.log(plane.includes('boeing'))
+console.log(plane.startsWith('Air'))
+
+
+
+
+
+
+
+
+
+
+
+////---------------------------------------------------------------------------
+
 ////            TITLE MAPS ------------
 
+/// Setting a new Map
+
+// const rest = new Map();
+// rest.set('name', 'Classico Italiano');
+// rest.set(1, "Firenze, Italy")
+// rest.set(2, 'Lisbon, Portugal')
+// console.log(rest)
+
+//// Adding new elements to a map
+
+// rest.set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+// .set('open', 11)
+// .set('close', 23)
+// .set(true, 'We are open :D')
+// .set(false, 'We are Closed :(')
 
 
+//// Getting elements from a Map. 
+
+//// IMPORTANT The data type of the key matters. Below 👇, true has to be the value, not a string!
+// console.log(rest.get('name'))
+// console.log(rest.get(true))
+// console.log(rest.get(1))
 
 
+// //// Using boolean on maps ex
+
+// const time = 21
+// console.log(rest.get(time > rest.get('open') && time < rest.get('close')))
+
+
+// //// Methods 
+
+// console.log(rest.has('categories'))
+// rest.delete(2)
+// // rest.clear()
+// console.log(rest)
+// // console.log(rest.size)
+
+
+//// Using Arrays and Objects as Map keys
+//// rest.set([1,2], 'Test') This would create the Array as a Map key. However read below 👇
+
+                                ////IMPORTANT
+//// Getting the data from that Array 
+//// * First you would have to create a variable with the array. This is due to the way js processes the heap and the stack, otherwise [1, 2] and [1,2], in the memory would point to two different memory addresses in the js engine. The line below shows 
+
+// console.log([1,2] === [1,2] ? 'yes' : 'no they are not the same since they are different addresses on memory')
+
+// const arr = [1,2] // *
+// rest.set(arr, 'Test')
+// rest.set(document.querySelector('h1'), 'Heading')
+// console.log(rest)
+
+// // console.log(rest.get([1,2])) // To consolelog this wouldnt work. You would have to create a const above *
+// //// and then consolelog like below
+// console.log(rest.get(arr))
+
+
+//// POPULATING A NEW MAP EASIER FOR LOTS OF DATA AT ONCE THAN .SET() METHOD
+
+// const question = new Map([
+//   ['Question', 'Whats the best Programing Leanguage?'],
+//   [1, 'C'],
+//   [2, 'Java'],
+//   [3, 'Javascript'],
+//   ['correct', 3],
+//   [true, 'Correct 🎉'],
+//   [false, 'Try again']
+// ])
+// console.log(question)
+// console.log(question.get('correct'))
+
+
+//// Convert Object to Map
+
+// console.log(Object.entries(restaurant.openingHours))
+// const hoursMap = new Map(Object.entries(restaurant.openingHours))
+// console.log(hoursMap)
+
+
+//// ITERATION ON MAP
+
+//// Quiz App example
+// console.log('--', question.get('Question'))
+// for(const [key, value] of question){
+//   if(typeof key === 'number'){
+//     console.log(`Answer ${key}: ${value}`)
+//   }
+// }
+
+// const answer = Number(prompt('Your Answer'))
+// console.log(answer)
+
+// answer === question.get('correct') ? console.log(question.get(true)) : console.log(question.get(false))
+// or
+// if(answer === question.get('correct')){
+//   console.log(question.get(true))
+// }else{
+//  console.log(question.get(false))
+// }
+
+//// Convert Map to Array
+// console.log([...question])
+// console.log([...question.entries()]) // spread into the array
+// console.log(question.keys())
+// console.log(question.values())
 
 
 
@@ -114,6 +329,63 @@ const restaurant = {
 // for(const [day, {open, close}] of entries){
 //   console.log(`On ${day} we open at ${open} and close at ${close}`)
 // }
+
+
+
+//// IMPORTANT TITLE        WICH DATA STRUCTURE TO USE?
+
+//// Sources of Data
+//// 1. From the program itself: Data directley in the source code (e.g. status msgs)
+//// 2. From the UI: Data from the user or data wriatten in the DOM (e.g tasks in todo app)
+//// 3. From external sources: Data fetched for example from web API (e.g recipe objects)
+
+//// For simple list use: Arrays or Sets
+//// For Key/Value Pairs: Objects or Maps
+
+//// With key/value pairs we have a way of describing the values
+//// With Arrays we just have the values without descriptions
+
+
+////              TITLE     ARRAYS VS SETS            IMPORTANT
+
+//// TITLE Arrays used when:
+
+//// When you need ordered list of values (might contains duplicates)
+//// When you need to Manipulate data
+
+
+//// TITLE Sets used when:
+
+//// When you need to work with unique values
+//// When high performance is really important
+//// To remove duplicates
+
+
+////                TITLE   OBJECT VS MAPS            IMPORTANT
+
+////  TITLE Objects used when:
+
+//// More traditional key/value
+//// Easier to write and access values with . and []
+//// When you need to include functions (methods)
+//// When working with JSON (can convert to map)
+
+
+////  TITLE Maps used when:
+
+//// Better performance
+//// Keys can have any data type
+//// Easy to iterate
+//// Easy to compute size
+//// When you simply need to map key to values
+//// When you need keys that are not strings
+
+
+//// ------------------------------------------------------------------------------------
+
+
+
+
 
 
 
@@ -569,6 +841,7 @@ const game = {
   },
 };
 
+
 const [players1, players2] = game.players
 const [gk, ...fieldPlayers] = players1;
 const [...allPlayers] = [...players1, ...players2] 
@@ -586,7 +859,8 @@ function printGoals(...players){
 }
 
 
-
+// printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich')
+// printGoals(...game.scored)
 
 // console.log(game.odds)
 
@@ -641,13 +915,43 @@ function printGoals(...players){
 
 
 
+// Coding Challenge #3
+
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+
+GOOD LUCK 😀
+*/
+
+// const gameEvents = new Map([
+//   [17, '⚽️ GOAL'],
+//   [36, '🔁 Substitution'],
+//   [47, '⚽️ GOAL'],
+//   [61, '🔁 Substitution'],
+//   [64, '🔶 Yellow card'],
+//   [69, '🔴 Red card'],
+//   [70, '🔁 Substitution'],
+//   [72, '🔁 Substitution'],
+//   [76, '⚽️ GOAL'],
+//   [80, '⚽️ GOAL'],
+//   [92, '🔶 Yellow card'],
+// ]);
 
 
+// const events = [...new Set(gameEvents.values())]
+// console.log(events)
 
+// gameEvents.delete(64)
+// console.log(gameEvents)
 
+// const time = [...gameEvents.keys()].pop() // turn gameEvents keys into an array to access items
+// // console.log(time.pop()) // gets the last item from array
+// console.log(`A event happened, on average, every: ${time / gameEvents.size} minutes`)
 
-
-
-// printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich')
-// printGoals(...game.scored)
+// for(const [timeOfEvent, event] of gameEvents){
+//   let firstHalf = 45;
+//   timeOfEvent <= firstHalf ? console.log(`[firstHalf] ${timeOfEvent}: ${event}`) :  console.log(`[secondHalf] ${timeOfEvent}: ${event}`)
+// }
 
