@@ -4,6 +4,13 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+console.log(flights.split('+'))
+
 // Data needed for first part of the section
 const restaurant = {
   name: 'Classico Italiano',
@@ -27,25 +34,29 @@ const restaurant = {
     },
   },
 
-  order: function(starterIndex, mainIndex){
+  order: function (starterIndex, mainIndex) {
     // console.log(this)
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
-
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivery: function ({starterIndex = 1, mainIndex = 0, time = '20:00', address}){
-    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`)
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
   },
-  orderPasta: function(ing1, ing2, ing3){
-    console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3}`)
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3}`);
   },
   orderPizza: function (mainIngredient, ...otherIngredients) {
-    console.log(mainIngredient)
-    console.log(otherIngredients)
-  }
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
 };
-
-
 
 ////           TITLE STRINGS------------------------------------
 
@@ -59,7 +70,6 @@ const restaurant = {
 // console.log(airline.length)
 // console.log('B737'.length)
 
-
 // //// String Methods    - They will always return a new modified string
 
 // console.log(airline.indexOf('r')) // return first appearence
@@ -69,16 +79,16 @@ const restaurant = {
 // //// Extracting part of a string
 
 // console.log(airline.slice(4)) // counts from 0 when reach 4 will remove it. It doesnt change the original
-// console.log(airline.slice(4, 7)) 
+// console.log(airline.slice(4, 7))
 // console.log(airline.slice(0, airline.indexOf(' ')))
 // console.log(airline.slice(airline.lastIndexOf(' ') + 1)) // since count is from 0 will add the space + 1 eliminates!
 // console.log(airline.slice(-2)) // with negative values will start from the end
-// console.log(airline.slice(1, -1)) 
+// console.log(airline.slice(1, -1))
 
 // const checkMiddleSeat = function(seat){
 //   // B and E are middle seats small planes
 //   const s = seat.slice(-1)
-  
+
 //   if(s === 'B' || s === 'C'){
 //     console.log('You have a middle seat')
 //   }
@@ -93,10 +103,9 @@ const restaurant = {
 // checkMiddleSeat('3C')
 // checkMiddleSeat('3F')
 
-
 //// Fix capitalization in a Passegers name
 
-// const passenger = 'mArcelo' 
+// const passenger = 'mArcelo'
 
 // function correctName(passeger){
 //   const passegerToLowerCase = passenger.toLocaleLowerCase()
@@ -105,7 +114,6 @@ const restaurant = {
 // }
 
 // console.log(correctName(passenger))
-
 
 //// Comparing emails
 
@@ -128,8 +136,7 @@ const restaurant = {
 
 // console.log(checkEmails(email))
 
-
-//// Replacing 
+//// Replacing
 // const priceGB = '€288,97'
 // const priceUs = priceGB.replace('€', '$').replace(',', '.')
 // console.log(priceUs)
@@ -138,7 +145,6 @@ const restaurant = {
 // // console.log(announcement.replace('door', 'gate').replace('door', 'gate'))
 // console.log(announcement.replaceAll(/door/g, 'gate')) //regex
 // // console.log(announcement.replaceAll('door', 'gate'))
-
 
 //// Booleans
 // const plane = 'Airbus A320neo';
@@ -149,7 +155,6 @@ const restaurant = {
 // if(plane.startsWith('Airbus') && plane.endsWith('neo')){
 //   console.log('Part of the NEW Airbus family')
 // }
-
 
 //// Practice exercise
 // const checkBaggage = function(items){
@@ -164,39 +169,106 @@ const restaurant = {
 // checkBaggage('Socks and a camera')
 // checkBaggage('Got some snacks and a gun for protection')
 
+//// The slipt
 
-//// The slipt 
-console.log('a+very+nice+string'.split('+'))
-console.log('Marcelo Araujo'.split(' '))
+// console.log('a+very+nice+string'.split('+'))
+// console.log('Marcelo Araujo'.split(' '))
 
-const [firstName, lastName] = 'Marcelo Araujo'.split(' ');
+// const [firstName, lastName] = 'Marcelo Araujo'.split(' ');
 
-// Printing Passegers name
-const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ')
-console.log(newName)
+// // Printing Passegers name
 
-const capitalizeName = function(name){
- const names = name.split(' ') // creates an array with each item after ' '
- const namesUpper = []
-//  console.log(names)
-// isolates the first letter of each name on the array. Makes it uppercase 
- for(const firstL of names){ // loops through each name firstL[0] = first letter then removes it and pushes to namesUpper
-  namesUpper.push(firstL[0].toUpperCase() + firstL.slice(1)) 
- }
- console.log('names upper', namesUpper)
- console.log('Final result', namesUpper.join(' '))
-}
-capitalizeName('marcelo araujo') // this is what is passed
-// console.log('marcelo'.slice(1))
-// console.log(capitalizeName('jessica ann smith davis'))
-// console.log(capitalizeName('marcelo araujo'))
+// const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ')
+// // console.log(newName)
 
+// const capitalizeName = function(name){
+//  const names = name.split(' ') // creates an array with each item after ' '
+//  const namesUpper = []
+
+// // isolates the first letter of each name on the array. Makes it uppercase
+//  for(const firstL of names){ // loops through each name firstL[0] = first letter then removes it and pushes to namesUpper
+//   namesUpper.push(firstL[0].toUpperCase() + firstL.slice(1))
+//   // namesUpper.push(firstL.replace(firstL[0], firstL[0].toUpperCase())) // this does the same thing
+//  }
+//  console.log(namesUpper.join(' '))
+// }
+// // capitalizeName('marcelo araujo') // this is what is passed
+// // console.log('marcelo'.slice(1))
+// capitalizeName('jessica ann smith davis')
+// capitalizeName('marcelo araujo')
+
+//// Padding a String.
+
+// const message = 'Go to gate 23!'
+// console.log(message.padStart(25, '+'))
+// console.log(message.padStart(25, '+').padEnd(35, '+'))
+// console.log('joe'.padStart(25, '+'))
+
+//// Real world example of Padding  --- Credit Card Last 4 numbers showing
+
+// const maskCreditCard = function (number){
+//   const str = String(number) // number + '' would also work
+//   const last4 = str.slice(-4)
+//   // const last4Showing = last4.padStart(16, '*') // instead of this just return
+//   // console.log(last4Showing)
+//   return last4.padStart(str.length, '*')
+// }
+
+// console.log(maskCreditCard(1205554424569087))
+// console.log(maskCreditCard(78904534))
+
+//// Repeat
+
+// const message2 = 'BAd Weather... All Departures Delayed...'
+// console.log(message2.repeat(5))
+
+// const planesInLine = function (n){
+//   console.log(`There are ${n} planes inline ${'✈'.repeat(n)}`)
+// }
+
+// planesInLine(5)
+// planesInLine(15)
+// planesInLine(25)
+
+
+
+
+
+
+
+
+
+
+// Coding Challenge #4
+
+// document.body.append(document.createElement('textarea'));
+// document.body.append(document.createElement('button'));
+// const text = document.querySelector('textarea');
+// const btn = document.querySelector('button');
+// btn.textContent = 'click';
+// // console.log(text)
+
+// btn.addEventListener('click', () => {
+//   convert(text.value);
+// });
+
+// function convert(word) {
+//   const rows = word.split('\n')
+  
+// for(const [i, row] of rows.entries()){
+//     const [first, second] = row.toLowerCase().trim().split('_')
+//     const output = `${first}${second.replace(second[0],
+//     second[0].toUpperCase()
+    
+//     )}`;
+//     console.log(`${output.padEnd(20,)}${'✅'.repeat(i + 1)}`)
+// }
+// }
 
 
 ////---------------------------------------------------------------------------
 
 ////            TITLE MAPS ------------
-
 /// Setting a new Map
 
 // const rest = new Map();
@@ -213,22 +285,19 @@ capitalizeName('marcelo araujo') // this is what is passed
 // .set(true, 'We are open :D')
 // .set(false, 'We are Closed :(')
 
-
-//// Getting elements from a Map. 
+//// Getting elements from a Map.
 
 //// IMPORTANT The data type of the key matters. Below 👇, true has to be the value, not a string!
 // console.log(rest.get('name'))
 // console.log(rest.get(true))
 // console.log(rest.get(1))
 
-
 // //// Using boolean on maps ex
 
 // const time = 21
 // console.log(rest.get(time > rest.get('open') && time < rest.get('close')))
 
-
-// //// Methods 
+// //// Methods
 
 // console.log(rest.has('categories'))
 // rest.delete(2)
@@ -236,13 +305,12 @@ capitalizeName('marcelo araujo') // this is what is passed
 // console.log(rest)
 // // console.log(rest.size)
 
-
 //// Using Arrays and Objects as Map keys
 //// rest.set([1,2], 'Test') This would create the Array as a Map key. However read below 👇
 
-                                ////IMPORTANT
-//// Getting the data from that Array 
-//// * First you would have to create a variable with the array. This is due to the way js processes the heap and the stack, otherwise [1, 2] and [1,2], in the memory would point to two different memory addresses in the js engine. The line below shows 
+////IMPORTANT
+//// Getting the data from that Array
+//// * First you would have to create a variable with the array. This is due to the way js processes the heap and the stack, otherwise [1, 2] and [1,2], in the memory would point to two different memory addresses in the js engine. The line below shows
 
 // console.log([1,2] === [1,2] ? 'yes' : 'no they are not the same since they are different addresses on memory')
 
@@ -254,7 +322,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // // console.log(rest.get([1,2])) // To consolelog this wouldnt work. You would have to create a const above *
 // //// and then consolelog like below
 // console.log(rest.get(arr))
-
 
 //// POPULATING A NEW MAP EASIER FOR LOTS OF DATA AT ONCE THAN .SET() METHOD
 
@@ -270,13 +337,11 @@ capitalizeName('marcelo araujo') // this is what is passed
 // console.log(question)
 // console.log(question.get('correct'))
 
-
 //// Convert Object to Map
 
 // console.log(Object.entries(restaurant.openingHours))
 // const hoursMap = new Map(Object.entries(restaurant.openingHours))
 // console.log(hoursMap)
-
 
 //// ITERATION ON MAP
 
@@ -305,8 +370,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // console.log(question.keys())
 // console.log(question.values())
 
-
-
 ////            TITLE SET ----------------------
 
 // const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza']);
@@ -331,13 +394,7 @@ capitalizeName('marcelo araujo') // this is what is passed
 
 // console.log(new Set('marcelo').size)
 
-
-
-
-
-
 ////            TITLE LOOPING OBJECTS: OBJECT KEYS, VALUES AND ENTRIES
-
 
 //// Property NAMES:
 //   const properties = Object.keys(restaurant.openingHours);
@@ -350,10 +407,9 @@ capitalizeName('marcelo araujo') // this is what is passed
 //   }
 // console.log(openStr)
 
-//// Property VALUES: 
+//// Property VALUES:
 // const values = Object.values(restaurant.openingHours)
 // console.log(values)
-
 
 //// LOOP Entire Object with .entries()
 
@@ -366,8 +422,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // for(const [day, {open, close}] of entries){
 //   console.log(`On ${day} we open at ${open} and close at ${close}`)
 // }
-
-
 
 //// IMPORTANT TITLE        WICH DATA STRUCTURE TO USE?
 
@@ -382,7 +436,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 //// With key/value pairs we have a way of describing the values
 //// With Arrays we just have the values without descriptions
 
-
 ////              TITLE     ARRAYS VS SETS            IMPORTANT
 
 //// TITLE Arrays used when:
@@ -390,13 +443,11 @@ capitalizeName('marcelo araujo') // this is what is passed
 //// When you need ordered list of values (might contains duplicates)
 //// When you need to Manipulate data
 
-
 //// TITLE Sets used when:
 
 //// When you need to work with unique values
 //// When high performance is really important
 //// To remove duplicates
-
 
 ////                TITLE   OBJECT VS MAPS            IMPORTANT
 
@@ -407,7 +458,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 //// When you need to include functions (methods)
 //// When working with JSON (can convert to map)
 
-
 ////  TITLE Maps used when:
 
 //// Better performance
@@ -417,24 +467,11 @@ capitalizeName('marcelo araujo') // this is what is passed
 //// When you simply need to map key to values
 //// When you need keys that are not strings
 
-
 //// ------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////                        TITLE OPTIONAL CHAINING ?.
 
-// only if the property before the ? exist it will read from there if not undefined will be returned 
+// only if the property before the ? exist it will read from there if not undefined will be returned
 // console.log(restaurant.openingHours.mon?.open)
 // console.log(restaurant.openingHours.fri?.open)
 // console.log(restaurant.openingHours?.mon?.open)
@@ -445,9 +482,9 @@ capitalizeName('marcelo araujo') // this is what is passed
 //   console.log(day)
 //   let open = restaurant.openingHours[day]?.open ?? 'closed'
 //     if(open === 'closed') {
-//       console.log(`On ${day}, we are ${open}`) 
+//       console.log(`On ${day}, we are ${open}`)
 //     }else{
-//       console.log(`On ${day}, we are open at ${open || '24hrs'}`) 
+//       console.log(`On ${day}, we are open at ${open || '24hrs'}`)
 //     }
 // }
 
@@ -469,16 +506,11 @@ capitalizeName('marcelo araujo') // this is what is passed
 // if (users.length > 0) console.log(users[0].name)
 // else console.log('User array empty')
 
-
-
-
-
-
 // //                            TITLE FOR OF LOOP
 
-// // With the for of loop you can use continue and break!       IMPORTANT  1                
+// // With the for of loop you can use continue and break!       IMPORTANT  1
 
-// const menu = [...restaurant.starterMenu, ... restaurant.mainMenu]                    
+// const menu = [...restaurant.starterMenu, ... restaurant.mainMenu]
 
 // // for(const item of menu) console.log(item); // no code block need it when its only one statement to execute
 
@@ -493,9 +525,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // for(const [i, element] of menu.entries()){
 //   console.log(`${i + 1}: ${element}`)
 // }
-
-
-
 
 ////                           TITLE LOGICAL ASSIGNMENT OPERATORS
 
@@ -517,14 +546,12 @@ capitalizeName('marcelo araujo') // this is what is passed
 // rest1.numGuests  ||= 10 // same as above!
 // rest2.numGuests  ||= 10 // same as above!
 
-
 //// Nullish assignment operator (null or undefined)
 //// if numGuest is null or undefined it will set it to 10 if not it wont do anything
-// rest1.numGuests  ??= 10  
-// rest2.numGuests  ??= 10 
+// rest1.numGuests  ??= 10
+// rest2.numGuests  ??= 10
 
-
-// // Logical 
+// // Logical
 
 // rest2.owner = rest2.owner && '<ANONYMOUS>'
 
@@ -538,8 +565,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // console.log('Rest 1:', rest1)
 // console.log('Rest 2:', rest2)
 
-
-
 ////                                 TITLE ||, && Operators
 
 ////Use ANY data type, return ANY data type, short-circuiting IMPORTANT 9
@@ -551,7 +576,7 @@ capitalizeName('marcelo araujo') // this is what is passed
 
 // console.log(undefined || 0 || '' || 'Hello' || 23 || null);
 
-//// Assigining value with the || operand and making use of short-circuiting 
+//// Assigining value with the || operand and making use of short-circuiting
 // restaurant.numGuests = 23;
 // const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
 // console.log(guests1)
@@ -559,8 +584,7 @@ capitalizeName('marcelo araujo') // this is what is passed
 // const guest2 = restaurant.numGuests || 10;
 // console.log(guest2)
 
-
-//// The && operator does the oposite of the || operator it short-circuit when the first operand is falsy! 
+//// The && operator does the oposite of the || operator it short-circuit when the first operand is falsy!
 //// The && operator is only true if all the operands are true. When the first operatorand is thruthy it will only print the second operand, since it still needs to confirm the second operand so on and so forth.
 //// IMPORTANT 10
 
@@ -576,7 +600,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // // It checks if the orderPizza property exist then if it does executes
 // restaurant.orderPizza && restaurant.orderPizza('olives', 'cheese')
 
-
 ////                                    TITLE NULLISH COALESING OPERATOR ??
 //// The nullish operator works with the principle of null values, only null values will short-circuit the operand
 
@@ -588,10 +611,7 @@ capitalizeName('marcelo araujo') // this is what is passed
 // const guestCorrect = restaurant.numGuests ?? 10;
 // // console.log(guestCorrect)
 
-
-
-
-// //                               TITLE The Spread Operator 
+// //                               TITLE The Spread Operator
 
 //// Without the spread
 // const arr = [7, 8, 9];
@@ -609,7 +629,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // const mainMenuCopy = [...restaurant.mainMenu]
 // console.log(mainMenuCopy)
 
-
 //// join 2 arrays
 // const menu = [...restaurant.mainMenu, ...restaurant.starterMenu]
 // console.log(menu)
@@ -625,14 +644,12 @@ capitalizeName('marcelo araujo') // this is what is passed
 
 // restaurant.orderPasta(...ingredients)
 
-
 //// Objects with the Spread Operator
 // const newRestaurant = {...restaurant, founder: 'Guisppe', foundedIn: 1998}
 // console.log(newRestaurant)
 // const restaurantCopy = {...restaurant};
 // restaurantCopy.name = 'Ristorante Roma'
 // console.log(restaurant.name, '/', restaurantCopy.name)
-
 
 ////                                TITLE - REST - OPERATOR - Destructuring
 
@@ -643,15 +660,13 @@ capitalizeName('marcelo araujo') // this is what is passed
 // const [a, b, ...others] = [1, 2, 3, 4, 5];
 // console.log(a, b, others)
 
-//// 8 
+//// 8
 // const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu]
 // console.log(pizza, risotto, otherFood)
 
-
-//// REST with Objects 
+//// REST with Objects
 // const {sat, ...weekdays} = restaurant.openingHours;
 // console.log(weekdays)
-
 
 ////                                      TITLE REST in Functions
 
@@ -671,36 +686,27 @@ capitalizeName('marcelo araujo') // this is what is passed
 // const x = [23, 5, 7];
 // add(...x)
 
-// restaurant.orderPizza('mushroom', 'onions', 'olives', 'spinach')              
+// restaurant.orderPizza('mushroom', 'onions', 'olives', 'spinach')
 // restaurant.orderPizza('mushrrom')
-
-
-
-
-
-
-
-
 
 // //                                   TITLE Destructuring arrays IMPORTANT
 
 // const arr = [2, 3,4]
 
 // //This is not a array this is a destructuring assingment
-// const [x, y, z] = arr //1 
+// const [x, y, z] = arr //1
 // console.log(x, y, z)
 // console.log(arr)
 
 // let [main, ,secondary] = restaurant.categories;
 // console.log(main, secondary);
 
-//// Destructuring Switching variables 
+//// Destructuring Switching variables
 
 // const temp = main
 // main = secondary
 // secondary = main
 // console.log(main, secondary) // what was italian is now vegetarian and what was vegatarian is now italian
-
 
 //// With Destructuring
 
@@ -708,11 +714,9 @@ capitalizeName('marcelo araujo') // this is what is passed
 // [main, secondary] = [secondary, main];
 // console.log(main, secondary);
 
-
 // // Receive 2 return values from a function with destructuring
 // const [starter, mainCourse] = restaurant.order(2, 0)
 // console.log(starter, mainCourse)
-
 
 // // Nested Array Destructuring
 
@@ -723,13 +727,10 @@ capitalizeName('marcelo araujo') // this is what is passed
 // // console.log(i, j)
 // console.log(i, j, k)
 
-
-
 // // Default values IMPORTANT 7
 
 // const [p = 1, q = 1, r = 1] = [8, 9];
 // console.log(p, q, r);
-
 
 // // TITLE Destructuring Objects
 // const {name, openingHours, categories} = restaurant
@@ -751,12 +752,9 @@ capitalizeName('marcelo araujo') // this is what is passed
 //   starterIndex: 1
 // })
 
-
-
 // // Seting default values.  IMPORTANT
 // const { menu = [], starterMenu: starters = []} = restaurant
 // console.log(menu, starters)
-
 
 // // Mutating variables in Objects
 // let a = 111;
@@ -765,7 +763,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 
 // ({a, b} = obj);
 // console.log(a, b);
-
 
 // // Destructuring Nested Objects Syntax    IMPORTANT
 // console.log(openingHours)
@@ -776,14 +773,13 @@ capitalizeName('marcelo araujo') // this is what is passed
 
 ////----------------------------------------------
 
-
 // // 1 IMPORTANT those constants will be the value of each array item! The array is preserved
 
 // // 2 IMPORTANT we dont need let or const just to reasign the variables in the destructuring method!
 
-// // 3 IMPORTANT Destructuring Arrays we use [] 
+// // 3 IMPORTANT Destructuring Arrays we use []
 
-// // 4 IMPORTANT Destructuring Objects we use {} 
+// // 4 IMPORTANT Destructuring Objects we use {}
 
 // // 5 IMPORTANT Destructuring Objects the order is irrelevant
 
@@ -792,7 +788,6 @@ capitalizeName('marcelo araujo') // this is what is passed
 // // 7 IMPORTANT Default value can be assigned at the distructuring. It will be applied if arguments havent been passed
 
 // // 8 IMPORTANT the REST operator must be the last so it can collect the rest of the data.
-
 
 // ------------------------------SUBJECT: ||, &&, ?? OPERATORS --------------------------------------------
 
@@ -804,14 +799,12 @@ capitalizeName('marcelo araujo') // this is what is passed
 
 // // 4 IMPORTANT The &&= does is assigns a value to a variable if is currently thruthy
 
-
-
 //// ------------------------------SUBJECT: FOR OF LOOP --------------------------------------------
-//// 1 IMPORTANT With the for of loop you can use continue and break!     
+//// 1 IMPORTANT With the for of loop you can use continue and break!
 
-//// 2 IMPORTANT To get the index in the for of loop you need to use the .entries() method    
+//// 2 IMPORTANT To get the index in the for of loop you need to use the .entries() method
 
-//// 3 IMPORTANT each item in the for of loop is returned as an array. giving the possibility to destructure the item at the very beginning     
+//// 3 IMPORTANT each item in the for of loop is returned as an array. giving the possibility to destructure the item at the very beginning
 
 ///////////////////////////////////////
 // Coding Challenge #2
@@ -878,23 +871,23 @@ const game = {
   },
 };
 
-
-const [players1, players2] = game.players
+const [players1, players2] = game.players;
 const [gk, ...fieldPlayers] = players1;
-const [...allPlayers] = [...players1, ...players2] 
-const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic']
-const {odds: {team1, x: draw, team2} } = game
+const [...allPlayers] = [...players1, ...players2];
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
 
-function printGoals(...players){
-  players.forEach((e)=>{
-    console.log(e)
-  })
-  console.log(`${players.length} goals were scored`)
+function printGoals(...players) {
+  players.forEach(e => {
+    console.log(e);
+  });
+  console.log(`${players.length} goals were scored`);
   // team1 < team2 ? console.log('Team 1 is more likely to win') : console.log('Team 2 is more likely to win')
-  team1 < team2 && console.log('Team 1 is more likely to win')
-  team1 > team2 && console.log('Team 2 is more likely to win')
+  team1 < team2 && console.log('Team 1 is more likely to win');
+  team1 > team2 && console.log('Team 2 is more likely to win');
 }
-
 
 // printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich')
 // printGoals(...game.scored)
@@ -904,7 +897,6 @@ function printGoals(...players){
 // for(const [i, player] of game.scored.entries()){
 //   console.log(`Gol ${i + 1}: ${player}`)
 // }
-
 
 // const scorers = {};
 // console.log(game.scored)
@@ -934,7 +926,6 @@ function printGoals(...players){
 //   console.log(`Odd of ${teamStr} ${odd}`)
 // }
 
-
 // const scorers = {
 //   name: 'goals'
 // }
@@ -946,11 +937,6 @@ function printGoals(...players){
 //         Hummels: 1,
 //         Lewandowski: 2
 //       }
-
-
-
-
-
 
 // Coding Challenge #3
 
@@ -976,7 +962,6 @@ GOOD LUCK 😀
 //   [92, '🔶 Yellow card'],
 // ]);
 
-
 // const events = [...new Set(gameEvents.values())]
 // console.log(events)
 
@@ -991,4 +976,3 @@ GOOD LUCK 😀
 //   let firstHalf = 45;
 //   timeOfEvent <= firstHalf ? console.log(`[firstHalf] ${timeOfEvent}: ${event}`) :  console.log(`[secondHalf] ${timeOfEvent}: ${event}`)
 // }
-
