@@ -170,9 +170,9 @@ return reversed value
 //// When you need keys that are not strings
 
 -------------------------------------------------------------------------------
+////                             TITLE isNaN
 
-
-
+ //// IMPORTANT !isNaN(input) evaluates to true if input is a valid number, and false if it is not a valid number. It's a way to check if the input is numeric or not.
 
 
 
