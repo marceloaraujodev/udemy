@@ -9,7 +9,14 @@ const flights =
 //   🔴 Delayed Arrival from HEL to FAO (12h05)
 //            Departure from FAO to LIS (12h30)
 
-console.log(flights.split('+'))
+// const getCode = str => str.slice('0', '3').toUpperCase()
+
+// for(const flight of flights.split('+')){
+//   // console.log(flight)
+//   const [type, from, to, time] = flight.split(';')
+//   const output = `${type.startsWith('_Delayed') ? '🔴' : ''} ${type.replaceAll('_', ' ')} ${getCode(from).padStart('8', 'from ')} ${getCode(to).padStart('6', 'to ')} (${time.replace(':', 'h')})`.padStart(49)
+//   console.log(output)
+// }
 
 // Data needed for first part of the section
 const restaurant = {
