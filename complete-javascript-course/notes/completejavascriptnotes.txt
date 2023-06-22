@@ -177,6 +177,37 @@ return reversed value
 
 
 
+                                                TITLE FUNCTIONS
+
+
+                                                First Class Funtions
+
+IMPORTANT JS treats functions as first-class citizens
+
+IMPORTANT This means that functions are simply values
+
+IMPORTANT Funtions are just another 'type' of object
+
+                                                Higher Order Functions
+
+IMPORTANT Funtion that receives another function as an argument, that returns a new function, or both.
+
+IMPORTANT This is only possible because of first-class functions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  -- vscode settings --
 
