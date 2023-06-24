@@ -283,26 +283,26 @@ GOOD LUCK 😀
 */
 
 
-const poll = {
-    question: 'What is your favourite programming language?',
-    options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
-    answers: new Array(4).fill(0),
-    registerNewAnswer() {
-       const answer = Number(prompt(`${this.question}\n${this.options.join('\n')}\n(Write option number) `))
-       typeof answer === 'number' && answer < this.answers.length && this.answers[answer]++
+// const poll = {
+//     question: 'What is your favourite programming language?',
+//     options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
+//     answers: new Array(4).fill(0),
+//     registerNewAnswer() {
+//        const answer = Number(prompt(`${this.question}\n${this.options.join('\n')}\n(Write option number) `))
+//        typeof answer === 'number' && answer < this.answers.length && this.answers[answer]++
 
-    this.displayResults()
-    this.displayResults('string')
-    // this.displayResults([5, 2, 3])
-    },
-    displayResults(type = 'array'){
-        if(type === 'array'){
-            console.log(this.answers)
-        }else if(type === 'string'){
-            console.log(`Poll results are ${this.answers.join(', ')}`)
-        }
-    }
-}
+//     this.displayResults()
+//     this.displayResults('string')
+//     // this.displayResults([5, 2, 3])
+//     },
+//     displayResults(type = 'array'){
+//         if(type === 'array'){
+//             console.log(this.answers)
+//         }else if(type === 'string'){
+//             console.log(`Poll results are ${this.answers.join(', ')}`)
+//         }
+//     }
+// }
 
 /*
 .bind will point the this keyword to the poll object
@@ -310,9 +310,134 @@ const poll = {
 .bind creates a new function thats why you can use it in the addeventlistener, since the second parameter is a function
 .apply calls the specified function with a given this value, and arguments provided as an array (or an array-like object). */
 
-document
-.querySelector('.poll')
-.addEventListener('click', poll.registerNewAnswer.bind(poll))
+// document
+// .querySelector('.poll')
+// .addEventListener('click', poll.registerNewAnswer.bind(poll))
 
 // [5, 2, 3]
 // poll.displayResults.call({answers: [5, 2, 3]})
+
+
+// //                                TITLE      CLOSURES
+
+
+
+////In the given code below, when const booker = secureBooking() is executed, the secureBooking function is invoked and IMPORTANT it returns an inner function IMPORTANT. However, the inner function retains access to the variables and scope of its parent function, including passengerCount. This is what creates a closure.
+
+
+// const secureBooking = function () {
+//     let passengerCount = 0;
+    
+//     return function(){
+//         passengerCount++;       
+//         passengerCount === 1 ? console.log(`${passengerCount} passenger`) : console.log(`${passengerCount} passengers`)
+//     }
+// }
+// const booker = secureBooking() 
+
+//// The line const booker = secureBooking() effectively assigns the returned inner function to the booker constant. It does not execute the inner function immediately. Instead, it creates a closure where the passengerCount variable is preserved.
+// booker()
+// booker()
+// booker()
+
+// console.dir(booker) // f anonymous() > scopes > Closure I can see the variables that we have acces in the closure it will show {passengerCount: 3}
+
+
+// booker()
+////When you subsequently call booker(), it executes the inner function that was assigned to booker. Since the inner function is a closure, it still has access to the passengerCount variable in its parent scope. Each time booker() is called, it increments passengerCount by 1 and logs the updated count.
+
+////In the case of booker(), the initial value of passengerCount is 0 because that's the value assigned when the closure is created. When you call booker() for the first time, passengerCount is incremented to 1, and the appropriate log message is displayed.
+
+
+//// Same as above but in a long text format instead of per parts of code
+
+
+
+/*                                CLOSURES EXPLAINED     
+
+In the given code, when const booker = secureBooking() is executed, the secureBooking function is invoked and it returns an inner function. However, the inner function retains access to the variables and scope of its parent function, including passengerCount. This is what creates a closure.
+
+The line const booker = secureBooking() effectively assigns IMPORTANT - the RETURNED inner function to the booker constant - IMPORTANT. It does not execute the inner function immediately. Instead, it creates a closure where the passengerCount variable is preserved.
+
+When you subsequently call booker(), it executes the inner function that was assigned to booker. Since the inner function is a closure, it still has access to the passengerCount variable in its parent scope. Each time booker() is called, it increments passengerCount by 1 and logs the updated count.
+
+In the case of booker(), the initial value of passengerCount is 0 because that's the value assigned when the closure is created. When you call booker() for the first time, passengerCount is incremented to 1, and the appropriate log message is displayed.
+
+The important thing to note is that the closure retains the reference to the variables in its parent scope, even after the parent function has finished executing. This allows you to maintain and update the state of variables across multiple invocations of the closure. 
+
+Eu estava achando que tudo quando digo tudo incluo o let passengerCount = 0 era assigned para a a const booker, mas na verdade a função é o que retorna! Ou seja const booker = secureBooking() é basicamente dizer que booker function () {
+    passengerCount++ 
+    passengerCount === 1 ? console.log(`${passengerCount} passenger`) : console.log(`${passengerCount} passengers`)
+}
+Sendo assim o passengerCount ainda é 0 quando o booker() é executado pela primeira vez!
+*/
+
+
+
+// let f;
+// const g = function(){
+//     const a = 23;
+//     f = function(){
+//         console.log(a * 2)
+//     }
+// }
+// g()
+// f()
+// you have to call g first and only then f will be able to execute. Notice that g has already left the call stack, and f still has access to a! Thats the closure, it preserves the a variable.
+
+
+//// example 1 closures
+
+// let f;
+// const g = function(){
+//     const a = 23;
+//     f = function(){
+//         console.log(a * 2)
+//     }
+// }
+
+// const h = function(){
+//     const b = 12;
+//     f = function(){
+//         console.log(b * 2)
+//     }
+// }
+// g()
+// f()
+// console.dir(f)
+
+// // Re-assigning f function
+// h()
+// f()
+// console.dir(f)
+
+
+
+// example 2 // The closure in this code is the anonymous function that is passed as the first argument to setTimeout. This anonymous function has access to the variables and scope of its parent function, boardPassengers, including n and perGroup.
+
+// const boardPassengers = function (n, wait){
+//     const perGroup = n / 3;
+    
+//     setTimeout(() => {
+//         console.log(`We are now boarding all ${n} passengers`);
+//         console.log(`There are 3 groups, each with ${perGroup} passengers`)
+//     }, wait * 1000);
+
+//     console.log(`Will start boarding in ${wait} seconds`)
+// }
+
+// const perGroup = 1000 // if I remove per group inside the function it will use this one. However if per group inside the function its on it will have priority over the perGroup from the global scope
+// boardPassengers(180, 3)
+// // console.dir(boardPassengers)
+
+
+// //                               CODING CHALLENGE#2 CLOSURES
+
+(function (){
+    const header = document.querySelector('h1')
+    header.style.color = 'red'
+    
+    document.querySelector('body').addEventListener('click', ()=>{
+       header.style.color = 'blue' // this parte of the code becomes the closure it enherits the header const from the iife function!
+    })
+}) ()
