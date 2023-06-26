@@ -61,6 +61,52 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Individual movements in the statement
+const displayMovements = function(movements){
+  containerMovements.innerHTML = '';
+ movements.forEach((mov, i) => {
+  const type = mov > 0 ? 'deposit' : 'withdrawal'
+
+  const html = `  
+  <div class="movements__row">
+    <div class="movements__type movements__type--${type}">${i +  1} ${type}</div>
+    <div class="movements__date">3 days ago</div>
+    <div class="movements__value">${mov}</div>
+  </div>`
+
+  containerMovements.insertAdjacentHTML('afterbegin', html)
+
+ });
+}
+displayMovements(account1.movements)
+
+
+// Display Balance
+const calcDisplayBalance = function(movement){
+  const balance = movement.reduce((acc, mov) => acc + mov, 0)
+  labelBalance.textContent = `${balance} EUR`
+}
+calcDisplayBalance(account1.movements)
+
+
+
+//Creates user names
+const createUserNames = function (accounts){
+
+  accounts.forEach((account)=>{ // account refers to each seperate accounts item from the array accounts!
+    account.username = account.owner // it says that username is the same as owner then modifies everything
+    .toLocaleLowerCase()
+    .split(' ')
+    .map( word => word[0] )
+    .join('') 
+  })
+  // console.log(account1)
+}
+
+createUserNames(accounts)
+// console.log(accounts)
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -187,3 +233,110 @@ const currencies = new Map([
 // currenciesUnique.forEach((value, _, map)=>{
 //   console.log(`${value}: ${value}`)
 // })
+
+
+
+
+////                                          TITLE  MAP - FILTER - REDUCE
+
+/*
+ IMPORTANT THE MAP METHOD returns a new array with the results of applying an operation on all original array elements
+
+ IMPORTANT THE FILTER METHOD returns a new array containing the array elements that passed a specified test condition
+ 
+  IMPORTANT THE REDUCE METHOD boils all array elements down to one single value (adding all elements together)
+
+*/
+
+//// MAP --
+
+// const eurToUsd = 1.1;
+
+
+// const movementsUSD = movements.map((mov)=>{
+//   // return 23 // just to see that it returns an array with the same amount of elements
+//  return mov * eurToUsd
+// })
+// const movementsUSD = movements.map(mov => mov * eurToUsd) // cleaning using arrow function
+
+// console.log(movements)
+// console.log(movementsUSD)
+
+// const movementsDescriptions = movements.map((mov, i) => 
+//   `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+// )// one line does not need return statement
+
+// console.log(movementsDescriptions)
+
+
+
+//// Filter --
+
+// const deposits = movements.filter( mov=> mov > 0)
+// // only elements that are true to this condition mov > 0 will return in the new deposits array
+// console.log('movements', movements)
+// console.log('deposits array', deposits)
+
+// const withdrawals = movements.filter(mov => mov < 0)
+// console.log(withdrawals)
+
+// const depositsFor = []
+// for (const mov of movements){
+//   mov > 0 ? depositsFor.push(mov) : undefined
+// }
+// console.log('With the for of loop', depositsFor)
+
+
+// //// Reduce --
+// // the 0 there is the initial accumulator variable
+// const balance = movements.reduce((acc, current, index)=> acc + current, 0)
+// console.log(balance)
+
+
+//// Maximum value of the movements array using Reduce
+
+const maxMov = movements.reduce((acc, current)=>{
+  return acc < current ? acc = current : acc
+}, movements[0])
+console.log(maxMov)
+
+
+
+// // CODING CHALLENGE  1
+
+/* 
+Julia and Kate are doing a study on dogs. So each of them asked 5 dog owners about their dog's age, and stored the data into an array (one array for each). For now, they are just interested in knowing whether a dog is an adult or a puppy. A dog is an adult if it is at least 3 years old, and it's a puppy if it's less than 3 years old.
+
+Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
+
+1. Julia found out that the owners of the FIRST and the LAST TWO dogs actually have cats, not dogs! So create a shallow copy of Julia's array, and remove the cat ages from that copied array (because it's a bad practice to mutate function parameters)
+2. Create an array with both Julia's (corrected) and Kate's data
+3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy 🐶")
+4. Run the function for both test datasets
+
+HINT: Use tools from all lectures in this section so far 😉
+
+TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
+TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+// const dogsJulia = [3, 5, 2, 12, 7]
+// const dogsKate = [4, 1, 15, 8, 3]
+
+// function checkDogs(julia, kate){
+//   // const juliaNew = julia.slice(1, 3) I did it like this
+//   const juliaNew = julia.slice() // using splice
+//   juliaNew.splice(0, 1) // removes the first item
+//   juliaNew.splice(-2) // removes the last 2
+//   // console.log(juliaNew)
+//   // const all = [...juliaNew, ...kate] // I didt 
+//   const all = juliaNew.concat(kate) // with the concat method since is array lessons
+//   console.log(all)
+
+//   all.forEach((dog, i)=>{
+//    console.log(dog < 3 ? `Dog number ${i + 1} is an Puppy` : `Dog number ${i + 1} is an Adult`)
+//   })
+// }
+
+// checkDogs(dogsJulia, dogsKate)
