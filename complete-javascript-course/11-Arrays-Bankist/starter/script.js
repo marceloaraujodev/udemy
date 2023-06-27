@@ -71,23 +71,45 @@ const displayMovements = function(movements){
   <div class="movements__row">
     <div class="movements__type movements__type--${type}">${i +  1} ${type}</div>
     <div class="movements__date">3 days ago</div>
-    <div class="movements__value">${mov}</div>
+    <div class="movements__value">${mov}€</div>
   </div>`
 
   containerMovements.insertAdjacentHTML('afterbegin', html)
 
  });
 }
-displayMovements(account1.movements)
 
 
-// Display Balance
+
+// Display Balance 
 const calcDisplayBalance = function(movement){
   const balance = movement.reduce((acc, mov) => acc + mov, 0)
-  labelBalance.textContent = `${balance} EUR`
+  labelBalance.textContent = `${balance} €`
 }
-calcDisplayBalance(account1.movements)
 
+
+// Display Summary bottom
+const calcDisplaySummary = function (movements){ 
+  const incomes = movements
+  .filter(mov => mov > 0)
+  .reduce((acc, mov) => acc + mov, 0)
+  labelSumIn.textContent = `${incomes}€`
+
+  const out = movements
+  .filter(mov => mov < 0)
+  .reduce((acc, mov) => acc + mov, 0)
+  labelSumOut.textContent = `${Math.abs(out)} €` // Math.abs removes the negative sign 
+
+  const interest = movements
+  .filter(mov => mov > 0)
+  .map(deposit => deposit * 0.012)
+  .filter((int, i, arr) =>{
+    // console.log(arr)
+    return int >= 1
+  })
+  .reduce((acc, interest) => acc += interest, 0)
+  labelSumInterest.textContent = `${interest} €`
+}
 
 
 //Creates user names
@@ -102,9 +124,37 @@ const createUserNames = function (accounts){
   })
   // console.log(account1)
 }
-
 createUserNames(accounts)
 // console.log(accounts)
+
+
+//Event Handlers 
+let currentAccount;
+
+btnLogin.addEventListener('click', (e)=>{
+  e.preventDefault()
+
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value)
+
+  if(currentAccount?.pin === Number(inputLoginPin.value)){
+    // display UI and Welcome msg
+    labelWelcome.textContent = `Welcome Back ${currentAccount.owner.split(' ')[0]}`
+    containerApp.style.opacity = '100'
+
+    //clear input fields // assignment operator works from right to left
+    inputLoginUsername.value = inputLoginPin.value = '';
+    //makes field looses its focus
+    inputLoginPin.blur();
+
+    //Display movements
+    displayMovements(currentAccount.movements)
+
+    //Display balance
+    calcDisplayBalance(currentAccount.movements)
+    //Display summary
+    calcDisplaySummary(currentAccount.movements)
+  }
+})
 
 
 /////////////////////////////////////////////////
@@ -237,15 +287,16 @@ const currencies = new Map([
 
 
 
-////                                          TITLE  MAP - FILTER - REDUCE
+////                                 TITLE  MAP - FILTER - REDUCE - FIND
 
 /*
  IMPORTANT THE MAP METHOD returns a new array with the results of applying an operation on all original array elements
 
  IMPORTANT THE FILTER METHOD returns a new array containing the array elements that passed a specified test condition
  
-  IMPORTANT THE REDUCE METHOD boils all array elements down to one single value (adding all elements together)
-
+ IMPORTANT THE REDUCE METHOD boils all array elements down to one single value (adding all elements together)
+ 
+ IMPORTANT THE FIND METHOD retrieves the first item, that passes the condition, from the array
 */
 
 //// MAP --
@@ -299,6 +350,71 @@ const currencies = new Map([
 //   return acc < current ? acc = current : acc
 // }, movements[0])
 // console.log(maxMov)
+
+
+
+////                                  TITLE CHAINING METHODS -
+
+const eurToUsd = 1.1;
+
+//// The filter returns a array with positive values, looks fro true or false values that passe a condition
+//// The map returns a new array with the values of a applied condition
+//// The reduce returns one value.
+//// Everytime it returns a new array you can chain methods
+
+// const totalDepositsUSD = movements
+// .filter((mov) => mov > 0)
+// .map((mov) => mov * eurToUsd)
+// .reduce((acc, currentMovement) => acc + currentMovement, 0)
+
+// console.log(totalDepositsUSD)
+
+////                          TITLE DEBBUGING THE CHAINING METHOD
+
+//// If a mistake was made on the filter method, below is how I could debugged it. Console log it the array after each method to see what the error whas and where it happened
+
+// console.log(movements)
+// const totalDepositsUSD = movements
+// .filter((mov) => mov < 0)
+// .map((mov, i, arr) => {
+//   console.log(arr)
+//   return mov * eurToUsd
+// })
+// .reduce((acc, currentMovement) => acc + currentMovement, 0)
+
+// console.log(totalDepositsUSD)
+
+
+
+
+
+
+////                                       TITLE  FIND METHOD
+
+// const firstWithdrawal = movements.find(mov => mov < 0)
+
+// console.log(movements)
+// console.log(firstWithdrawal)
+
+// console.log(accounts)
+
+// const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+// console.log(account)
+
+// for (const acc of accounts){
+//   // console.log(acc)
+//   if(acc.owner === 'Jessica Davis'){
+//     console.log(acc)
+//   }else{
+//     undefined
+//   }
+// }
+
+
+
+
+
+
 
 
 
@@ -371,4 +487,25 @@ GOOD LUCK 😀
 //   return averageAge
 // }
 
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]))
+
+
+
+
+/* Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+
+
+// function calcAverageHumanAge(ages){
+//  const humanAges =  ages
+//  .map((age) => age <= 2 ? age * 2 : 16 + age * 4)
+//  .filter(humanAge => humanAge >= 18)
+//  .reduce((acc, current, i, arr) =>  acc + current / arr.length, 0)
+//    return humanAges
+// }
 // console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]))
