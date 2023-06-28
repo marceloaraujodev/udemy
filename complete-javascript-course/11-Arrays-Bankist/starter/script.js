@@ -62,9 +62,14 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // Individual movements in the statement
-const displayMovements = function(movements){
+// sort set to false by default in the parameter
+const displayMovements = function(movements, sort = false){
   containerMovements.innerHTML = '';
- movements.forEach((mov, i) => {
+
+  // wanna copy the movements array to sort it since the sort method changes the array
+  const movs = sort ? movements.slice().sort((a,b) => a - b) : movements
+
+  movs.forEach((mov, i) => {
   const type = mov > 0 ? 'deposit' : 'withdrawal'
 
   const html = `  
@@ -80,29 +85,28 @@ const displayMovements = function(movements){
 }
 
 
-
 // Display Balance 
-const calcDisplayBalance = function(movement){
-  const balance = movement.reduce((acc, mov) => acc + mov, 0)
-  labelBalance.textContent = `${balance} €`
+const calcDisplayBalance = function(acc){
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0)
+  labelBalance.textContent = `${acc.balance} €`
 }
 
 
 // Display Summary bottom
-const calcDisplaySummary = function (movements){ 
-  const incomes = movements
+const calcDisplaySummary = function (acc){ 
+  const incomes = acc.movements
   .filter(mov => mov > 0)
   .reduce((acc, mov) => acc + mov, 0)
   labelSumIn.textContent = `${incomes}€`
 
-  const out = movements
+  const out = acc.movements
   .filter(mov => mov < 0)
   .reduce((acc, mov) => acc + mov, 0)
   labelSumOut.textContent = `${Math.abs(out)} €` // Math.abs removes the negative sign 
 
-  const interest = movements
+  const interest = acc.movements
   .filter(mov => mov > 0)
-  .map(deposit => deposit * 0.012)
+  .map(deposit => (deposit * acc.interestRate) / 100 )
   .filter((int, i, arr) =>{
     // console.log(arr)
     return int >= 1
@@ -127,14 +131,27 @@ const createUserNames = function (accounts){
 createUserNames(accounts)
 // console.log(accounts)
 
+function updateUI(acc){
+      //Display movements
+      displayMovements(acc.movements)
+      //Display balance
+      calcDisplayBalance(acc)
+      //Display summary
+      calcDisplaySummary(acc)
+}
+
 
 //Event Handlers 
 let currentAccount;
 
+
+//// LOGIN AND DISPLAY ACCOUNTS
+// ? the optional chaining in the btnLogin, first checks if the current account exists, if it doesnt the rest of the code will not run. If it does exist it will go to the pin ...
 btnLogin.addEventListener('click', (e)=>{
   e.preventDefault()
 
   currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value)
+
 
   if(currentAccount?.pin === Number(inputLoginPin.value)){
     // display UI and Welcome msg
@@ -146,15 +163,75 @@ btnLogin.addEventListener('click', (e)=>{
     //makes field looses its focus
     inputLoginPin.blur();
 
-    //Display movements
-    displayMovements(currentAccount.movements)
-
-    //Display balance
-    calcDisplayBalance(currentAccount.movements)
-    //Display summary
-    calcDisplaySummary(currentAccount.movements)
+    // Update UI
+    updateUI(currentAccount)
   }
 })
+
+//// The preventDefault is need so it wont reload the page! 
+btnTransfer.addEventListener('click', (e)=>{
+  e.preventDefault()
+  const amount =  Number(inputTransferAmount.value)
+  const receiverAcc = accounts.find(acc => acc.username === inputTransferTo.value) 
+  inputTransferTo.value = inputTransferAmount.value = ''; // assignment goes right to left can 2 in 1!
+
+  if(amount > 0 && receiverAcc && currentAccount.balance >= amount && receiverAcc?.username !== currentAccount.username){
+    //doing the transfer
+    currentAccount.movements.push(-amount)
+    receiverAcc.movements.push(amount)
+    console.log('Transfer valid')
+    updateUI(currentAccount)
+  }
+
+})
+
+
+btnLoan.addEventListener('click', (e)=>{
+  e.preventDefault()
+  const amount = Number(inputLoanAmount.value)
+
+  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)){
+    // add positive movement
+    currentAccount.movements.push(amount)
+    // Update UI
+    updateUI(currentAccount)
+  }
+  inputLoanAmount.value = ''
+})
+
+
+//// Close Account
+btnClose.addEventListener('click', (e)=>{
+  e.preventDefault()
+  
+  
+  if(inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin){
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username)
+    // Delete Account
+    accounts.splice(index, 1)
+    // Hide UI
+    containerApp.style.opacity = 0
+  }
+  inputClosePin.value = inputCloseUsername.value = ''
+})
+
+//// State Variable to be used to sort the array!
+let sorted = false
+
+// activates the sorted button
+btnSort.addEventListener('click', (e)=>{
+  e.preventDefault()
+  displayMovements(currentAccount.movements, !sorted)
+  sorted = !sorted
+})
+
+
+
+
+
+
+
+
 
 
 /////////////////////////////////////////////////
@@ -409,6 +486,111 @@ const eurToUsd = 1.1;
 //     undefined
 //   }
 // }
+
+
+
+////                                 TITLE  SOME AND EVERY METHODS
+
+// console.log(movements)
+
+// // INCLUDES CHECKS FOR EQUALITY
+// console.log(movements.includes(-130))
+
+// // SOME: CHECKS FOR A CONDITION
+// const anyDeposits = movements.some( mov => mov > 5000)
+// console.log(anyDeposits)
+
+
+// EVERY: RETURNS TRUE ONLY IF ALL ELEMENTS PASSES THE TEST
+
+// console.log(movements.every(mov => mov > 0 ))
+// console.log(account4.movements.every(mov => mov > 0 ))
+
+
+// SEPARETE CALL BACK FUNCTION 
+
+// const deposit = mov => mov > 0
+// console.log(movements.some(deposit))
+// console.log(movements.every(deposit))
+// console.log(movements.filter(deposit))
+
+
+
+////                                 TITLE  FLAT AND FLATMAP
+
+//// .Flat()
+// const arr = [[1,2,3], [4,5,6], 7, 8]
+// console.log(arr.flat())
+
+// const arrDeep = [[[1,2],3], [4,[5,6]], 7, 8]
+
+// console.log(arrDeep.flat(2))
+
+
+// const accountMovements = accounts.map(acc => acc.movements)
+// console.log(accountMovements)
+// const allMovements = accountMovements.flat()
+// console.log(allMovements)
+// // const overAllBalance = allMovements.reduce((acc, mov) => acc + mov, 0)
+// console.log(overAllBalance)
+
+// // Chaining all Together
+
+// const overAllBalance = accounts.map(acc => acc.movements).flat().reduce((acc, mov) => acc + mov, 0)
+// console.log(overAllBalance)
+
+
+////.FlatMap - Only goes 1 level deep if need more use separete map() then flat()
+
+// const overAllBalance = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0)
+// console.log(overAllBalance)
+
+
+
+
+////                                 TITLE  SORTING ARRAYS
+
+// The sort method mutates the array be carefull IMPORTANT
+
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha']
+// console.log(owners.sort())
+// console.log(owners) // 
+
+// Numbers
+// console.log(movements)
+// console.log(movements.sort()) // it sorts based on strings not on numbers
+
+// return < 0, A, B (Keep Order)
+// return > 0, B, A (Switch Order)
+
+// // Ascending
+// movements.sort((a, b)=>{
+//   if(a > b){
+//     return 1;
+//   }
+//   if(a < b){
+//     return -1;
+//   }
+// })
+// console.log(movements)
+
+// it doesnt have to be 1 it can be anything > then 0 thats why a - b works its not about the number its about positive or negative! 0 will remain the same
+// movements.sort((a, b) => a - b)
+// console.log(movements)
+
+// // Descending
+// movements.sort((a, b)=>{
+//   if(a > b){
+//     return -1;
+//   }
+//   if(a < b){
+//     return 1;
+//   }
+// })
+// console.log(movements)
+
+// movements.sort((a, b) => b - a)
+// console.log(movements)
 
 
 
