@@ -594,6 +594,166 @@ const owners = ['Jonas', 'Zach', 'Adam', 'Martha']
 
 
 
+////                            TITLE  MORE WAYS OF CREATING AND FILLING ARRAY
+
+
+// // IMPORTANT The new Array() with only one parameter that is a number creates a weird behaviour
+
+
+// const arr = [1, 2, 3, 4, 5, 6, 7,]
+
+// // EMPTY ARRAYS + FILL METHOD
+// const x = new Array(7) 
+// console.log(x, 'one parameter being a number exemption')
+
+// x.fill(1, 3, 5) // Fill with one ate index 3, you can especified a end parameter as well.
+// x.fill(1) // This mutates the array. Turn on and off to see it
+// console.log(x)
+
+// arr.fill(23, 4, 6)
+// console.log(arr, 'arr.fill(23, 4, 6)')
+
+// // ARRAY.from -- if we want to recreate the arr Array
+
+// const y = Array.from({length: 7}, () => 1) // Notice its Array.from with Capital A and not array.from! This is a Array constructor
+
+// console.log(y, 'Array.from()')
+
+// const z = Array.from({length: 7}, (_, i) => i + 1) // ***
+// console.log(z)
+
+// // *** The call back function its exaclty like the one in a map method on a empty array. IMPORTANT REMEMBER THE ORDER OF THE  PARAMETER? element,index, array! So if only the index is going to be used you have to signal the first parameter as not used but you have to have a first parameter otherwise the second parameter becomes the first. _ = ele , i = index so if its only one parameter i = curr then i would be undefined and then undefined + 1 = NaN. With 2 parameter would be curr = undefined, i = 0, i + 1 = 1. Then I would be able to be counted even though the curr its not used. 
+
+
+// const dice100 = Array.from({length: 100}, (_, i) => i + Math.floor(Math.random() * 100) + 1)
+// // console.log(dice100)
+
+
+
+// Converting a NodeList into a Array to be able to use Reduce or Map methods with it!
+// labelBalance.addEventListener('click', ()=>{
+
+//   const movementsUI = Array.from(document.querySelectorAll('.movements__value'), el => Number(el.textContent.replace('€', '')))
+//   console.log(movementsUI)
+// })
+
+
+
+
+
+////                            TITLE  WHICH ARRAY METHOD TO USE?
+
+////                                        IMPORTANT
+
+
+/*                                          What do I want?
+                                    TITLE TO MUTATE ORIGINAL ARRAY
+
+Add to original array:
+.push (end)
+.unshift (start)
+
+Remove from original:
+.pop (end)
+.shift (start)
+.splice (any)
+
+Others:
+.reverse
+.sort
+.fill
+--------------------------------------------------------------------------------------------------
+
+                                    TITLE A NEW ARRAY 
+Computed from original:
+.map (loop)
+
+Filtered using condition:
+.filter
+
+Portion of original:
+.slice
+
+Adding orginal to other:
+.concat
+
+Flattening the original:
+.flat
+.flatMap
+
+
+--------------------------------------------------------------------------------------------------
+                                    TITLE AN ARRAY INDEX
+
+Based on value:
+.indexOf
+
+Based on test Condition:
+.findIndex
+
+AN ARRAY ELEMENT
+
+Based on Test Condition:
+.find
+
+--------------------------------------------------------------------------------------------------
+                                    TITLE KNOW IF ARRAY INCLUDES
+
+Based on value:
+.includes
+
+Based on test condition:
+.some
+.every
+
+A NEW STRING
+
+Based on separator string:
+.join
+--------------------------------------------------------------------------------------------------
+                                    TITLE TO TRANSFORM THE VALUE
+
+Based on accumulator:
+.reduce
+
+-Returns a single value of any type, number, string, boolean or even an array or object                                    
+--------------------------------------------------------------------------------------------------
+
+                                    TITLE TO JUST LOOP
+
+Based on callback:
+.forEach
+
+-Does not create a new array, just loops over it                                    
+--------------------------------------------------------------------------------------------------
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -691,3 +851,111 @@ GOOD LUCK 😀
 //    return humanAges
 // }
 // console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]))
+
+
+// ---------- Practice
+
+// 1. Gets all the deposits adds them all into one array, filter just the positive values and then adds them all together for the full balance of the bank
+
+// const bankDepositSum = accounts.flatMap((acc) => acc.movements)
+// .filter(mov => mov > 0)
+// .reduce((acc, mov) => mov + acc, 0)
+// console.log(bankDepositSum)
+
+
+// 2. How many deposits have there being in the bank with at least 1000 
+
+// const deposits1kM = accounts.flatMap((acc)=> acc.movements).filter((mov) => mov >= 1000).length
+// console.log(deposits1kM)
+
+// same as 2 using reduce 
+
+// const deposit1kReduceT = accounts.flatMap((acc)=> acc.movements).reduce((acc, current)=> current >= 1000 ? acc + 1 : acc, 0)
+// console.log(deposit1kReduceT)
+
+// const deposit1kReduce = accounts.flatMap((acc)=> acc.movements).reduce((acc, current)=>{
+//  if(current >= 1000){
+//   acc = acc + 1
+//  }
+//  return acc
+// }, 0)
+// console.log(deposit1kReduce)
+
+
+// IMPORTANT Watch out for the ++
+
+// Prefixed ++ operator
+
+// let a = 10
+// console.log(a++) // prints 10! The ++ does it job but it will only print the right result after this line!
+// console.log(a) // prints 11! 
+
+// there is a fixer for that ++ before the variable will fix it
+// console.log(++a) // prints 10! The ++ does it job but it will only print the right result after this line!
+
+//// 3. Create a object that have the sums of deposits and withdrawals
+
+// const sums = accounts.flatMap((acc)=> acc.movements).reduce((sums, cur) => {
+//   //  cur > 0 ? sums.deposits += cur : sums.widthrawals += cur
+
+//   sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur // same as above but with the []notation!
+//    return sums
+// }, {deposits: 0, widthrawals: 0})
+
+// console.log(sums)
+
+
+// 4. 
+// const convertTitleCase = function(title){
+//   const capitalize = str => str[0].toUpperCase() + str.slice(1)
+//   const exception = ['a','and', 'an', 'the', 'but', 'or', 'on', 'in', 'with']
+
+//   const titleCase = title.toLocaleLowerCase().split(' ')
+//   .map((word) => exception.includes(word) ? word : capitalize(word))
+//   .join(' ')
+//   return capitalize(titleCase)
+// }
+
+// console.log(convertTitleCase('This is a Nice Title'))
+// console.log(convertTitleCase('This is a LONG title but not too lOng'))
+// console.log(convertTitleCase('and here is another title with an EXAMPLE'))
+
+// // ** thats what that code means in plain englsih. If the current word is included in the exception array then simply return that word. If not then captilize the first letter of the current word!
+
+// function capitalize1 (str){
+  
+//   return str[0].toUpperCase() + str.slice(1)
+// } 
+// console.log(capitalize1('test'))
+
+
+
+// Coding Challenge #4
+
+/* 
+Julia and Kate are still studying dogs, and this time they are studying if dogs are eating too much or too little.
+Eating too much means the dog's current food portion is larger than the recommended portion, and eating too little is the opposite.
+Eating an okay amount means the dog's current food portion is within a range 10% above and 10% below the recommended portion (see hint).
+
+1. Loop over the array containing dog objects, and for each dog, calculate the recommended food portion and add it to the object as a new property. Do NOT create a new array, simply loop over the array. Forumla: recommendedFood = weight ** 0.75 * 28. (The result is in grams of food, and the weight needs to be in kg)
+2. Find Sarah's dog and log to the console whether it's eating too much or too little. HINT: Some dogs have multiple owners, so you first need to find Sarah in the owners array, and so this one is a bit tricky (on purpose) 🤓
+3. Create an array containing all owners of dogs who eat too much ('ownersEatTooMuch') and an array with all owners of dogs who eat too little ('ownersEatTooLittle').
+4. Log a string to the console for each array created in 3., like this: "Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
+5. Log to the console whether there is any dog eating EXACTLY the amount of food that is recommended (just true or false)
+6. Log to the console whether there is any dog eating an OKAY amount of food (just true or false)
+7. Create an array containing the dogs that are eating an OKAY amount of food (try to reuse the condition used in 6.)
+8. Create a shallow copy of the dogs array and sort it by recommended food portion in an ascending order (keep in mind that the portions are inside the array's objects)
+
+HINT 1: Use many different tools to solve these challenges, you can use the summary lecture to choose between them 😉
+HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
+
+TEST DATA:
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] }
+];
+
+GOOD LUCK 😀
+*/
