@@ -192,13 +192,45 @@ function updateUI(acc){
 }
 
 
+const startLogOutTimer = function () {
+
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, '0')
+    const sec = String(time % 60).padStart(2, '0')
+    // In each call, print the remaining time to UI
+    labelTimer.textContent = `${min}:${sec}` 
+
+    // When 0 seconds, stop timer and log out user
+    if(time === 0 ){
+      clearInterval(timer)
+      labelWelcome.textContent = 'Log in to get started'
+      containerApp.style.opacity = 0
+    }
+        // Decrease 1 second
+        time--
+
+  }
+
+  // set time to 5 minutes
+ let time = 120
+
+  // call the timer every second
+  tick()
+  const timer = setInterval(tick, 1000)
+  // returns timer to check is there is another timer running, they run separattly for each account
+  return timer
+}
+
+
 //Event Handlers 
-let currentAccount;
+let currentAccount, timer;
 //----------Remove when finished
 // FAKE ALWAYS LOGGED IN - remove it to test logging in - leave it to work on interface
-currentAccount = account1
-updateUI(currentAccount)
-containerApp.style.opacity = 100
+// currentAccount = account1
+// updateUI(currentAccount)
+// containerApp.style.opacity = 100
+
+
 
 //// Experimenting with API
 ////----- Timbe below Current Balance
@@ -261,12 +293,16 @@ btnLogin.addEventListener('click', (e)=>{
     //makes field looses its focus
     inputLoginPin.blur();
 
+    // Starts logout timer and checks if there is timer running for another user, is so it will clear the timer for the other user and restart the timer for the new user logging in.
+    if(timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount)
   }
 })
 
-
+//// TRANSFER
 //// The preventDefault is need so it wont reload the page! 
 btnTransfer.addEventListener('click', (e)=>{
   e.preventDefault()
@@ -286,6 +322,10 @@ btnTransfer.addEventListener('click', (e)=>{
 
     // Update UI 
     updateUI(currentAccount)
+
+    // Reset Timer
+    clearInterval(timer)
+    timer = startLogOutTimer()
   }
 
 })
@@ -295,16 +335,24 @@ btnLoan.addEventListener('click', (e)=>{
   e.preventDefault()
   const amount = Math.floor(inputLoanAmount.value)
 
-  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)){
-    // add positive movement
-    currentAccount.movements.push(amount)
+  setTimeout(()=> {
+    if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)){
 
-    // Loan Date
-      currentAccount.movementsDates.push(new Date().toISOString())
+      // add positive movement
+      currentAccount.movements.push(amount)
+  
+      // Loan Date
+        currentAccount.movementsDates.push(new Date().toISOString())
+  
+      // Update UI
+      updateUI(currentAccount)
 
-    // Update UI
-    updateUI(currentAccount)
-  }
+      // Reset Timer
+      clearInterval(timer)
+      timer = startLogOutTimer()
+    }
+  }, 2500)
+
   inputLoanAmount.value = ''
 })
 
@@ -471,3 +519,28 @@ btnSort.addEventListener('click', (e)=>{
 // console.log('US:' , new Intl.NumberFormat('en-US', options).format(num))
 // console.log('BR:', new Intl.NumberFormat('pt-BR', options).format(num))
 // console.log('GER:', new Intl.NumberFormat('de-DE', options).format(num))
+
+// // SetTimeout
+// const ingredients = ['olives', 'cheese']
+
+// const pizzaTimer = setTimeout((ing1, ing2)=>{
+//   console.log(`Here is your ${ing1} and ${ing2} pizza 🍕`)  
+// }, 3000, ...ingredients)
+// console.log('waiting for the pizza')
+
+// if(ingredients.includes('spinach')) clearTimeout(pizzaTimer)
+
+
+// SetInterval
+
+// const timerClock = setInterval(() => {
+//   const now = new Date()
+//   const options = {
+//     hour: 'numeric',
+//     minute: 'numeric',
+//     second: 'numeric'
+//   }
+//   // console.log(new Intl.DateTimeFormat('pt-BR', options).format(now))
+//   // console.log(now)
+// }, 1000)
+
