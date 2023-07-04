@@ -7,7 +7,10 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to')
+const section1 = document.querySelector('#section--1')
 
+// Modal Window
 // Prevent link click from going to the top of the page
 const openModal = function (e) {
   e.preventDefault()
@@ -25,8 +28,6 @@ btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal))
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
-
-
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
@@ -34,9 +35,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 
-const btnScrollTo = document.querySelector('.btn--scroll-to')
-const section1 = document.querySelector('#section--1')
-
+// Button Scrolling
 btnScrollTo.addEventListener('click', (e) => {
   const s1coords = section1.getBoundingClientRect()
   // console.log(s1coords)
@@ -58,29 +57,143 @@ btnScrollTo.addEventListener('click', (e) => {
 }) // ****
 
 
-// rgb(255,255,255)
+//// Page Navigation
+
+
+////                                  TITLE Event Delegation - Using Bubling
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
+
+document.querySelector('.nav__links').addEventListener('click', function (e){
+  e.preventDefault() // prevents from going to link position then goes to link with scrollIntoView!
+
+  // Matching Strategy for the right items
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href')
+    document.querySelector(id).scrollIntoView({behavior: 'smooth'})
+  }
+})
+
+
+
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab')
+const tabsContainer = document.querySelector('.operations__tab-container')
+const tabsContent = document.querySelectorAll('.operations__content')
+
+
+//// Event Delegation
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
+// To try, click on the span or on the button and console log it!
+// closest(): if I click on the button using e.target will return the <button></button>. If I click on top of the <span></span> element that is 01 or 03 it will return the span element. And I need to return the button in both instances! So the closest its the toll, since it will return itself if clicked on top of the <button>
+
+// Container Tabs
+tabsContainer.addEventListener('click', function (e){
+  const clicked = e.target.closest('.operations__tab')
+
+  // Guard Clause
+  if(!clicked) return
+  // or 
+  // if(clicked){
+  //   clicked.classList.add('operations__tab--active')
+  // }
+
+  // Remove Active
+  tabs.forEach(t => t.classList.remove('operations__tab--active')) // removes class from all 
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'))
+
+  //Active tab
+  clicked.classList.add('operations__tab--active') // adds class to clicked
+
+  // Activete content area
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////                                          TITLE DOM TRAVERSING
+
+// const h1 = document.querySelector('h1')
+
+
+// // Going downwards: child
+// console.log(h1.querySelectorAll('.highlight'))
+// console.log(h1.childNodes)
+// console.log(h1.children)
+// h1.firstElementChild.style.color = 'white'
+// h1.lastElementChild.style.color = 'orangered'
+
+// // Going upwards: parents
+
+// console.log(h1.parentNode)
+// console.log(h1.parentElement)
+
+//                                          IMPORTANT
+// closest(): if I click on the ELEMENT using e.target will return the <ELEMENT>. If I click on top of the <span ELEMENT INSIDE OF THE ELEMENT> it will return the span element. And I need to return the ELEMENT in both instances, NOT THE <SPAN INSIDE THE ELEMENT>! So the closest its the toll, since it will return itself if clicked on top of the <button>
+
+// h1.closest('.header').style.background = 'var(--gradient-secondary)'
+// h1.closest('h1').style.background = 'var(--gradient-primary)'
+
+
+// // Going sideways: siblings
+
+// console.log(h1.previousElementSibling)
+// console.log(h1.nextElementSibling)
+
+// console.log(h1.previousSibling)
+// console.log(h1.nextSibling)
+
+// console.log(h1.parentElement.children)
+// const x = [...h1.parentElement.children].forEach(function(el) {
+//   if(el !== h1) el.style.transform = 'scale(0.5)'
+// })
+
+
+
+
+
 
 //// BUBLING PROPAGATION 
 
-const randomInt = (min,max) => Math.floor(Math.random() * (max - min + 1) + min)
-const randomColor = () => `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`
-// console.log(randomColor(0,255))
+// const randomInt = (min,max) => Math.floor(Math.random() * (max - min + 1) + min)
+// const randomColor = () => `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`
+// // console.log(randomColor(0,255))
 
-document.querySelector('.nav__link').addEventListener('click',function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('LINK', e.target, '---CURRENT T----',e.currentTarget)
+// document.querySelector('.nav__link').addEventListener('click',function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, '---CURRENT T----',e.currentTarget)
 
-  //// Stop propagation
-  // e.stopPropagation()
-})
-document.querySelector('.nav__links').addEventListener('click',function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('CONTAINER', e.target, '---CURRENT T----',e.currentTarget)
-})
-document.querySelector('.nav').addEventListener('click',function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log('NAV', e.target, '---CURRENT T----', e.currentTarget)
-}, /*true*/) //****
+//   //// Stop propagation
+//   // e.stopPropagation()
+// })
+// document.querySelector('.nav__links').addEventListener('click',function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('CONTAINER', e.target, '---CURRENT T----',e.currentTarget)
+// })
+// document.querySelector('.nav').addEventListener('click',function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAV', e.target, '---CURRENT T----', e.currentTarget)
+// }, /*true*/) //****
+
+
+
+
 
 
 ////**** IMPORTANT Look at the log and see that the first event captured now is the NAV, due to the third parameter on the call back function set to true. This means the event will be captured going down the DOM, while the others are captured going back up the DOM. Going down its rarely used
