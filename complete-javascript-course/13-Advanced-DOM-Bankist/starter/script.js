@@ -9,6 +9,11 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to')
 const section1 = document.querySelector('#section--1')
+const tabs = document.querySelectorAll('.operations__tab')
+const tabsContainer = document.querySelector('.operations__tab-container')
+const tabsContent = document.querySelectorAll('.operations__content')
+const nav = document.querySelector('.nav')
+
 
 // Modal Window
 // Prevent link click from going to the top of the page
@@ -76,17 +81,13 @@ document.querySelector('.nav__links').addEventListener('click', function (e){
 
 
 
-// Tabbed component
-const tabs = document.querySelectorAll('.operations__tab')
-const tabsContainer = document.querySelector('.operations__tab-container')
-const tabsContent = document.querySelectorAll('.operations__content')
-
+//// Tabbed component
 
 //// Event Delegation
 // 1. Add event listener to common parent element
 // 2. Determine what element originated the event
 // To try, click on the span or on the button and console log it!
-// closest(): if I click on the button using e.target will return the <button></button>. If I click on top of the <span></span> element that is 01 or 03 it will return the span element. And I need to return the button in both instances! So the closest its the toll, since it will return itself if clicked on top of the <button>
+// closest(): if I click on the button using e.target will return the <button></button>. If I click on top of the <span></span> element that is 01 or 03 it will return the span element. And I need to return the button in both instances! So the closest its the tool, since it will return itself if clicked on top of the <button>
 
 // Container Tabs
 tabsContainer.addEventListener('click', function (e){
@@ -111,6 +112,152 @@ tabsContainer.addEventListener('click', function (e){
 })
 
 
+// Menu Fade Animation - Passing 'Arguments' to Event Handlers
+
+const handleHover = function (e) {
+  // console.log(this) // the this becomes the opacity, it was set using bind() in the mouseover event!
+
+  if(e.target.classList.contains('nav__link')){
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link')
+    const logo = link.closest('.nav').querySelector('img')
+    // console.log('link', link, 'siblings', siblings, 'logo', logo)
+
+    siblings.forEach(el => {
+      if(el !== link) el.style.opacity = this
+    })
+    logo.style.opacity = this
+  }
+}
+
+// Passing 'argument' into handler
+nav.addEventListener('mouseover', handleHover.bind(0.5))
+nav.addEventListener('mouseout', handleHover.bind(1))
+
+
+//// Sticky navigation: Intersection observer API
+const header = document.querySelector('header')
+const navHeight = nav.getBoundingClientRect().height
+
+const stickyNav = function (entries) { // entries are the root and threshold values
+  const [entry] = entries;
+  // console.log(entry)
+  
+  if(!entry.isIntersecting) nav.classList.add('sticky')
+  else  nav.classList.remove('sticky')
+}
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null, 
+  threshold: 0, 
+  rootMargin: `-${navHeight}px`
+});
+headerObserver.observe(header)
+
+
+
+
+
+
+//// Reveal section--hidden using Intersection observer
+const allSections = document.querySelectorAll('.section') // returns a node list
+
+const revealSection = function(entries, observer){
+  const [entry] = entries;
+  console.log(entry)
+
+  if(!entry.isIntersecting) return
+  entry.target.classList.remove('section--hidden')
+  observer.unobserve(entry.target)
+}
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15
+})
+
+allSections.forEach(function(section) {
+  sectionObserver.observe(section)
+  section.classList.add('section--hidden')
+})
+
+
+
+/* 
+//                        TITLE   Intersection observer  OBSERVE() EXPLANATION
+
+// const obsCallBack = function (entries, observer) {
+  //   entries.forEach(entry => console.log(entry))
+  // }
+  
+  // const obsOptions = {
+  //   root: null, // When null it will be the entire viewport
+  //   threshold: [0, 0.2]
+  // }
+  
+  // const observer = new IntersectionObserver(obsCallBack, obsOptions)
+  // observer.observe(section1)
+
+
+//                              .observe()  IMPORTANT
+// The call back function obsCallBack will be call each time that observe element in this case 'section1' is intercecting the root element in this case the 'viewport' at the threshold we defined.
+
+// Setting the root to null will be only looking for when the 'section1' enters the viewpor for more than 10% or 0.1! Based on a threshold: 0.1
+
+                                            IMPORTANT
+The rootMargin Will activate the threshold exactly where the target area start minus the size of the NAV bar, instead of overlapping.
+
+ex. 
+rootMargin: '-90px' it will activate the Sticky Nav bar whenever it reaches 90 px before the target. Thats what the -90 is for, if I do it 90 px it will activate 90 px after
+obs: It has to be pixels! % wont work neither will rem
+
+
+
+
+ Sticky Navigation Bar ---  Not really good, very performance heavy ------------------
+
+If I want to start from the Heading elements 
+const h1Header = document.querySelector('.header__title')
+const initialCoords = h1Header.getBoundingClientRect()
+
+const initialCoords = section1.getBoundingClientRect()
+console.log(initialCoords)
+
+window.addEventListener('scroll', () => {
+  // console.log(window.scrollY)
+  if(window.scrollY > initialCoords.top){
+    nav.classList.add('sticky')
+  }else{
+    nav.classList.remove('sticky')
+  }
+})
+---------------------------------------------------------------------------------
+
+
+*/ 
+
+
+
+
+/*   TITLE   Menu Fade Animation - Passing 'Arguments' to Event Handlers --  REMEMBERING WHAT BIND DOES
+
+nav.addEventListener('mouseover', function(e){
+  handleHover(e, 0.5)
+})
+
+nav.addEventListener('mouseout', function(e){
+  handleHover(e, 1)
+})
+
+
+  IMPORTANT When used in a event handler the Bind method will always pass the event as the first parameter
+  nav.addEventListener('mouseout', handleHover.bind(1)) this will work because handleHover.bind(1) is also a function. The bind method returns a new function, and in this new function the 'this' variable will be set to bind(1) 1, so this = 1
+  If more than one value is need it we could pass a array or a object bind([1, 2, 3])
+
+  // IMPORTANT The mouse enter event does not bubble
+*/
+
+//// -------END OF - Menu Fade Animation - Passing 'Arguments' to Event Handlers----------------------
 
 
 
