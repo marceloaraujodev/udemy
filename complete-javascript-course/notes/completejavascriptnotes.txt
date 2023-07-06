@@ -206,6 +206,751 @@ IMPORTANT This is only possible because of first-class functions
 
 
 
+////                                          TITLE DOM TRAVERSING
+
+// const h1 = document.querySelector('h1')
+
+
+// // Going downwards: child
+// console.log(h1.querySelectorAll('.highlight'))
+// console.log(h1.childNodes)
+// console.log(h1.children)
+// h1.firstElementChild.style.color = 'white'
+// h1.lastElementChild.style.color = 'orangered'
+
+// // Going upwards: parents
+
+// console.log(h1.parentNode)
+// console.log(h1.parentElement)
+
+//                                          IMPORTANT
+// closest(): if I click on the ELEMENT using e.target will return the <ELEMENT>. If I click on top of the <span ELEMENT INSIDE OF THE ELEMENT> it will return the span element. And I need to return the ELEMENT in both instances, NOT THE <SPAN INSIDE THE ELEMENT>! So the closest its the toll, since it will return itself if clicked on top of the <button>
+
+// h1.closest('.header').style.background = 'var(--gradient-secondary)'
+// h1.closest('h1').style.background = 'var(--gradient-primary)'
+
+
+// // Going sideways: siblings
+
+// console.log(h1.previousElementSibling)
+// console.log(h1.nextElementSibling)
+
+// console.log(h1.previousSibling)
+// console.log(h1.nextSibling)
+
+// console.log(h1.parentElement.children)
+// const x = [...h1.parentElement.children].forEach(function(el) {
+//   if(el !== h1) el.style.transform = 'scale(0.5)'
+// })
+
+
+
+
+
+
+//// BUBLING PROPAGATION 
+
+// const randomInt = (min,max) => Math.floor(Math.random() * (max - min + 1) + min)
+// const randomColor = () => `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`
+// // console.log(randomColor(0,255))
+
+// document.querySelector('.nav__link').addEventListener('click',function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINK', e.target, '---CURRENT T----',e.currentTarget)
+
+//   //// Stop propagation
+//   // e.stopPropagation()
+// })
+// document.querySelector('.nav__links').addEventListener('click',function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('CONTAINER', e.target, '---CURRENT T----',e.currentTarget)
+// })
+// document.querySelector('.nav').addEventListener('click',function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAV', e.target, '---CURRENT T----', e.currentTarget)
+// }, /*true*/) //****
+
+
+
+
+
+
+////**** IMPORTANT Look at the log and see that the first event captured now is the NAV, due to the third parameter on the call back function set to true. This means the event will be captured going down the DOM, while the others are captured going back up the DOM. Going down its rarely used
+
+
+
+// // TITLE            Making a event listener to listen only once
+
+// const h1 = document.querySelector('h1')
+
+// const alerth1 = (e) => {
+//   alert('uuuuuh')
+//   h1.removeEventListener('mouseenter', alerth1)
+// }
+
+// h1.addEventListener('mouseenter', alerth1)
+
+// // If not used in 3 seconds the event is removed
+// setTimeout(() => h1.removeEventListener('mouseenter', alerth1), 3000)
+
+
+
+
+// IMPORTANT***             TITLE  SCROLL TO WHERE I WANT EXPLAINED 
+
+////.scrollIntoView only works in modern browsers
+
+/*
+s1coords.top + window.scrollY Explained
+
+When I scroll down, the distance from the viewport to the top of the section--1 decreases. 
+current position + distance to the top section--1 = distance from the top of section--1 to the top of webpage
+
+formula explained : 
+
+DOMRect y: "value" = top of the section where I want to go, to the top of the viewport.
+current position from top of webpage = window.scrollY 
+
+(DOMRect y: "Value" + window.scrollY) = top of the section I want to be.
+
+viewport height/width = just the reference to see if everything is ok
+
+*/
+
+
+
+
+
+
+
+
+
+////////////////// LECTURES 
+
+// SELECTING ELEMENTS
+
+// console.log(document.documentElement)
+// console.log(document.head)
+// console.log(document.body)
+// const header = document.querySelector('.header')
+// const allSections = document.querySelectorAll('.section')
+// console.log(allSections)
+
+// document.getElementById('section--1')
+// const allButtons = document.getElementsByTagName('button')
+// console.log(allButtons)
+
+// console.log(document.getElementsByClassName('btn'))
+
+
+//                                TITLE HTMLCollection vs NodeList 
+/*
+The main difference between an HTMLCollection and a NodeList is that one is live and one is static. This means that when an element is appended to the DOM, a live node will recognize the new element while a static node will not
+
+REFERENCE LINK
+https://medium.com/@layne_celeste/htmlcollection-vs-nodelist-4b83e3a4fb4b
+*/
+
+
+//                             TITLE CREATING, INSERTING,  DELETING ELEMENTS
+
+// const message = document.createElement('div')
+// message.classList.add('cookie-message');
+// message.textContent = 'We use cooked for improved functionality and analytics.';
+// message.innerHTML = 'We use cooked for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>'
+
+// header.prepend(message) // prepend adds the element as the first child of the header element
+// header.append(message) // append adds the element as the last child of the element
+//-- The element was only inserted once, that happens because message is a live element, and cant be at 2 places at once!
+
+// To Inser multiple elements 
+
+// header.append(message.cloneNode(true)) // will create on top with the prepend and on the bottom using the cloneNode!
+
+
+// header.before(message) // inserts before the header element
+// header.after(message) // inserts after the header element
+
+
+// // DELETE ELEMENTS
+
+// document.querySelector('.btn btn--close-cookie')
+// addEventListener('click', () => {
+//   message.remove()
+// })
+
+
+
+////                                     TITLE STYLES, ATTRIBUTES, CLASSES
+
+// message.style.backgroundColor = '#37383d';
+// message.style.width = '120%';
+
+// console.log(message.style.width) // only works if we set it manually like in the two lines above!
+// console.log(message.style.color) // I havent set the color above, only the backgroundColor but not the color
+// console.log(message.style.backgroundColor, 'background color')
+
+
+// Acessing styles from the style sheet  👇 
+// console.log(getComputedStyle(message).color, 'color')
+// console.log(getComputedStyle(message).height, 'Height')
+
+// Changing the styles in the css file 
+
+// console.log(getComputedStyle(message).height)
+// console.log(Number.parseFloat(getComputedStyle(message).height, 10)) // gets just the number!
+// message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px'; // have to convert the string we get to a number the 10 after the height is a default radix value, that means the string should be parsed as a decimal number. The radix parameter helps avoid potential issues with number parsing when dealing with strings that start with leading zeros or contain certain characters.
+
+// console.log(getComputedStyle(message).height)
+
+
+
+////                          TITLE CSS CUSTOM PROPERTIES ALSO KNOW AS VARIABLES
+
+// document.documentElement.style.setProperty('--color-primary', 'orangered')
+
+
+
+////                          TITLE ATTRIBUTES
+
+
+// const logo = document.querySelector('.nav__logo')
+// console.log(logo.alt)
+// console.log(logo.src)
+// console.log(logo.className)
+
+
+// // Reading non-standard attributes
+// console.log(logo.getAttribute('designer'))
+// logo.setAttribute('company', 'Bankist')
+// console.log(logo.getAttribute('company'))
+
+
+//// DATA ATTRIBUTES
+// always stored in the dataset attribute
+// console.log(logo.dataset.versionNumber)
+
+// // CLASSES
+// .add()
+// .remove()
+// .toggle()
+// .contains()
+
+// Dont use - It will over ride all clases use add or remove
+// logo.className = 'jonas'
+
+
+
+TITLE 11 ARRAYS
+
+
+
+// let arr = ['a', 'b', 'c', 'd', 'e']
+
+// // SLICE RETURNS A NEW ARRAY
+
+// console.log(arr.slice(2))
+// console.log(arr.slice(0,2))
+// console.log(arr.slice(-2))
+// console.log(arr.slice(-1))
+// console.log(arr.slice(1, -2))
+// console.log(arr.slice()) // shallow copy
+
+
+// SPLICE - CHANGES ORIGINAL ARRAY - USED MOSTLY TO DELETE SOMETHINGS FROM THE ARRAY
+
+// console.log(arr.splice(2))
+// console.log(arr.splice(-1))
+// console.log(arr.splice(1, 2))
+// console.log(arr) // changed the original!
+
+
+// REVERSE - MUTATES THE ORIGINAL ARRAY
+
+// let arr2 = ['j', 'i', 'h', 'g', 'f']
+// console.log(arr2, 'original')
+// console.log(arr2.reverse())
+// console.log(arr2, 'mutated')
+// arr2.reverse()
+
+// // CONCAT
+
+// const letters = arr.concat(arr2)
+// console.log(letters)
+
+// // JOIN 
+// console.log(letters.join('-'))
+
+
+// // THE AT METHOD
+// const arr = [23, 11, 64]
+// // console.log(arr.at(0))
+
+// // getting last array element old vs .at()
+// // console.log(arr[arr.length -1])
+// // console.log(arr.slice(-1)[0])
+// console.log(arr.at(-1))
+
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+//// For Of
+// for(const movement of movements){
+//   movement < 0 ? console.log(`Withdraw of $${Math.abs(movement)}`) : console.log(`Deposit of $${movement}`)
+// }
+
+//// For Of with access to the indexes - The order of the the elements in the for of loop are Index, Element to be looped through
+
+// for(const [i, movement] of movements.entries()){
+//   console.log('Index:',i, 'Movement:',movement)
+// }
+
+//// Math.abs() removes the - of the number, will always return a positive number
+
+//// For Loop
+// for(let i = 0; i < movements.length; i++){
+//   // console.log(movements[i])
+//   if(movements[i] < 0){
+//     console.log(`Withdraw of ${movements[i]}`)
+//   }else{
+//     console.log(`Deposit of ${movements[i]}`)
+//   }
+// }
+
+
+//// For Each - 
+//// IMPORTANT The forEach method calls the function example:
+/* at index 
+0: function(200) the value of the first index is passed so on and so forth
+1: function(450)  
+2: function(400)
+
+IMPORTANT 
+                      Everytime it is called it passes
+
+1. The element being processed in the array
+2. The index of the current element being processed in the array
+3. The array the forEach method was called upon
+The order of the parameters matter, first paramenter is the element, second is the index, third is the array
+You cannot break out of a forEach Loop IMPORTANT when choosing which to use
+*/
+// movements.forEach((movement, index)=>{
+//   // console.log(index + 1, movement)
+//   movement < 0 ? console.log(`Movement ${index + 1}: Withdraw of $${Math.abs(movement)}`) : console.log(`Movement ${index + 1}: Deposit of $${movement}`)
+// })
+
+
+
+//// TITLE FOR EACH WITH MAPS AND SETS
+
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+
+// currencies.forEach((value, key, map)=>{
+//   console.log(`${key}: ${value}`)
+// })
+
+// // SET
+
+// const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR'])
+// console.log(currenciesUnique)
+
+// currenciesUnique.forEach((value, _, map)=>{
+//   console.log(`${value}: ${value}`)
+// })
+
+
+
+
+////                                 TITLE  MAP - FILTER - REDUCE - FIND
+
+/*
+ IMPORTANT THE MAP METHOD returns a new array with the results of applying an operation on all original array elements
+
+ IMPORTANT THE FILTER METHOD returns a new array containing the array elements that passed a specified test condition
+ 
+ IMPORTANT THE REDUCE METHOD boils all array elements down to one single value (adding all elements together)
+ 
+ IMPORTANT THE FIND METHOD retrieves the first item, that passes the condition, from the array
+*/
+
+//// MAP --
+
+// const eurToUsd = 1.1;
+
+
+// const movementsUSD = movements.map((mov)=>{
+//   // return 23 // just to see that it returns an array with the same amount of elements
+//  return mov * eurToUsd
+// })
+// const movementsUSD = movements.map(mov => mov * eurToUsd) // cleaning using arrow function
+
+// console.log(movements)
+// console.log(movementsUSD)
+
+// const movementsDescriptions = movements.map((mov, i) => 
+//   `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+// )// one line does not need return statement
+
+// console.log(movementsDescriptions)
+
+
+
+//// Filter --
+
+// const deposits = movements.filter( mov=> mov > 0)
+// // only elements that are true to this condition mov > 0 will return in the new deposits array
+// console.log('movements', movements)
+// console.log('deposits array', deposits)
+
+// const withdrawals = movements.filter(mov => mov < 0)
+// console.log(withdrawals)
+
+// const depositsFor = []
+// for (const mov of movements){
+//   mov > 0 ? depositsFor.push(mov) : undefined
+// }
+// console.log('With the for of loop', depositsFor)
+
+
+// //// Reduce --
+// // the 0 there is the initial accumulator variable
+// const balance = movements.reduce((acc, current, index)=> acc + current, 0)
+// console.log(balance)
+
+
+//// Maximum value of the movements array using Reduce
+
+// const maxMov = movements.reduce((acc, current)=>{
+//   return acc < current ? acc = current : acc
+// }, movements[0])
+// console.log(maxMov)
+
+
+
+////                                  TITLE CHAINING METHODS -
+
+const eurToUsd = 1.1;
+
+//// The filter returns a array with positive values, looks fro true or false values that passe a condition
+//// The map returns a new array with the values of a applied condition
+//// The reduce returns one value.
+//// Everytime it returns a new array you can chain methods
+
+// const totalDepositsUSD = movements
+// .filter((mov) => mov > 0)
+// .map((mov) => mov * eurToUsd)
+// .reduce((acc, currentMovement) => acc + currentMovement, 0)
+
+// console.log(totalDepositsUSD)
+
+////                          TITLE DEBBUGING THE CHAINING METHOD
+
+//// If a mistake was made on the filter method, below is how I could debugged it. Console log it the array after each method to see what the error whas and where it happened
+
+// console.log(movements)
+// const totalDepositsUSD = movements
+// .filter((mov) => mov < 0)
+// .map((mov, i, arr) => {
+//   console.log(arr)
+//   return mov * eurToUsd
+// })
+// .reduce((acc, currentMovement) => acc + currentMovement, 0)
+
+// console.log(totalDepositsUSD)
+
+
+
+
+
+
+////                                       TITLE  FIND METHOD
+
+// const firstWithdrawal = movements.find(mov => mov < 0)
+
+// console.log(movements)
+// console.log(firstWithdrawal)
+
+// console.log(accounts)
+
+// const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+// console.log(account)
+
+// for (const acc of accounts){
+//   // console.log(acc)
+//   if(acc.owner === 'Jessica Davis'){
+//     console.log(acc)
+//   }else{
+//     undefined
+//   }
+// }
+
+
+
+////                                 TITLE  SOME AND EVERY METHODS
+
+// console.log(movements)
+
+// // INCLUDES CHECKS FOR EQUALITY
+// console.log(movements.includes(-130))
+
+// // SOME: CHECKS FOR A CONDITION
+// const anyDeposits = movements.some( mov => mov > 5000)
+// console.log(anyDeposits)
+
+
+// EVERY: RETURNS TRUE ONLY IF ALL ELEMENTS PASSES THE TEST
+
+// console.log(movements.every(mov => mov > 0 ))
+// console.log(account4.movements.every(mov => mov > 0 ))
+
+
+// SEPARETE CALL BACK FUNCTION 
+
+// const deposit = mov => mov > 0
+// console.log(movements.some(deposit))
+// console.log(movements.every(deposit))
+// console.log(movements.filter(deposit))
+
+
+
+////                                 TITLE  FLAT AND FLATMAP
+
+//// .Flat()
+// const arr = [[1,2,3], [4,5,6], 7, 8]
+// console.log(arr.flat())
+
+// const arrDeep = [[[1,2],3], [4,[5,6]], 7, 8]
+
+// console.log(arrDeep.flat(2))
+
+
+// const accountMovements = accounts.map(acc => acc.movements)
+// console.log(accountMovements)
+// const allMovements = accountMovements.flat()
+// console.log(allMovements)
+// // const overAllBalance = allMovements.reduce((acc, mov) => acc + mov, 0)
+// console.log(overAllBalance)
+
+// // Chaining all Together
+
+// const overAllBalance = accounts.map(acc => acc.movements).flat().reduce((acc, mov) => acc + mov, 0)
+// console.log(overAllBalance)
+
+
+////.FlatMap - Only goes 1 level deep if need more use separete map() then flat()
+
+// const overAllBalance = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0)
+// console.log(overAllBalance)
+
+
+
+
+////                                 TITLE  SORTING ARRAYS
+
+// The sort method mutates the array be carefull IMPORTANT
+
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha']
+// console.log(owners.sort())
+// console.log(owners) // 
+
+// Numbers
+// console.log(movements)
+// console.log(movements.sort()) // it sorts based on strings not on numbers
+
+// return < 0, A, B (Keep Order)
+// return > 0, B, A (Switch Order)
+
+// // Ascending
+// movements.sort((a, b)=>{
+//   if(a > b){
+//     return 1;
+//   }
+//   if(a < b){
+//     return -1;
+//   }
+// })
+// console.log(movements)
+
+// it doesnt have to be 1 it can be anything > then 0 thats why a - b works its not about the number its about positive or negative! 0 will remain the same
+// movements.sort((a, b) => a - b)
+// console.log(movements)
+
+// // Descending
+// movements.sort((a, b)=>{
+//   if(a > b){
+//     return -1;
+//   }
+//   if(a < b){
+//     return 1;
+//   }
+// })
+// console.log(movements)
+
+// movements.sort((a, b) => b - a)
+// console.log(movements)
+
+
+
+////                            TITLE  MORE WAYS OF CREATING AND FILLING ARRAY
+
+
+// // IMPORTANT The new Array() with only one parameter that is a number creates a weird behaviour
+
+
+// const arr = [1, 2, 3, 4, 5, 6, 7,]
+
+// // EMPTY ARRAYS + FILL METHOD
+// const x = new Array(7) 
+// console.log(x, 'one parameter being a number exemption')
+
+// x.fill(1, 3, 5) // Fill with one ate index 3, you can especified a end parameter as well.
+// x.fill(1) // This mutates the array. Turn on and off to see it
+// console.log(x)
+
+// arr.fill(23, 4, 6)
+// console.log(arr, 'arr.fill(23, 4, 6)')
+
+// // ARRAY.from -- if we want to recreate the arr Array
+
+// const y = Array.from({length: 7}, () => 1) // Notice its Array.from with Capital A and not array.from! This is a Array constructor
+
+// console.log(y, 'Array.from()')
+
+// const z = Array.from({length: 7}, (_, i) => i + 1) // ***
+// console.log(z)
+
+// // *** The call back function its exaclty like the one in a map method on a empty array. IMPORTANT REMEMBER THE ORDER OF THE  PARAMETER? element,index, array! So if only the index is going to be used you have to signal the first parameter as not used but you have to have a first parameter otherwise the second parameter becomes the first. _ = ele , i = index so if its only one parameter i = curr then i would be undefined and then undefined + 1 = NaN. With 2 parameter would be curr = undefined, i = 0, i + 1 = 1. Then I would be able to be counted even though the curr its not used. 
+
+
+// const dice100 = Array.from({length: 100}, (_, i) => i + Math.floor(Math.random() * 100) + 1)
+// // console.log(dice100)
+
+
+
+// Converting a NodeList into a Array to be able to use Reduce or Map methods with it!
+// labelBalance.addEventListener('click', ()=>{
+
+//   const movementsUI = Array.from(document.querySelectorAll('.movements__value'), el => Number(el.textContent.replace('€', '')))
+//   console.log(movementsUI)
+// })
+
+
+
+
+
+////                            TITLE  WHICH ARRAY METHOD TO USE?
+
+////                                        IMPORTANT
+
+
+/*                                          What do I want?
+                                    TITLE TO MUTATE ORIGINAL ARRAY
+
+Add to original array:
+.push (end)
+.unshift (start)
+
+Remove from original:
+.pop (end)
+.shift (start)
+.splice (any)
+
+Others:
+.reverse
+.sort
+.fill
+--------------------------------------------------------------------------------------------------
+
+                                    TITLE A NEW ARRAY 
+Computed from original:
+.map (loop)
+
+Filtered using condition:
+.filter
+
+Portion of original:
+.slice
+
+Adding orginal to other:
+.concat
+
+Flattening the original:
+.flat
+.flatMap
+
+
+--------------------------------------------------------------------------------------------------
+                                    TITLE AN ARRAY INDEX
+
+Based on value:
+.indexOf
+
+Based on test Condition:
+.findIndex
+
+AN ARRAY ELEMENT
+
+Based on Test Condition:
+.find
+
+--------------------------------------------------------------------------------------------------
+                                    TITLE KNOW IF ARRAY INCLUDES
+
+Based on value:
+.includes
+
+Based on test condition:
+.some
+.every
+
+A NEW STRING
+
+Based on separator string:
+.join
+--------------------------------------------------------------------------------------------------
+                                    TITLE TO TRANSFORM THE VALUE
+
+Based on accumulator:
+.reduce
+
+-Returns a single value of any type, number, string, boolean or even an array or object                                    
+--------------------------------------------------------------------------------------------------
+
+                                    TITLE TO JUST LOOP
+
+Based on callback:
+.forEach
+
+-Does not create a new array, just loops over it                                    
+--------------------------------------------------------------------------------------------------
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
