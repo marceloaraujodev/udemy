@@ -296,10 +296,20 @@ const slider = function (){
 slider()
 
 
-document.addEventListener('DOMContentLoaded', function (e){
-console.log('html parsed and dom tree built', e)
-})
 
+
+
+
+
+
+
+
+// //                               TITLE Leaving Site Confirmation
+// window.addEventListener('beforeunload', (e) => {
+//   e.preventDefault()
+//   console.log(e)
+//   e.returnValue = ''; // To display leaving confirmation returnValue needs to be empty string
+// })
 
 
 
