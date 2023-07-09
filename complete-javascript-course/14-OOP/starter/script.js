@@ -1,8 +1,6 @@
 'use strict';
 
 
-
-
 // Constructor Function
 // const Person = function (firstName, birthYear){
 //     // Instance Properties
@@ -16,14 +14,22 @@
 // }
 
 // const jonas = new Person('Jonas', 1991)
-// console.log(jonas)
+// // console.log(jonas)
 
 // const matilda = new Person('Matilda', 1981)
 // const jack = new Person('Jack', 1984)
-// console.log(matilda)
-// console.log(jack)
+// // console.log(matilda)
+// // console.log(jack)
 
-// console.log(jonas instanceof Person)
+// // console.log(jonas instanceof Person)
+
+// // Person.hey = function () {
+// //     console.log('Hey there 🖐')
+// //     // console.log(this)
+// // }
+
+// // Person.hey()
+// // // jonas.hey()
 
 
 /*      👆   TITLE What happens when we use the new keyword calling the construction function?
@@ -35,28 +41,28 @@
  */
 
 
-// Creating New Prototype method
-// console.log('Person prototype', Person.prototype) // *1
+//// Creating New Prototype method
+// // console.log('Person prototype', Person.prototype) // *1
 // Person.prototype.calcAge = function () { 
 //         console.log(2023 - this.birthYear)
 //     }
 // jonas.calcAge()
-// console.log('The calc Function was not added here! If added to the constructor function, it would be. Uncomment on line 13 to see it', jonas)
+// // console.log('The calc Function was not added here! If added to the constructor function, it would be. Uncomment on line 13 to see it', jonas)
 
-// console.log('this is the prototype of jonas', jonas.__proto__)
-// console.log(jonas.__proto__ === Person.prototype)
-// console.log(Person.prototype.isPrototypeOf(jonas))
-// console.log(Person.prototype.isPrototypeOf(Person))
+// // console.log('this is the prototype of jonas', jonas.__proto__)
+// // console.log(jonas.__proto__ === Person.prototype)
+// // console.log(Person.prototype.isPrototypeOf(jonas))
+// // console.log(Person.prototype.isPrototypeOf(Person))
 
 // Person.prototype.species = 'Homo Sapiens'
-// console.log(jonas.species)
-// console.log(jonas.hasOwnProperty('firstName'))
-// console.log(jonas.hasOwnProperty('species')) // its not in the jonas object, but it has access to it
-// console.log('Person.prototype', Person.prototype)
-// console.log(jonas.__proto__)
-// console.log(jonas.__proto__.__proto__)
-// console.log(Person.prototype.constructor)
-// console.dir(Person.prototype.constructor)
+// // console.log(jonas.species)
+// // console.log(jonas.hasOwnProperty('firstName'))
+// // console.log(jonas.hasOwnProperty('species')) // its not in the jonas object, but it has access to it
+// // console.log('Person.prototype', Person.prototype)
+// // console.log(jonas.__proto__)
+// // console.log(jonas.__proto__.__proto__)
+// // console.log(Person.prototype.constructor)
+// // console.dir(Person.prototype.constructor)
 
 
 // 👉 EVERY FUNCTION IN JS HAS A PROPERTY PROTOTYPE!!!!! THAT INCLUDES CONSTRUCTOR FUNCTIONS
@@ -143,7 +149,7 @@ prototypes contains methods
 
 
 
-//                   TITLE CLASSES 
+//                                               TITLE CLASSES 
 
 // Class Expression:
 // const PersonCl = class{}
@@ -151,39 +157,208 @@ prototypes contains methods
 
 // // Class Declaration:
 // class PersonCl {
-//   constructor(firstName, birthYear){
-//     this.firstName = firstName;
+//   constructor(fullName, birthYear){
+//     this.fullName = fullName;
 //     this.birthYear = birthYear
 //   }
 
+//   // Instance methods  
 //   // Methods go here inside class but outside constructor! They will be added to .prototype property. No commas separating the methods
-//   calcAga() {
+//   calcAge() {
 //     console.log(2023 - this.birthYear)
 //   }
 
 //   greet (){
-//     console.log(`Hey ${this.firstName}`)
+//     console.log(`Hey ${this.fullName}`)
+//   }
+
+//   get age (){
+//     return 2023 - this.birthYear
+//   }
+// // Set a property that already exist IMPORTANT
+//   set fullName(name){
+//     // console.log(name)
+//     if(name.includes(' ')) this._fullName = name
+//     else console.log(`${name} is not full name!`)
+//   }
+
+//   get fullName() {
+//     return this._fullName
+//   }
+
+// // Static Method
+//   static hey (){
+//     console.log('Hey there 👋')
+//     // console.log(this)
 //   }
 
 // }
 
 
-// const jessica = new PersonCl('Jessica', 1990)
-
+// const jessica = new PersonCl('Jessica Davis', 1990)
 // console.log(jessica)
+// jessica.calcAge();
+// console.log(jessica.age) // get method
+
 // console.log(jessica.__proto__ === PersonCl.prototype)
 
-// //// Works the same as inside the class above!
-// // PersonCl.prototype.greet = function(){
-// //   console.log(`Hey ${this.firstName}`)
-// // }
+//// Works the same as inside the class above!
+// PersonCl.prototype.greet = function(){
+//   console.log(`Hey ${this.firstName}`)
+// }
 
 // jessica.greet()
 
 
-// 1. Classes are not hoisted.
-// 2. Class are first-class citizens
-// 3. Classes are executed in strict mode.
+
+// // 1. Classes are not hoisted.
+// // 2. Class are first-class citizens
+// // 3. Classes are executed in strict mode.
+
+// const walter = new PersonCl('Walter White', 1965)
+// console.log(walter) // open and look at _fullName and fullName - click on (...)
+// console.log(walter.fullName) // this is possible because of the get and set on line 172
+
+// PersonCl.hey()
+
+
+//                                             TITLE GETTERS AND SETTERS
+
+
+// const account = {
+//     owner: 'jonas', 
+//     movements: [200, 530, 440, 120],
+
+//     get latest() {
+//         return this.movements.slice(-1).pop()
+//     },
+
+//     set latest (mov) {
+//         this.movements.push(mov)
+//     }
+
+// }
+
+// console.log(account.latest)
+// account.latest = 50
+// console.log(account.movements)
+
+
+/* 
+👉 Notice that its used like a property and not like calling a function.
+👉 A getter must have exactly zero parameters.
+👉 The set needs exactly one parameter
+👉 Notice how the set syntax is different, it is used to assign 
+*/
+
+
+/*                               TITLE Setting a property that already exist.
+
+👉 Will have to use the underscore ex: this._variableName (this.fullName in this case)
+👉 Will have to create the get method and return this._variableName so it can be used with the variable  name (fullName). Ex: jessica.fullName. So the actual property will still be _variableName, but It will also be computed variableName without the underscore!
+*/
+
+
+
+//                                       TITLE STATIC METHOD
+
+// 👉 .from method is only available on the constructor Array.from and not on the array it self
+// 👉 Number.parseFloat(12) is only available on the constructor and not on numbers you cant wright 12.parseFloat. Thats what it means
+
+
+//                                       TITLE OBJECT.CREATE()
+
+// const PersonProto = {
+//     calcAge() {
+//         console.log(`${this.firstName} age is ${2023 - this.birthYear} y/o`)
+//       },
+
+//     init(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//       }
+// }
+
+// const steven = Object.create(PersonProto)
+
+// console.log(steven)
+// steven.firstName = 'Steven';
+// steven.birthYear = 1989;
+// // console.log(steven)
+// steven.calcAge()
+
+
+// const sarah = Object.create(PersonProto)
+// sarah.init('Sarah', 1975)
+// sarah.calcAge()
+
+
+
+
+
+//                    TITLE INHERITANCE BETWEEN 'CLASSES, NOT THE class VariableName' 
+
+
+
+// const Person1 = function (firstName, birthYear){
+//     // Instance Properties
+//     this.firstName = firstName
+//     this.birthYear = birthYear
+// }
+
+// Person1.prototype.calcAge = function () { 
+//     console.log(2023 - this.birthYear)
+// }
+
+// // constructor function
+// const Student = function (firstName, birthYear, course){
+//     Person1.call(this, firstName, birthYear)
+//     this.course = course
+// }
+
+// // Linking prototypes
+// Student.prototype = Object.create(Person1.prototype) // returns a empty object.
+// Student.prototype.constructor = Student
+
+// // Student Method
+// Student.prototype.introduce = function (){
+//     console.log(`My name is ${this.firstName} and I'm studing ${this.course}`)
+// }
+
+// const mike = new Student('Mike', 2000, 'Computer Science')
+// console.log(mike)
+// mike.introduce()
+// mike.calcAge()
+
+// // The prototype chain below!
+// console.log(mike.__proto__)
+// console.log(mike.__proto__.__proto__)
+// console.log(mike.__proto__.__proto__.__proto__)
+// console.log(mike.__proto__.__proto__.__proto__.__proto__)
+
+// console.dir(Student.prototype.constructor)
+
+/*                                                  IMPORTANT 
+
+👉 This is a Regular function call.  greet("John"); 
+
+👉 In a regular function call, the this keyword is set to undefined. And thats why this will not work! Person1.call(firstName, birthYear). Does not work. Instead do this
+Person1.call(this, firstName, birthYear) 👉 Will manually set the this keyword from Person1 to be the same this keyword in the Student function.
+
+👉 Linking Student Class to the Person Class: Student.prototype = Object.create(Person1.prototype) will return a empty object. Then you can add methods to the Student.prototype
+
+👉 To correctly link the classes you have to 
+1. Create the Student Constructor function
+2. Add Student.prototype = Object.create(Person1.prototype) below the Student Constructor function
+
+IMPORTANT
+
+👉 Using Object.create will set the Student.prototype.constructor to be Person1. Fixing this problem:
+Student.prototype.constructor = Student!
+*/
+
+
+
 
 
 
@@ -224,7 +399,7 @@ const Car = function (make, speed) {
 }
 
 Car.prototype.acelerate = function () {
-  this.speed += + 10
+  this.speed += 10
   console.log(`This ${this.make} is going at ${this.speed} km/h`)
 }
 
@@ -240,3 +415,50 @@ bmw.acelerate()
 
 bmw.brake() */
 
+// Coding Challenge #2
+
+/* 
+1. Re-create challenge 1, but this time using an ES6 class;
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+GOOD LUCK 😀
+*/
+
+
+// class Car {
+//     constructor(make, speed){
+//         this.make = make;
+//         this.speed = speed;
+//     }
+
+//     acelerate() {
+//         this.speed += 10
+//         console.log(`This ${this.make} is going at ${this.speed} km/h`)
+//     }
+
+//     brake(){
+//         this.speed -= 5
+//         console.log(`This ${this.make} is breaking and now its at ${this.speed} km/h`)
+//     }
+
+//     get speedUS() {
+//         return this.speed / 1.6
+//       }
+      
+//       set speedUS(speed) {
+//         this.speed = speed * 1.6;
+//       }
+
+// }
+
+// const ford = new Car('Ford', 120)
+// console.log(ford.speedUS, 'mph')
+// ford.acelerate()
+// ford.acelerate()
+// ford.brake()
+// ford.speedUS = 50
+// console.log(ford)
