@@ -3,7 +3,7 @@
 
 
 
-// // Constructor Function
+// Constructor Function
 // const Person = function (firstName, birthYear){
 //     // Instance Properties
 //     this.firstName = firstName
@@ -13,7 +13,6 @@
 //     // this.calcAge = function () {
 //     //     console.log(2023 - birthYear)
 //     // }
-
 // }
 
 // const jonas = new Person('Jonas', 1991)
@@ -24,8 +23,6 @@
 // console.log(matilda)
 // console.log(jack)
 
-
-
 // console.log(jonas instanceof Person)
 
 
@@ -34,10 +31,11 @@
 1. A new Object {} is created
 2. The this keyword will point to the newly created object.
 3. The new Object is linked to prototype
-4. function automatically return a empty object. */
+4. function automatically return a empty object.
+ */
 
 
-// // Creating New Prototype method
+// Creating New Prototype method
 // console.log('Person prototype', Person.prototype) // *1
 // Person.prototype.calcAge = function () { 
 //         console.log(2023 - this.birthYear)
@@ -54,7 +52,11 @@
 // console.log(jonas.species)
 // console.log(jonas.hasOwnProperty('firstName'))
 // console.log(jonas.hasOwnProperty('species')) // its not in the jonas object, but it has access to it
-
+// console.log('Person.prototype', Person.prototype)
+// console.log(jonas.__proto__)
+// console.log(jonas.__proto__.__proto__)
+// console.log(Person.prototype.constructor)
+// console.dir(Person.prototype.constructor)
 
 
 // 👉 EVERY FUNCTION IN JS HAS A PROPERTY PROTOTYPE!!!!! THAT INCLUDES CONSTRUCTOR FUNCTIONS
@@ -74,6 +76,8 @@
 
 // Any Object always has access to the methods and properties from its prototype. And the prototype of jonas and matilda is Person.prototype
 
+
+// When calling the jonas.calcAge() function JS cant find the calcAge function in the jonas Object {}, it is not there. So what happens in this situation is that when a property or a method cannot be found in a certain Object JS will look into its prototype and if you look Person.prototype, there it is. calcAge is there. The jonas Object Inherited the calcAge function from its prototype.
 
 
 
@@ -136,4 +140,103 @@ prototypes contains methods
 
 
 */
+
+
+
+//                   TITLE CLASSES 
+
+// Class Expression:
+// const PersonCl = class{}
+
+
+// // Class Declaration:
+// class PersonCl {
+//   constructor(firstName, birthYear){
+//     this.firstName = firstName;
+//     this.birthYear = birthYear
+//   }
+
+//   // Methods go here inside class but outside constructor! They will be added to .prototype property. No commas separating the methods
+//   calcAga() {
+//     console.log(2023 - this.birthYear)
+//   }
+
+//   greet (){
+//     console.log(`Hey ${this.firstName}`)
+//   }
+
+// }
+
+
+// const jessica = new PersonCl('Jessica', 1990)
+
+// console.log(jessica)
+// console.log(jessica.__proto__ === PersonCl.prototype)
+
+// //// Works the same as inside the class above!
+// // PersonCl.prototype.greet = function(){
+// //   console.log(`Hey ${this.firstName}`)
+// // }
+
+// jessica.greet()
+
+
+// 1. Classes are not hoisted.
+// 2. Class are first-class citizens
+// 3. Classes are executed in strict mode.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Coding Challenge #1
+
+/* 
+1. Use a constructor function to implement a Car. A car has a make and a speed property. The speed property is the current speed of the car in km/h;
+2. Implement an 'accelerate' method that will increase the car's speed by 10, and log the new speed to the console;
+3. Implement a 'brake' method that will decrease the car's speed by 5, and log the new speed to the console;
+4. Create 2 car objects and experiment with calling 'accelerate' and 'brake' multiple times on each of them.
+
+DATA CAR 1: 'BMW' going at 120 km/h
+DATA CAR 2: 'Mercedes' going at 95 km/h
+
+GOOD LUCK 😀
+*/
+/* 
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+}
+
+Car.prototype.acelerate = function () {
+  this.speed += + 10
+  console.log(`This ${this.make} is going at ${this.speed} km/h`)
+}
+
+Car.prototype.brake = function () {
+  this.speed -= 5
+  console.log(`This ${this.make} is breaking and now its at ${this.speed} km/h`)
+}
+
+const bmw = new Car('BMW', 120)
+console.log(bmw)
+bmw.acelerate()
+bmw.acelerate()
+
+bmw.brake() */
 
