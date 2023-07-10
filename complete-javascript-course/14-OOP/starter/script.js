@@ -227,7 +227,7 @@ prototypes contains methods
 
 // const account = {
 //     owner: 'jonas', 
-//     movements: [200, 530, 440, 120],
+//     _movements: [200, 530, 440, 120],
 
 //     get latest() {
 //         return this.movements.slice(-1).pop()
@@ -359,6 +359,212 @@ Student.prototype.constructor = Student!
 
 
 
+//                     TITLE INHERITANCE BETWEEN 'CLASSES': ES6 CLASSES
+
+  //   class PersonCl {
+  //   constructor(fullName, birthYear){
+  //     this.fullName = fullName;
+  //     this.birthYear = birthYear
+  //   }
+  
+  //   // Instance methods  
+  //   // Methods go here inside class but outside constructor! They will be added to .prototype property. No commas separating the methods
+  //   calcAge() {
+  //     console.log(2023 - this.birthYear)
+  //   }
+  
+  //   greet (){
+  //     console.log(`Hey ${this.fullName}`)
+  //   }
+  
+  //   get age (){
+  //     return 2023 - this.birthYear
+  //   }
+  // // Set a property that already exist IMPORTANT
+  //   set fullName(name){
+  //     // console.log(name)
+  //     if(name.includes(' ')) this._fullName = name
+  //     else console.log(`${name} is not full name!`)
+  //   }
+  
+  //   get fullName() {
+  //     return this._fullName
+  //   }
+  
+  // // Static Method
+  //   static hey (){
+  //     console.log('Hey there 👋')
+  //     // console.log(this)
+  //   }
+  
+  // }
+
+
+  /*                                                 TITLE ES6 CLASSES
+
+  👉 Extendes PersonCl will link to prototypes behind the scenes without us having to think about it.
+  👉 Instead of using PersonCl.call(this, firstName, birthYear) like in constructor functions, just super() is used.
+  👉 Just pass the parameter from the PersonCl constructor to the super()
+  👉 If you dont need new properties you dont even need to write the constructor function
+  */
+
+  // class StudentCl extends PersonCl{
+  //   constructor(fullName, birthYear, course){
+  //     super(fullName, birthYear)
+  //     this.course = course; 
+  //   }
+
+  //   introduce = function (){
+  //   console.log(`My name is ${this.fullName} and I'm studing ${this.course}`)
+  //   }
+
+  //   calcAge() {
+  //     console.log(`I'm ${2023 - this.birthYear} years old, but as a student I feel more like ${2023 - this.birthYear + 10}`)
+  //   }
+  // }
+
+  // // const martha = new StudentCl('Martha Jones', 2005)
+  // const martha = new StudentCl('Martha Jones', 2000, 'Computer Science')
+  // console.log(martha)
+
+  // martha.introduce()
+  // martha.calcAge()
+
+
+
+
+
+  //                         TITLE INHERITANCE BETWEEN 'CLASSES': OBJECT.CREATE
+
+
+// const PersonProto = {
+//     calcAge() {
+//         console.log(`${this.firstName} age is ${2023 - this.birthYear} y/o`)
+//       },
+
+//     init(firstName, birthYear){
+//         this.firstName = firstName;
+//         this.birthYear = birthYear;
+//       }
+// }
+
+// const steven = Object.create(PersonProto)
+
+// const StudentProto = Object.create(PersonProto) // // Basically at this poit, StudentProto is a empty Object with 2 methods that are inherited from PersonProto. The methods are calcAge and init.
+
+// // New Method that will overwrite the one that exist on PersonProto
+// StudentProto.init = function(firstName, birthYear, course){
+//   PersonProto.init.call(this, firstName, birthYear)
+//     this.course = course;
+// }
+
+// // New Method that will overwrite the one that exist on PersonProto
+// StudentProto.introduce = function () {
+//   console.log(`My name is ${this.firstName} and I'm studing ${this.course}`)
+// }
+
+// const jay = Object.create(StudentProto)
+// jay.init('Jay', 2003, 'Computer Science')
+// console.log(jay)
+// jay.introduce()
+// jay.calcAge()
+
+
+
+
+  ////                               TITLE OTHER CLASS EXAMPLES 
+  ////                                             &
+  ////     TITLE ENCAPSULATION: PRIVATE CLASS - PROTECTED PROPERTIES AND METHODS - DATA PROTECTION
+
+
+  class Account {
+    // 1. Public field (instances), need semi colens, looks like a variable but no need to declare. They are the same as this._movements but stay outside of the constructor
+    locale = navigator.language; 
+    
+
+    // 2. Private fields (instances): You can make properties really not accessible from the outside
+    #movements = [];
+    #pin;
+
+    constructor(owner, currency, pin){
+      this.owner = owner;
+      this.currency = currency;
+      this.#pin = pin;
+      // Protected property uses _ in front of the variable and is just a convention
+      // this.#movements = [];
+      // this.locale = navigator.language;
+      // console.log(`Thanks for opening an account, ${owner}!`)
+    }
+
+    // Public Interface
+    // 3. Public Methods
+    getMovements(){
+      return this.#movements
+    }
+
+    deposit(val) {
+      this.#movements.push(val)
+    }
+    // My initial thought was to remove the val from the array, however we need to track all the values, so push a negative value into the movements array!
+    withdraw(val) {
+      this.deposit(-val)
+    }
+
+    requestLoan(val){
+      if(this._approveLoan(val)){
+        this.deposit(val)
+        // console.log(`Loan Approved`)
+      }
+    }
+
+    // 4. Private Methods - Not yet implemented - Uses # using _ here because its not implemented
+    _approveLoan(val){
+      return true
+    }
+
+  }
+
+
+const acc1 = new Account('Jonas', 'EUR', 1111)
+
+acc1.deposit(250)
+acc1.withdraw(140)
+acc1.requestLoan(1000)
+console.log(acc1.getMovements())
+
+
+console.log(acc1)
+// console.log(acc1.#pin) // not supposed to be accessible
+// console.log(acc1.#movements) // throws a error, that is right not supposed to be acceptible
+
+
+  
+
+// 👉 Protected property uses _ in front of the variable and is just a convention
+
+// 👉 1. Public fields: Public field, need semi colens, looks like a variable but no need to declare. It will be present at all instaces that we are creating through the class. They are NOT on the PROTOTYPE. They are the same as this._movements but stay outside of the constructor IMPORTANT
+
+// 👉 2. Private fields: Use # in front of the variable goes below public field outside constructor. They are instaces not prototypes
+
+// 👉 3. Public methods: Its basically all the methods
+
+// 👉 4. Private methods: Not yet implemented
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -429,7 +635,7 @@ GOOD LUCK 😀
 */
 
 
-// class Car {
+// const Car {
 //     constructor(make, speed){
 //         this.make = make;
 //         this.speed = speed;
@@ -462,3 +668,65 @@ GOOD LUCK 😀
 // ford.brake()
 // ford.speedUS = 50
 // console.log(ford)
+
+
+// Coding Challenge #3
+
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+
+// // Constructor function
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// }
+
+// // Method
+// Car.prototype.acelerate = function () {
+//   this.speed += 10
+//   console.log(`This ${this.make} is going at ${this.speed} km/h`)
+// }
+
+// // Method
+// Car.prototype.brake = function () {
+//   this.speed -= 5
+//   console.log(`This ${this.make} is breaking and now its at ${this.speed} km/h`)
+// }
+
+// // Constructor function
+// const EV = function (make, speed, charge){
+//   Car.call(this, make, speed, charge)
+//   this.charge = charge
+// }
+// // console.log(Car.prototype)
+
+// // Linking the EV to the Car 'Class'
+// EV.prototype = Object.create(Car.prototype)  // Prototypes are the mechanism by which JavaScript objects inherit features from one another
+
+// // Method
+// EV.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo
+// }
+
+// Method
+// EV.prototype.acelerate = function (){
+//   this.speed += 20;
+//   this.charge --;
+//   console.log(`${this.make} going at ${this.speed}km/h, with a charge of ${this.charge}%`)
+
+// }
+
+// const tesla = new EV ('Tesla', 120, 23)
+// tesla.chargeBattery(90)
+// console.log(tesla)
+// tesla.brake()
+// tesla.acelerate() // EV acelerate was used instead of the Car acelerate method!
