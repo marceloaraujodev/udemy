@@ -477,109 +477,86 @@ Student.prototype.constructor = Student!
   ////     TITLE ENCAPSULATION: PRIVATE CLASS - PROTECTED PROPERTIES AND METHODS - DATA PROTECTION
 
 
-  class Account {
-    // 1. Public field (instances), need semi colens, looks like a variable but no need to declare. They are the same as this._movements but stay outside of the constructor
-    locale = navigator.language; 
+//   class Account {
+//     // 1. Public field (instances), need semi colens, looks like a variable but no need to declare. They are the same as this._movements but stay outside of the constructor
+//     locale = navigator.language; 
     
 
-    // 2. Private fields (instances): You can make properties really not accessible from the outside
-    #movements = [];
-    #pin;
+//     // 2. Private fields (instances): You can make properties really not accessible from the outside
+//     #movements = [];
+//     #pin;
 
-    constructor(owner, currency, pin){
-      this.owner = owner;
-      this.currency = currency;
-      this.#pin = pin;
-      // Protected property uses _ in front of the variable and is just a convention
-      // this.#movements = [];
-      // this.locale = navigator.language;
-      // console.log(`Thanks for opening an account, ${owner}!`)
-    }
+//     constructor(owner, currency, pin){
+//       this.owner = owner;
+//       this.currency = currency;
+//       this.#pin = pin;
+//       // Protected property uses _ in front of the variable and is just a convention
+//       // this.#movements = [];
+//       // this.locale = navigator.language;
+//       // console.log(`Thanks for opening an account, ${owner}!`)
+//     }
 
-    // Public Interface
-    // 3. Public Methods
-    getMovements(){
-      return this.#movements
-    }
+//     // Public Interface
+//     // 3. Public Methods
+//     getMovements(){
+//       return this.#movements
+//     }
 
-    deposit(val) {
-      this.#movements.push(val)
-    }
-    // My initial thought was to remove the val from the array, however we need to track all the values, so push a negative value into the movements array!
-    withdraw(val) {
-      this.deposit(-val)
-    }
+//     deposit(val) {
+//       this.#movements.push(val)
+//       return this; // for chaining to work
+//     }
+//     // My initial thought was to remove the val from the array, however we need to track all the values, so push a negative value into the movements array!
+//     withdraw(val) {
+//       this.deposit(-val)
+//       return this;
+//     }
 
-    requestLoan(val){
-      if(this._approveLoan(val)){
-        this.deposit(val)
-        // console.log(`Loan Approved`)
-      }
-    }
+//     requestLoan(val){
+//       if(this._approveLoan(val)){
+//         this.deposit(val)
+//         console.log(`Loan Approved`)
+//         return this;
+//       }
+//     }
 
-    // 4. Private Methods - Not yet implemented - Uses # using _ here because its not implemented
-    _approveLoan(val){
-      return true
-    }
+//     // 4. Private Methods - Not yet implemented - Uses # using _ here because its not implemented
+//     _approveLoan(val){
+//       return true
+//     }
 
-  }
-
-
-const acc1 = new Account('Jonas', 'EUR', 1111)
-
-acc1.deposit(250)
-acc1.withdraw(140)
-acc1.requestLoan(1000)
-console.log(acc1.getMovements())
+//   }
 
 
-console.log(acc1)
-// console.log(acc1.#pin) // not supposed to be accessible
-// console.log(acc1.#movements) // throws a error, that is right not supposed to be acceptible
+// const acc1 = new Account('Jonas', 'EUR', 1111)
 
+// acc1.deposit(250)
+// acc1.withdraw(140)
+// acc1.requestLoan(1000)
+// console.log(acc1.getMovements())
+
+
+// console.log(acc1)
+// // console.log(acc1.#pin) // not supposed to be accessible
+// // console.log(acc1.#movements) // throws a error, that is right not supposed to be acceptible
+
+
+// // Chaining
+//// 👉 return this; // for chaining to work
+// acc1.deposit(300).deposit(400).withdraw(50).requestLoan(25000).withdraw(1000)
+// console.log(acc1.getMovements())
 
   
 
-// 👉 Protected property uses _ in front of the variable and is just a convention
+// // 👉 Protected property uses _ in front of the variable and is just a convention
 
-// 👉 1. Public fields: Public field, need semi colens, looks like a variable but no need to declare. It will be present at all instaces that we are creating through the class. They are NOT on the PROTOTYPE. They are the same as this._movements but stay outside of the constructor IMPORTANT
+// // 👉 1. Public fields: Public field, need semi colens, looks like a variable but no need to declare. It will be present at all instaces that we are creating through the class. They are NOT on the PROTOTYPE. They are the same as this._movements but stay outside of the constructor IMPORTANT
 
-// 👉 2. Private fields: Use # in front of the variable goes below public field outside constructor. They are instaces not prototypes
+// // 👉 2. Private fields: Use # in front of the variable goes below public field outside constructor. They are instaces not prototypes
 
-// 👉 3. Public methods: Its basically all the methods
+// // 👉 3. Public methods: Its basically all the methods
 
-// 👉 4. Private methods: Not yet implemented
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// // 👉 4. Private methods: Not yet implemented
 
 
 
@@ -730,3 +707,75 @@ GOOD LUCK 😀
 // console.log(tesla)
 // tesla.brake()
 // tesla.acelerate() // EV acelerate was used instead of the Car acelerate method!
+
+
+// Coding Challenge #4
+/* 
+1. Re-create challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+2. Make the 'charge' property private;
+3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. They experiment with chining!
+
+DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
+new EVCl('Rivian', 120, 23)
+GOOD LUCK 😀
+*/
+
+// class CarCl {
+//   constructor(make, speed){
+//     this.make = make;
+//     this.speed = speed;
+//   }
+
+//       accelerate() {
+//         this.speed += 10
+//         console.log(`This ${this.make} is going at ${this.speed} km/h`)
+//     }
+
+//     brake(){
+//         this.speed -= 5
+//         console.log(`This ${this.make} is breaking and now its at ${this.speed} km/h`)
+//         return this
+//     }
+
+//     get speedUS() {
+//         return this.speed / 1.6
+//       }
+      
+//       set speedUS(speed) {
+//         this.speed = speed * 1.6;
+//       }
+
+// }
+
+// class EVCl extends CarCl {
+//   #charge;
+
+//   constructor(make, speed, charge){
+//     super(make, speed);
+//     this.#charge = charge; 
+//   }
+
+//   chargeBattery(chargeTo){
+//     this.#charge = chargeTo
+//     return this
+//   }
+
+//   accelerate() {
+//     this.speed += 20;
+//     this.#charge --;
+//     console.log(`${this.make} going at ${this.speed}km/h, with a charge of ${this.#charge}%`)
+//     return this
+//   }
+
+// }
+// const rivian = new EVCl('Rivian', 120, 23)
+// console.log(rivian)
+// rivian.accelerate()
+// rivian.brake()
+// rivian.chargeBattery(50)
+// console.log(rivian)
+// // console.log(rivian.#charge)
+
+// rivian.accelerate().accelerate().accelerate().brake().chargeBattery(70).accelerate()
+
+// console.log(rivian.speedUS)
