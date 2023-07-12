@@ -11,32 +11,122 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
-if(navigator.geolocation)
-navigator.geolocation.getCurrentPosition(function(position){
-// console.log(position)
-const {latitude} = position.coords
-const {longitude} = position.coords
-// console.log(latitude)
-// console.log(longitude)
-// console.log(`https://www.google.com/maps/@${latitude},${longitude}`)
 
-const coords = [latitude, longitude]
+class Workout{
+    date = new Date(); // Class fields
+    id = (Date.now() + '').slice(-10) // usually use library for creating ids, but here will use date convert to string and use the last 10 numbers, not a good practice
 
-const map = L.map('map').setView(coords, 13); // 13 zoom level on load
-// console.log(map)
+    constructor(coords, distance, duration){
+        // this.date = date;  // ES6 at least thos above are very new
+        // this.id = id ;  // ES6
+        this.coords = coords;
+        this.distance = distance; // in km
+        this.duration = duration; // in min
+    }
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+}
 
-    map.on('click', function(mapEvent) {
-        console.log(mapEvent)
-        // console.log(mapEvent.latlng.lat, mapEvent.latlng.lng)
-        const {lat, lng} = mapEvent.latlng
-        console.log(lat, 'lat', 'lng', lng)
+// Child of workout
+class Running extends Workout{
+    constructor(coords, distance, duration, candence){
+        super(coords, distance, duration) // [lat, lng] Remember child class call super with the variables 
+        this.candence = candence; // add the new varible to the child class
+        this.calcPace()
+    }
+    calcPace(){
+        // min/km
+        this.pace = this.duration / this.distance 
+        return this.pace
+    }
+}
 
-        L.marker([lat, lng]).addTo(map)
-        .bindPopup(L.popup({
+// Child of workout
+class Cycling extends Workout{
+    constructor(coords, distance, duration, elevationGain){
+        super(coords, distance, duration) // Remember child class call super with the variables 
+        this.elevationGain = elevationGain; // add the new varible to the child class
+        this.calcSpeed()
+    }
+
+    calcSpeed(){
+        // km/h
+        this.speed = this.distance / (this.duration / 60)
+        return this.speed
+    }
+}
+
+const run1 = new Running([39, -12], 5.2, 24, 178)
+const cycling1 = new Cycling([39, -12], 27, 95, 578)
+
+console.log(run1, cycling1)
+
+///////////////////////////////
+
+// APPLICATION ARCHITECTURE
+class App {
+    #map;
+    #mapEvent;
+
+    constructor() {
+        this._getPosition()
+
+        // Setting the marker on map when form is submitted (on enter)
+        form.addEventListener('submit', this._newWorkout.bind(this))
+
+        // Changes Elevation or Cadence for running or cycling (toggleelevation field doesnt use the this so dont need to bind it)
+        inputType.addEventListener('change', this._toggleElevationField)
+        
+    }
+
+    _getPosition(){ 
+        // On regular function calls this is set to undefined so this._loadMap its a regular function call
+        if(navigator.geolocation)
+        navigator.geolocation.getCurrentPosition(this._loadMap.bind(this),
+        function(){
+            alert('Could not get your position')
+        })
+    }
+
+    _loadMap(position){
+        const {latitude} = position.coords
+        const {longitude} = position.coords
+        // console.log(`https://www.google.com/maps/@${latitude},${longitude}`)
+        
+        const coords = [latitude, longitude]
+
+        // console.log(this) //fiding out why it was undefined before setting the bind method on line 26
+        this.#map = L.map('map').setView(coords, 13); // 13 zoom level on load
+        // console.log(map)
+        
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.#map);
+        
+        
+        // Handling clicks on map. - Show form / set focus / Set map event info to global variable mapEvent
+            this.#map.on('click', this._showForm.bind(this))
+    }
+
+    _showForm(mapE){
+        // console.log('mapE:', mapE)
+        this.#mapEvent = mapE
+        form.classList.remove('hidden')
+        inputDistance.focus()    
+    }
+    _toggleElevationField(){
+        inputElevation.closest('.form__row').classList.toggle('form__row--hidden')
+        inputCadence.closest('.form__row').classList.toggle('form__row--hidden')
+    }
+    _newWorkout(e){
+        e.preventDefault() // So page wont reload and erase everything- for now since its not saved
+
+        // Clear input fields
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
+
+        // Display marker
+        const {lat, lng} = this.#mapEvent.latlng // Deconstruct 2 variable from mapevent
+        L.marker([lat, lng]).addTo(this.#map) // Marker receives a array wit lat and long, add to map
+        .bindPopup(L.popup({ // object for the popup with specs
             maxWidth: 250,
             minWidth: 100,
             autoClose: false,
@@ -44,12 +134,16 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             className: 'running-popup',
         })).setPopupContent('Running')
         .openPopup();
+    }
+}
 
-    })
+const app = new App();
 
-}, function(){
-    alert('Could not get your position')
-})
+
+
+
+
+
 
 
 
@@ -119,6 +213,16 @@ Page loads ➡ 1. Async Get current location coordinates ➡ 2. Render map on cu
 
 4. Architecture:
 How we will build it. How to implement and organize it. Strategies for efficency to avoid spaguetthi code
+
+👉 Where and how to store the data.
+
+👉 Parents will host the data and methods that appears in both childs.
+
+👉 The Child class will hold the more specific data and methods that only happen on them
+
+👉 The structure for this project will come from classes and objects.
+
+
 
 
 5. Development Step:

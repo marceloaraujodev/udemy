@@ -60,22 +60,29 @@ reverse array
 return reversed value
 
 
-------------------------------SUBJECT: THIS & ARGUMENTS - KEYWORDS ------------------
+                             TITLE: THIS  & ARGUMENTS - KEYWORDS 
 
 
-// // 1  IMPORTANT  NEVER USE A ARROW FUNCTION AS A METHOD! To avoid conflicts with the this keyword
+1   NEVER USE A ARROW FUNCTION AS A METHOD! To avoid conflicts with the this keyword
 
-// // 2  IMPORTANT  inside a regular function call the this keyword is undefined! 
+2   inside a regular function call the this keyword is undefined! 
 
-// // 3  IMPORTANT arrow function do not have its own THIS keyword. It would call its parent in the scope to use their 'this' keyword, which is the window and on window there is no fristName. **before var firstName is created
+3   arrow function do not have its own THIS keyword. It would call its parent in the scope to use their 'this' keyword, which is the window and on window there is no fristName. **before var firstName is created
 
-// // 4  IMPORTANT this is not a code block its a object literal! thats why the arrow function wont have this as a parent
+4   this is not a code block its a object literal! thats why the arrow function wont have this as a parent
 
-// // 5  IMPORTANT setting self to this I'm outside the function so I can call self
+5   setting self to this I'm outside the function so I can call self
 
-// // 6  IMPORTANT on solution 2 using the we use arrow function that dont have its own this keyword, so it looks at its parent this keyword! While on solution 1 regular function have its own this keyword, making it us having to declare a new variable pointing to the parent element for the this keyword!
+6   on solution 2 using the we use arrow function that dont have its own this keyword, so it looks at its parent this keyword! While on solution 1 regular function have its own this keyword, making it us having to declare a new variable pointing to the parent element for the this keyword!
 
-// // 7  IMPORTANT Arguments keyword its only available in regular functions
+7   Arguments keyword its only available in regular functions
+
+
+The This Keyword in different situations:
+
+👉 On regular function calls the this keyword is set to undefined
+👉 On event listeners the this keyword is set to the DOM Element that is attached to. To fix use .bind(this)
+👉 Console.log(this) to keep checking if the this keyword is set to what we want
 
 
 
