@@ -118,12 +118,41 @@ class App {
         inputCadence.closest('.form__row').classList.toggle('form__row--hidden')
     }
     _newWorkout(e){
+        // when using ... the spread operator inputs becomes an array. 
+        // inputs.every will loop through array and check if numbers are finite. And will only return true if all numbers are finite
+        const validInputs = (...inputs) => 
+            inputs.every(inp => Number.isFinite(inp))
+
         e.preventDefault() // So page wont reload and erase everything- for now since its not saved
 
-        // Clear input fields
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
+        // Get data from form
+        const type = inputType.value
+        const distance = +inputDistance.value // + converts into number
+        const duration = +inputDuration.value 
+        
 
-        // Display marker
+        
+        // If workout running, create running object
+        if(type === 'running'){
+            // Check if data is valid
+            const cadence = +inputCadence.value;
+        }
+
+        // If workout cycling, create cycling object
+        if(type === 'running'){
+            const elevation = +inputElevation.value;
+             if(
+                // !Number.isFinite(distance) || // checks if number is (e.g., Infinity, -Infinity, or NaN) if so execute
+                //  !Number.isFinite(duration) ||
+                //  !Number.isFinite(cadence) 
+                // if the return from validInputs is false meaning one of the numbers is not finite. I will make the false become true using the ! then the condition will execute since the estatement became true and alert will run
+                !validInputs(distance, duration, cadence)
+               )
+            return  alert('Inputs have to be positive numbers') 
+        }
+        // Add new objet to workout array
+
+        // Render workout on map as a marker
         const {lat, lng} = this.#mapEvent.latlng // Deconstruct 2 variable from mapevent
         L.marker([lat, lng]).addTo(this.#map) // Marker receives a array wit lat and long, add to map
         .bindPopup(L.popup({ // object for the popup with specs
@@ -134,6 +163,17 @@ class App {
             className: 'running-popup',
         })).setPopupContent('Running')
         .openPopup();
+
+        // Render workout on list
+        
+        // Hide form + clear input fields
+
+
+        // Clear input fields
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
+
+        
+        
     }
 }
 
