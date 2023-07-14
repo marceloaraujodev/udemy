@@ -122,6 +122,8 @@ class App {
         // inputs.every will loop through array and check if numbers are finite. And will only return true if all numbers are finite
         const validInputs = (...inputs) => 
             inputs.every(inp => Number.isFinite(inp))
+            
+        const allPositive = (...inputs) => inputs.every(inp => inp > 0)
 
         e.preventDefault() // So page wont reload and erase everything- for now since its not saved
 
@@ -130,7 +132,6 @@ class App {
         const distance = +inputDistance.value // + converts into number
         const duration = +inputDuration.value 
         
-
         
         // If workout running, create running object
         if(type === 'running'){
@@ -146,7 +147,7 @@ class App {
                 //  !Number.isFinite(duration) ||
                 //  !Number.isFinite(cadence) 
                 // if the return from validInputs is false meaning one of the numbers is not finite. I will make the false become true using the ! then the condition will execute since the estatement became true and alert will run
-                !validInputs(distance, duration, cadence)
+                !validInputs(distance, duration, elevation) || !allPositive(distance, duration, cadence)
                )
             return  alert('Inputs have to be positive numbers') 
         }
