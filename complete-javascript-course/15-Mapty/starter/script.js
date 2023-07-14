@@ -1,15 +1,8 @@
 'use strict';
 
-// prettier-ignore
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
+
+
 
 
 class Workout{
@@ -19,19 +12,28 @@ class Workout{
     constructor(coords, distance, duration){
         // this.date = date;  // ES6 at least thos above are very new
         // this.id = id ;  // ES6
-        this.coords = coords;
+        this.coords = coords; // [lat, lng]
         this.distance = distance; // in km
         this.duration = duration; // in min
+    }
+
+    _setDescription(){
+        //prettier-ignore
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`
     }
 
 }
 
 // Child of workout
 class Running extends Workout{
-    constructor(coords, distance, duration, candence){
+    type = 'running'
+    constructor(coords, distance, duration, cadence){
         super(coords, distance, duration) // [lat, lng] Remember child class call super with the variables 
-        this.candence = candence; // add the new varible to the child class
+        this.cadence = cadence; // add the new varible to the child class
         this.calcPace()
+        this._setDescription()
     }
     calcPace(){
         // min/km
@@ -42,10 +44,12 @@ class Running extends Workout{
 
 // Child of workout
 class Cycling extends Workout{
+    type = 'cycling' // same as puting in the constructor. this.type = 'cyclying'
     constructor(coords, distance, duration, elevationGain){
         super(coords, distance, duration) // Remember child class call super with the variables 
         this.elevationGain = elevationGain; // add the new varible to the child class
         this.calcSpeed()
+        this._setDescription()
     }
 
     calcSpeed(){
@@ -58,14 +62,25 @@ class Cycling extends Workout{
 const run1 = new Running([39, -12], 5.2, 24, 178)
 const cycling1 = new Cycling([39, -12], 27, 95, 578)
 
-console.log(run1, cycling1)
+// console.log(run1, cycling1)
 
 ///////////////////////////////
 
 // APPLICATION ARCHITECTURE
+
+const form = document.querySelector('.form');
+const containerWorkouts = document.querySelector('.workouts');
+const inputType = document.querySelector('.form__input--type');
+const inputDistance = document.querySelector('.form__input--distance');
+const inputDuration = document.querySelector('.form__input--duration');
+const inputCadence = document.querySelector('.form__input--cadence');
+const inputElevation = document.querySelector('.form__input--elevation');
+
+
 class App {
     #map;
     #mapEvent;
+    #workout = [];
 
     constructor() {
         this._getPosition()
@@ -79,7 +94,6 @@ class App {
     }
 
     _getPosition(){ 
-        // On regular function calls this is set to undefined so this._loadMap its a regular function call
         if(navigator.geolocation)
         navigator.geolocation.getCurrentPosition(this._loadMap.bind(this),
         function(){
@@ -94,7 +108,6 @@ class App {
         
         const coords = [latitude, longitude]
 
-        // console.log(this) //fiding out why it was undefined before setting the bind method on line 26
         this.#map = L.map('map').setView(coords, 13); // 13 zoom level on load
         // console.log(map)
         
@@ -108,18 +121,26 @@ class App {
     }
 
     _showForm(mapE){
-        // console.log('mapE:', mapE)
         this.#mapEvent = mapE
         form.classList.remove('hidden')
         inputDistance.focus()    
+        // console.log('mapE:', mapE)
     }
+
+    _hideForm(){
+        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
+
+        form.style.display= 'none';
+        form.classList.add('hidden');
+        setTimeout(() => (form.style.display = 'grid'), 1000)
+    }
+
     _toggleElevationField(){
         inputElevation.closest('.form__row').classList.toggle('form__row--hidden')
         inputCadence.closest('.form__row').classList.toggle('form__row--hidden')
     }
+    
     _newWorkout(e){
-        // when using ... the spread operator inputs becomes an array. 
-        // inputs.every will loop through array and check if numbers are finite. And will only return true if all numbers are finite
         const validInputs = (...inputs) => 
             inputs.every(inp => Number.isFinite(inp))
             
@@ -131,57 +152,143 @@ class App {
         const type = inputType.value
         const distance = +inputDistance.value // + converts into number
         const duration = +inputDuration.value 
-        
-        
+        const {lat, lng} = this.#mapEvent.latlng // Deconstruct 2 variable from mapevent
+        let workout;
+
         // If workout running, create running object
         if(type === 'running'){
             // Check if data is valid
             const cadence = +inputCadence.value;
-        }
 
-        // If workout cycling, create cycling object
-        if(type === 'running'){
-            const elevation = +inputElevation.value;
-             if(
+            if(
                 // !Number.isFinite(distance) || // checks if number is (e.g., Infinity, -Infinity, or NaN) if so execute
                 //  !Number.isFinite(duration) ||
                 //  !Number.isFinite(cadence) 
                 // if the return from validInputs is false meaning one of the numbers is not finite. I will make the false become true using the ! then the condition will execute since the estatement became true and alert will run
-                !validInputs(distance, duration, elevation) || !allPositive(distance, duration, cadence)
+                !validInputs(distance, duration, cadence) ||
+                !allPositive(distance, duration, cadence)
                )
             return  alert('Inputs have to be positive numbers') 
-        }
-        // Add new objet to workout array
 
-        // Render workout on map as a marker
-        const {lat, lng} = this.#mapEvent.latlng // Deconstruct 2 variable from mapevent
-        L.marker([lat, lng]).addTo(this.#map) // Marker receives a array wit lat and long, add to map
-        .bindPopup(L.popup({ // object for the popup with specs
-            maxWidth: 250,
-            minWidth: 100,
-            autoClose: false,
-            closeOnClick: false,
-            className: 'running-popup',
-        })).setPopupContent('Running')
-        .openPopup();
+            workout = new Running([lat, lng], distance, duration, cadence)
+            
+        }
+
+        // If workout cycling, create cycling object
+        if(type === 'cycling'){
+            const elevation = +inputElevation.value;
+             if(
+                !validInputs(distance, duration, elevation) || 
+                !allPositive(distance, duration, elevation)
+               )
+            return  alert('Inputs have to be positive numbers') 
+
+            workout = new Cycling([lat, lng], distance, duration, elevation)
+        }
+
+        // Add new objet to workout array
+        this.#workout.push(workout)
+        console.log(workout)
+
+        // Render workout on map as marker
+        this._renderWorkoutMarker(workout)
 
         // Render workout on list
+        this._renderWorkout(workout)
         
         // Hide form + clear input fields
 
 
         // Clear input fields
-        inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';
-
-        
-        
+        this._hideForm();
     }
+
+    _renderWorkoutMarker(workout) {
+        // Render workout on map as a marker
+        L.marker(workout.coords).addTo(this.#map) // Marker receives a array wit lat and long, add to map
+        .bindPopup(L.popup({ // object for the popup with specs
+            maxWidth: 250,
+            minWidth: 100,
+            autoClose: false,
+            closeOnClick: false,
+            className: `${workout.type}-popup`,
+        })).setPopupContent(`${workout.type === 'running' ? '🏃‍♂️' : '🚴'} ${workout.description}`)
+        .openPopup();
+    }
+
+    _renderWorkout(workout){
+        let html =`
+        <li class="workout workout--${workout.type}" data-id="${workout.id}">
+          <h2 class="workout__title">${workout.description}</h2>
+          <div class="workout__details">
+            <span class="workout__icon">${workout.type === 'running' ? '🏃‍♂️' : '🚴'}</span>
+            <span class="workout__value">${workout.distance}</span>
+            <span class="workout__unit">km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⏱</span>
+            <span class="workout__value">${workout.duration}</span>
+            <span class="workout__unit">min</span>
+          </div>
+          `;
+
+          if(workout.type === 'running')
+          html += `
+                <div class="workout__details">
+                <span class="workout__icon">⚡️</span>
+                <span class="workout__value">${workout.pace.toFixed(1)}</span>
+                <span class="workout__unit">min/km</span>
+                </div>
+                <div class="workout__details">
+                <span class="workout__icon">🦶🏼</span>
+                <span class="workout__value">${workout.cadence}</span>
+                <span class="workout__unit">spm</span>
+                </div>
+            </li>
+             `;
+
+             if(workout.type === 'cycling')
+             html += `
+                    <div class="workout__details">
+                    <span class="workout__icon">⚡️</span>
+                    <span class="workout__value">${workout.speed.toFixed(1)}</span>
+                    <span class="workout__unit">km/h</span>
+                </div>
+                <div class="workout__details">
+                    <span class="workout__icon">⛰</span>
+                    <span class="workout__value">${workout.elevationGain}</span>
+                    <span class="workout__unit">m</span>
+                </div>
+                </li>
+             `;
+
+             form.insertAdjacentHTML('afterend', html)
+    }
+
 }
 
 const app = new App();
 
 
 
+/* Description of what the code does
+
+_getPosition():
+
+👉 On regular function calls this is set to undefined so this._loadMap its a regular function call. There for the need to bind.
+
+👉 gets position from navigator and calls loadMap and binds the this keyword from the getCurrentPosition to the loadMap method. The seconde parameter is if there is a error getting the location here we input a function to display the alert, 
+
+
+_newWorkout(e):
+
+👉 when using ... the spread operator inputs becomes an array. 
+
+👉 inputs.every will loop through array and check if numbers are finite. And will only return true if all numbers are finite
+
+
+
+*/
 
 
 
